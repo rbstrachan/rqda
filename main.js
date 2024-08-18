@@ -1,8 +1,12 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('node:path')
-// const fs = require('node:fs');
 const { exec } = require('child_process');
+
+require('electron-reload')(path.join(__dirname, '**/*'), {
+  // Optional, to specify file types to watch
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+});
 
 async function createWindow() {
   // Create the browser window.

@@ -304,10 +304,8 @@ nav {
 /* END TOPBARSECTION TESTAREA */
 /* START MAINCONTENTSECTION DOCUMENTS */
 
-/* Container for the file tree */
-.file-tree {
+.fileTree {
   list-style-type: none;
-  /* padding-left: 10px; */
   margin: 0;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -326,20 +324,20 @@ nav {
 }
 
 .icon-file::before {
-  content: '\f15b'; /* FontAwesome file icon */
+  content: '\f15b';
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   margin-right: 8px;
 }
 
 .icon-folder::before {
-  content: '\f07b'; /* FontAwesome folder icon */
+  content: '\f07b';
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   margin-right: 8px;
 }
 
-/* indentation for nested files/folders */
+
 .fileTree ul {
   list-style-type: none;
   margin-left: 20px;
@@ -347,10 +345,11 @@ nav {
   border-left: 1px solid #444;
 }
 
-/* make the file tree scrollable */
+
 .mainContentSection.documents {
   overflow-y: auto;
   max-height: 100%;
+  scrollbar-color: #444 transparent;
 }
 
 /* END MAINCONTENTSECTION DOCUMENTS */

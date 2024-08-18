@@ -150,12 +150,12 @@
         </a>
       </div>
       <div class="topBarSection requete">
-        <button id="openFileButton">Import</button>
+        <!-- <button id="openFileButton">Import</button> -->
       </div>
       <div class="topBarSection testArea">
         <div id="testAreaText">
           <p><b>VERSION TEST</b></p>
-          <p>A3-F74BBA</p>
+          <p>A3-WB-E4A</p>
         </div>
       </div>
     </div>
@@ -163,6 +163,92 @@
       <div class="mainContentSection quickActions"></div>
       <div class="mainContentSection documents">
         <ul id="fileTree" class="fileTree"></ul>
+        <div id="file-tree">
+          <ul class="file-list">
+            <li class="folder">
+              <span class="folder-name">.github</span>
+              <ul class="file-list">
+                <li class="file">README.md</li>
+                <li class="file">CONTRIBUTING.md</li>
+                <li class="folder">
+                  <span class="folder-name">workflows</span>
+                  <ul class="file-list">
+                    <li class="file">ci.yml</li>
+                    <li class="file">deploy.yml</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="folder">
+              <span class="folder-name">bin</span>
+              <ul class="file-list">
+                <li class="file">setup.sh</li>
+                <li class="file">deploy.sh</li>
+              </ul>
+            </li>
+            <li class="folder">
+              <span class="folder-name">docs</span>
+              <ul class="file-list">
+                <li class="file">index.html</li>
+                <li class="file">getting-started.md</li>
+                <li class="folder">
+                  <span class="folder-name">api</span>
+                  <ul class="file-list">
+                    <li class="file">v1.md</li>
+                    <li class="file">v2.md</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="folder">
+              <span class="folder-name">src</span>
+              <ul class="file-list">
+                <li class="folder">
+                  <span class="folder-name">components</span>
+                  <ul class="file-list">
+                    <li class="file">Header.js</li>
+                    <li class="file">Footer.js</li>
+                    <li class="folder">
+                      <span class="folder-name">Sidebar</span>
+                      <ul class="file-list">
+                        <li class="file">Sidebar.js</li>
+                        <li class="file">SidebarItem.js</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="folder">
+                  <span class="folder-name">containers</span>
+                  <ul class="file-list">
+                    <li class="file">App.js</li>
+                    <li class="file">Dashboard.js</li>
+                  </ul>
+                </li>
+                <li class="folder">
+                  <span class="folder-name">utils</span>
+                  <ul class="file-list">
+                    <li class="file">helpers.js</li>
+                    <li class="file">api.js</li>
+                    <li class="file">constants.js</li>
+                  </ul>
+                </li>
+                <li class="file">index.js</li>
+                <li class="file">App.css</li>
+              </ul>
+            </li>
+            <li class="folder">
+              <span class="folder-name">test</span>
+              <ul class="file-list">
+                <li class="file">App.test.js</li>
+                <li class="file">Dashboard.test.js</li>
+              </ul>
+            </li>
+            <li class="file">.gitignore</li>
+            <li class="file">package.json</li>
+            <li class="file">webpack.config.js</li>
+          </ul>
+        </div>
+        
       </div>
       <div class="mainContentSection editor">
         <div id="editorTabs"></div>

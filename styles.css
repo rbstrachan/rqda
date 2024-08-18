@@ -304,53 +304,61 @@ nav {
 /* END TOPBARSECTION TESTAREA */
 /* START MAINCONTENTSECTION DOCUMENTS */
 
-.fileTree {
+#file-tree {
+  font-family: 'Inter', 'Monaco', monospace;
+  font-size: 14px;
+  color: #ccc;
+  padding: 10px;
+  width: 250px;
+}
+
+.file-list {
   list-style-type: none;
   margin: 0;
-  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-left: 15px;
 }
 
-.fileItem {
-  display: flex;
-  align-items: center;
-  padding: 2px 10px;
+.file-list .folder-name {
+  font-weight: bold;
+}
+
+.file-list .folder-name::before {
+  content: "📂";
+  /* content: '\f07b';
+  font-family: 'Font Awesome 5 Free'; */
+  margin-right: 7px;
+  /* color: #6ab04c; */
+  color: #ccc;
+}
+
+.file-list .file::before {
+  content: "📄";
+  /* content: '\f15b';
+  font-family: 'Font Awesome 5 Free'; */
+  margin-right: 7px;
+  /* color: #f0932b; */
+  color: #ccc
+}
+
+.folder-name,
+.file {
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  color: white;
+  padding: 3px 0;
 }
 
-.fileItem:hover {
-  background-color: #2c2c2c;
+.folder-name:hover,
+.file:hover {
+  background-color: #555;
 }
 
-.icon-file::before {
-  content: '\f15b';
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  margin-right: 8px;
+.folder > ul {
+  display: none;
 }
 
-.icon-folder::before {
-  content: '\f07b';
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  margin-right: 8px;
+.folder.open > ul {
+  display: block;
 }
 
-
-.fileTree ul {
-  list-style-type: none;
-  margin-left: 20px;
-  padding-left: 10px;
-  border-left: 1px solid #444;
-}
-
-
-.mainContentSection.documents {
-  overflow-y: auto;
-  max-height: 100%;
-  scrollbar-color: #444 transparent;
-}
 
 /* END MAINCONTENTSECTION DOCUMENTS */
 /* START MAINCONTENTSECTION EDITOR */

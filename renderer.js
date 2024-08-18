@@ -15,6 +15,13 @@ document.getElementById('close').addEventListener('click', () => {
     api.send('app/close');
 });
 
+document.querySelectorAll('.folder-name').forEach(folder => {
+    folder.addEventListener('click', function () {
+        const parentFolder = this.parentElement;
+        parentFolder.classList.toggle('open');
+    });
+});
+
 
 // const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
 //   lineNumbers: true,  // Adds line numbers to the editor

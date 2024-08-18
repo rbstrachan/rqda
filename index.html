@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com/; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com/; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net/ https://cdnjs.cloudflare.com/" 
+    ; 'unsafe-inline'">
+  <link href=" ./styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/lib/codemirror.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/theme/dracula.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <title>QADDOE</title>
+</head>
+
+<body>
+  <nav>
+    <div id="menus">
+      <!-- <div class="menuButton">
+        Projet
+        <div class="dropdownMenu">
+          <div class="menuItem">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+            <span class="itemText">Nouveau projet</span>
+            <span class="accelerator"><span class="key">Ctrl</span><span class="key">N</span></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-open"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg></span>
+            <span class="itemText">Ouvrir un project...</span>
+            <span class="accelerator"><span class="key">Ctrl</span><span class="key">O</span></span>
+          </div>
+          <div class="separator"></div>
+          <div class="menuItem">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
+            <span class="itemText">Fermer le projet</span>
+            <span class="accelerator"><span class="key">Ctrl</span><span class="key">W</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="menuButton">
+        Fichier
+        <div class="dropdownMenu">
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">New</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Import</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Duplicate</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="separator"></div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Rename</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Move</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="separator"></div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Save</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Save as…</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Export</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="separator"></div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Print</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Send to…</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Send by email</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Download</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="separator"></div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Close</span>
+            <span class="accelerator"></span>
+          </div>
+          <div class="menuItem">
+            <span class="icon"></span>
+            <span class="itemText">Delete</span>
+            <span class="accelerator"></span>
+          </div>
+        </div>
+      </div>
+      <div class="menuButton">Édition</div>
+      <div class="menuButton">Affichage</div>
+      <div class="menuButton">Codage</div>
+      <div class="menuButton">Fenêtre</div>
+      <div class="menuButton">Aide</div> -->
+    </div>
+
+    <div id="windowTitle">test projet ・ QADDOE</div>
+
+    <div id="windowButtons">
+      <div id="max"></div>
+      <div id="min"></div>
+      <div id="close"></div>
+    </div>
+  </nav>
+  <app>
+    <div id="topBar">
+      <div class="topBarSection logo"></div>
+      <div class="topBarSection details">
+        <span class="detailsText">
+          <p id="appNameVersion"><b>QADDOE ・ v1</b></p>
+          <p id="tagline">Projet de Recherche Qualitative</p>
+        </span>
+        <a href="https://apport.ca/QADDOE/aide/tutoriel" target="_blank" class="icon-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#bbb"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <path d="M12 17h.01" /></svg>
+        </a>
+      </div>
+      <div class="topBarSection requete">
+        <button id="openFileButton">Import</button>
+      </div>
+      <div class="topBarSection testArea">
+        <div id="testAreaText">
+          <p><b>VERSION TEST</b></p>
+          <p>A3-F74BBA</p>
+        </div>
+      </div>
+    </div>
+    <div id="mainContent">
+      <div class="mainContentSection quickActions"></div>
+      <div class="mainContentSection documents">
+        <ul id="fileTree" class="fileTree"></ul>
+      </div>
+      <div class="mainContentSection editor">
+        <div id="editorTabs"></div>
+        <!-- <textarea id="editor"></textarea> -->
+        <div id="editorStatusBar"></div>
+      </div>
+      <div class="mainContentSection codes"></div>
+    </div>
+  </app>
+
+  <!-- You can also require other files to run in this process -->
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/lib/codemirror.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/mode/markdown/markdown.js"></script>
+
+  <script src="./renderer.js"></script>
+  <script src="./menuBar.js"></script>
+  <!-- <script src="./windowButtons.js"></script> -->
+  <script src="./fileTree.js"></script>
+  <!-- <script src="./textEdtior.js"></script> -->
+  <!-- <script src="./codes.js"></script> -->
+</body>
+
+</html>

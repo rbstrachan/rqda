@@ -1,0 +1,15 @@
+{
+  "name": "qaddoe",
+  "productName": "qaddoe",
+  "description": "une application pour effectuer facilement des projets de recherches qualitatives",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "reiwa",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.2.1"
+  }
+}

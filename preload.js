@@ -7,31 +7,20 @@
  * https://www.electronjs.org/docs/latest/tutorial/sandbox
  */
 
-// I have no idea what this does but it works...
 const { contextBridge, ipcRenderer } = require('electron');
-const path = require('path');
-const fs = require('fs');
-
-contextBridge.exposeInMainWorld('electronAPI', {
-    openFileOrFolder: async (isFolder) => {
-        const filePaths = await ipcRenderer.invoke('dialog:openFileOrFolder', isFolder);
-        return filePaths;
-    },
-    getFilesInDirectory: (dirPath) => {
-        const fileNames = fs.readdirSync(dirPath).map(fileName => {
-            const fullPath = path.join(dirPath, fileName);
-            return {
-                name: fileName,
-                path: fullPath,
-                isDirectory: fs.lstatSync(fullPath).isDirectory()
-            };
-        });
-        return fileNames;
-    }
-});
+// const path = require('path');
+// const fs = require('fs');
 
 contextBridge.exposeInMainWorld('api', {
-  send: (channel, data) => {
-    ipcRenderer.send(channel, data);
-  },
+    send: (channel, data) => {
+        ipcRenderer.send(channel, data);
+    },
+    openFolderDialog: async () => {
+        const { filePaths } = await ipcRenderer.invoke('open-folder-dialog');
+        return filePaths[0];
+    },
+    getDirTree: async (folderPath) => {
+        const tree = await ipcRenderer.invoke('get-dir-tree', folderPath);
+        return tree;
+    }
 });

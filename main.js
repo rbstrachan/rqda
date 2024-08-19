@@ -1,15 +1,16 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('node:path')
-const { exec } = require('child_process');
+const os = require('node:os');
+const fs = require('node:fs');
+const dirTree = require('directory-tree');
+const { homedir } = require('node:os');
 
 require('electron-reload')(path.join(__dirname, '**/*'), {
-  // Optional, to specify file types to watch
   electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
 });
 
 async function createWindow() {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1440,
     height: 900,
@@ -19,9 +20,11 @@ async function createWindow() {
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      sandbox: false
-      // nodeIntegration: true,
-      // contextIsolation: false
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false,
+      transparent: true // this does nothing?
+      // backgroundThrottling: false // not sure if this is needed
       // devTools: false
     }
   })
@@ -44,15 +47,31 @@ async function createWindow() {
     app.quit();
   });
 
-  ipcMain.handle('dialog:openFileOrFolder', async (event, isFolder) => {
-    const result = await dialog.showOpenDialog(mainWindow, {
-      properties: isFolder ? ['openDirectory'] : ['openFile', 'openDirectory']
-    });
-
-    return result.filePaths;
-  });
-
+  // TO IMPLEMENT: MAKE MAXIMEMISE BUTTON TOGGLE BETWEEN MAXIMISE AND NORMAL SIZE
+  // ipcMain.on('app/maximize', (event, arg) => {
+  //   if (mainWindow.isMaximized()) {
+  //     mainWindow.unmaximize();
+  //   } else {
+  //     mainWindow.maximize();
+  //   }
+  // });
 }
+
+ipcMain.handle('open-folder-dialog', async (event, arg) => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openDirectory']
+  });
+  return result;
+});
+
+ipcMain.handle('get-dir-tree', async (event, folderPath) => {
+  if (folderPath) {
+    return dirTree(folderPath);
+  }
+});
+
+// const tree = dirTree(path.join(homedir(), 'Téléchargements'));
+// console.log(tree);
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

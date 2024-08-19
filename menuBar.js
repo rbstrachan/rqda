@@ -1,107 +1,123 @@
 /* NEED TO ADD:
 - KEEP MENUBUTTON ILLUMATED WHILE MENU IS OPEN, EVEN IF CURSOR IS NOT IN MENU
-- AUTOMATICALLY CHANGE MENUS IS CURSOR GOES OVER ANOTHER MENUBUTTON
+- AUTOMATICALLY CHANGE MENUS IF CURSOR GOES OVER ANOTHER MENUBUTTON
 - MAKE THE ACCELERATORS LOOK LIKE KEYBOARD KEYS
     - SEE BOUNCINGKEYS P5JS SKETCH
     - SEE PHONE SCREENSHOTS
 - MENUS WITHIN MENUS?
 */
 
+// menu structure object
+// MUST ALSO UPDATE handleMenuAction FUNCTION ON CHANGE OF THIS OBJECT
 const menuStructure = {
-    "Projet": [
-        { text: "Nouveau projet", icon: "plus", accelerator: "Ctrl+N" },
-        { text: "Ouvrir un projet...", icon: "folder-open", accelerator: "Ctrl+O" },
-        "separator",
-        { text: "Fermer le projet", icon: "circle-x", accelerator: "Ctrl+W" }
-    ],
-    "Fichier": [
-        { text: "Nouveau fichier" },
-        { text: "Importer un fichier" },
-        { text: "Dupliquer" },
-        "separator",
-        { text: "Renommer" },
-        { text: "Déplacer" },
-        "separator",
-        { text: "Enregister" },
-        { text: "Enregistrer sous…" },
-        { text: "Exporter" },
-        "separator",
-        { text: "Imprimer" },
-        { text: "Envoyer par email" },
-        // { text: "Télécharger" },
-        "separator",
-        { text: "Fermer" },
-        { text: "Supprimer" }
-    ],
-    "Edition": [
-        { text: "Annuler", accelerator: "Ctrl+Z" },
-        { text: "Rétablir", accelerator: "Ctrl+Y" },
-        "separator",
-        { text: "Copier", accelerator: "Ctrl+C" },
-        { text: "Coller", accelerator: "Ctrl+V" },
-        { text: "Coller texte brut", accelerator: "Ctrl+Shift+V" },
-        { text: "Couper", accelerator: "Ctrl+X" },
-        "separator",
-        { text: "Sélectionner tout", accelerator: "Ctrl+A" },
-        { text: "Rechercher", accelerator: "Ctrl+F" },
-        { text: "Remplacer", accelerator: "Ctrl+H" },
-        "separator",
-        { text: "Préférences" },
-    ],
-    "Affichage": [
-        { text: "Zoom avant", accelerator: "Ctrl++" },
-        { text: "Zoom arrière", accelerator: "Ctrl+-" },
-        { text: "Réinitialiser le zoom", accelerator: "Ctrl+0" }       
-    ],
-    "Codage": [
-        { text: "Ajouter une catégorie" },
-        { text: "Ajouter un code parent" },
-        { text: "Ajouter un code enfant" },
-        "separator",
-        { text: "Renommer" },
-        { text: "Déplacer" },
-        "separator",
-        { text: "Importer" },
-        { text: "Exporter" },
-        "separator",
-        { text: "Supprimer" }
-    ],
-    "Fenêtre": [
-        { text: "Plein écran", accelerator: "F11" },
-        { text: "Fenêtre normale", accelerator: "Esc" },
-        { text: "Réduire" },
-        "separator",
-        { text: "Fermer la fenêtre" },
-        { text: "Fermer toutes les fenêtres" },
-    ],
-    "Aide": [
-        { text: "À propos" },
-        "separator",
-        { text: "Documentation" },
-        { text: "Tutoriel" },
-        "separator",
-        { text: "FAQ" },
-        { text: "Contacter" },
-        "separator",
-        { text: "Signaler un problème" },
-        { text: "Faire une suggestion" },
-        { text: "Demander une fonction" },
-        // "separator",
-        // { text: "Licence" },
-        // { text: "Conditions d'utilisation" },
-        // { text: "Politique de confidentialité" },
-        "separator",
-        { text: "Soutenir le projet" },
-    ]
-    // "Parametres": [
-    //     { text: "Changer de langue" },
-    //     { text: "Changer de thème" },
-    //     { text: "Changer de police" },
-    //     "separator",
-    //     { text: "Mettre à jour" },
-    //     { text: "Rechercher des mises à jour" },
-    //     { text: "Installer les mises à jour" }
-    // ]
+    "Projet": {
+        items: [
+            { text: "Nouveau projet", icon: "plus", accelerator: "Ctrl+N" },
+            { text: "Ouvrir un projet...", icon: "folder-open", accelerator: "Ctrl+O" },
+            "separator",
+            { text: "Fermer le projet", icon: "circle-x", accelerator: "Ctrl+W" }
+        ],
+    },
+    "Fichier": {
+        items: [
+            { text: "Nouveau fichier" },
+            { text: "Importer des fichiers..." },
+            { text: "Importer des dossiers..." },
+            { text: "Dupliquer" },
+            "separator",
+            { text: "Renommer" },
+            { text: "Déplacer" },
+            "separator",
+            { text: "Enregister" },
+            { text: "Enregistrer sous…" },
+            // { text: "Exporter" },
+            "separator",
+            { text: "Imprimer" },
+            { text: "Envoyer par email" },
+            // { text: "Télécharger" },
+            "separator",
+            { text: "Fermer" },
+            { text: "Supprimer" }
+        ],
+    },
+    "Édition": {
+        width: "300px",
+        items: [
+            { text: "Annuler", accelerator: "Ctrl+Z" },
+            { text: "Rétablir", accelerator: "Ctrl+Y" },
+            "separator",
+            { text: "Copier", accelerator: "Ctrl+C" },
+            { text: "Coller", accelerator: "Ctrl+V" },
+            { text: "Coller texte brut", accelerator: "Ctrl+Shift+V" },
+            { text: "Couper", accelerator: "Ctrl+X" },
+            "separator",
+            { text: "Sélectionner tout", accelerator: "Ctrl+A" },
+            { text: "Rechercher...", accelerator: "Ctrl+F" },
+            { text: "Remplacer...", accelerator: "Ctrl+H" },
+            "separator",
+            { text: "Préférences..." },
+        ],
+    },
+    "Affichage": {
+        items: [
+            { text: "Zoom avant", accelerator: "Ctrl++" },
+            { text: "Zoom arrière", accelerator: "Ctrl+-" },
+            { text: "Réinitialiser le zoom", accelerator: "Ctrl+0" }
+        ],
+    },
+    "Codage": {
+        items: [
+            { text: "Ajouter une catégorie" },
+            { text: "Ajouter un code parent" },
+            { text: "Ajouter un code enfant" },
+            "separator",
+            { text: "Renommer" },
+            { text: "Déplacer" },
+            // "separator",
+            // { text: "Importer" },
+            // { text: "Exporter" },
+            "separator",
+            { text: "Supprimer" }
+        ],
+    },
+    "Fenêtre": {
+        items: [
+            { text: "Plein écran", accelerator: "F11" },
+            { text: "Fenêtre normale", accelerator: "Esc" },
+            { text: "Réduire" },
+            "separator",
+            { text: "Fermer la fenêtre" },
+            { text: "Fermer toutes les fenêtres" },
+        ],
+    },
+    "Aide": {
+        items: [
+            { text: "À propos" },
+            "separator",
+            { text: "Documentation" },
+            { text: "Tutoriel" },
+            "separator",
+            { text: "FAQ" },
+            { text: "Contacter" },
+            "separator",
+            { text: "Signaler un problème" },
+            { text: "Faire une suggestion" },
+            { text: "Demander une fonction" },
+            "separator",
+            { text: "Soutenir le projet" },
+        ],
+    },
+    // "Parametres": {
+    //     items: [
+    //         { text: "Changer de langue" },
+    //         { text: "Changer de thème" },
+    //         { text: "Changer de police" },
+    //         "separator",
+    //         { text: "Mettre à jour" },
+    //         { text: "Rechercher des mises à jour" },
+    //         { text: "Installer les mises à jour" }
+    //     ]
+    // }
 };
 
 // Function to generate menus
@@ -109,15 +125,16 @@ function generateMenus(menuStructure) {
     const menus = document.getElementById('menus');
     menus.innerHTML = '';
 
-    for (const [menuTitle, menuItems] of Object.entries(menuStructure)) {
+    for (const [menuTitle, menu] of Object.entries(menuStructure)) {
         const menuButton = document.createElement('div');
         menuButton.className = 'menuButton';
         menuButton.innerText = menuTitle;
 
         const dropdownMenu = document.createElement('div');
         dropdownMenu.className = 'dropdownMenu';
+        dropdownMenu.style.width = menu.width || '250px';
 
-        menuItems.forEach(item => {
+        menu.items.forEach(item => {
             if (item === 'separator') {
                 const separator = document.createElement('div');
                 separator.className = 'separator';
@@ -125,6 +142,7 @@ function generateMenus(menuStructure) {
             } else {
                 const menuItem = document.createElement('div');
                 menuItem.className = 'menuItem';
+                menuItem.id = item.text.replace(/ /g, '-').toLowerCase();
 
                 const iconSpan = document.createElement('span');
                 iconSpan.className = 'icon';
@@ -146,6 +164,11 @@ function generateMenus(menuStructure) {
                 menuItem.appendChild(itemText);
                 menuItem.appendChild(acceleratorSpan);
 
+                menuItem.addEventListener('click', function () {
+                    if (menuItem.classList.contains('disabled')) return;
+                    handleMenuAction(menuTitle, item.text);
+                });
+
                 dropdownMenu.appendChild(menuItem);
             }
         });
@@ -157,6 +180,159 @@ function generateMenus(menuStructure) {
     attachMenuEventListeners();
 }
 
+function handleMenuAction(menu, action) {
+    switch (menu) {
+        case 'Projet':
+            switch (action) {
+                case 'Nouveau projet':
+                    // todo: open a new window to create a new project
+                    break;
+                case 'Ouvrir un projet...':
+                    window.api.openFolderDialog().then(folderPath => {
+                        window.api.getDirTree(folderPath).then(directoryTree => {
+                            clearDirectoryTree();
+                            renderFileTree(document.getElementById('fileTree'), directoryTree);
+                        });
+                    });
+                    break;
+                case 'Fermer le projet':
+                    clearDirectoryTree();
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
+            break;
+        case 'Fichier':
+            switch (action) {
+                case 'Nouveau fichier':
+                    // todo    
+                    break;
+                case 'Importer des fichiers...':
+                    break;
+                case 'Importer des dossiers...':
+                    break;
+                case 'Dupliquer':
+                    break;
+                case 'Renommer':
+                    break;
+                case 'Déplacer':
+                    break;
+                case 'Enregister':
+                    break;
+                case 'Enregistrer sous…':
+                    break;
+                case 'Imprimer':
+                    break;
+                case 'Envoyer par email':
+                    break;
+                case 'Fermer':
+                    break;
+                case 'Supprimer':
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
+            break;
+        case 'Edition':
+            switch (action) {
+                case 'Annuler':
+                    break;
+                case 'Rétablir':
+                    break;
+                case 'Copier':
+                    break;
+                case 'Coller':
+                    break;
+                case 'Coller texte brut':
+                    break;
+                case 'Couper':
+                    break;
+                case 'Sélectionner tout':
+                    break;
+                case 'Rechercher...':
+                    break;
+                case 'Remplacer...':
+                    break;
+                case 'Préférences...':
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
+            break;
+        case 'Affichage':
+            switch (action) {
+                case 'Zoom avant':
+                    break;
+                case 'Zoom arrière':
+                    break;
+                case 'Réinitialiser le zoom':
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
+            break;
+        case 'Codage':
+            switch (action) {
+                case 'Ajouter une catégorie':
+                    break;
+                case 'Ajouter un code parent':
+                    break;
+                case 'Ajouter un code enfant':
+                    break;
+                case 'Renommer':
+                    break;
+                case 'Déplacer':
+                    break;
+                case 'Supprimer':
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
+            break;
+        case 'Fenêtre':
+            switch (action) {
+                case 'Plein écran':
+                    break;
+                case 'Fenêtre normale':
+                    break;
+                case 'Réduire':
+                    break;
+                case 'Fermer la fenêtre':
+                    break;
+                case 'Fermer toutes les fenêtres':
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
+            break;
+        case 'Aide':
+            switch (action) {
+                case 'À propos':
+                    break;
+                case 'Documentation':
+                    break;
+                case 'Tutoriel':
+                    break;
+                case 'FAQ':
+                    break;
+                case 'Contacter':
+                    break;
+                case 'Signaler un problème':
+                    break;
+                case 'Faire une suggestion':
+                    break;
+                case 'Demander une fonction':
+                    break;
+                case 'Soutenir le projet':
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
+            break;
+        default:
+            console.log(`No action defined for ${action} under ${menu}`);
+    }
+}
 
 function getIconSVG(iconName) {
     const icons = {
@@ -192,6 +368,11 @@ function attachMenuEventListeners() {
             menu.style.display = 'none';
         });
     });
+}
+
+function toggleMenuButtonState(buttonText) {
+    const menuItem = document.getElementById(buttonText.replace(/ /g, '-').toLowerCase());
+    if (menuItem) { menuItem.classList.toggle('disabled') }
 }
 
 // call the function to generate menus on page load

@@ -6,25 +6,13 @@
  * to expose Node.js functionality from the main process.
  */
 
-// event listeners for clicks on the window buttons
-document.getElementById('min').addEventListener('click', () => {
-    api.send('app/minimize')
+// will eventually be for changing the window title dynamically based on the project name
+const windowTitleStyle = document.getElementById('windowTitle').style;
+windowTitleStyle.setProperty('--projectTitle', '"projetThese"');
+
+const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+    lineNumbers: true,  // Adds line numbers to the editor
+    mode: 'markdown',  // Set mode for syntax highlighting
+    theme: 'dracula',  // Set theme
+    gutter: '30px',  // Set width of gutter
 });
-
-document.getElementById('close').addEventListener('click', () => {
-    api.send('app/close');
-});
-
-document.querySelectorAll('.folder-name').forEach(folder => {
-    folder.addEventListener('click', function () {
-        const parentFolder = this.parentElement;
-        parentFolder.classList.toggle('open');
-    });
-});
-
-
-// const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-//   lineNumbers: true,  // Adds line numbers to the editor
-//   mode: 'markdown',  // Set mode for syntax highlighting
-//   theme: 'dracula',  // Set theme
-// });

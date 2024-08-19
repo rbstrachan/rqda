@@ -2,38 +2,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter';
-    font-size: 12px;
-    -webkit-user-select: none;
-    -webkit-app-region: no-drag;
+  --applicationName: 'QADDOE';
+  --applicationVersion: '1';
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter';
+  /* font-size: 12px; */
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
 }
 
 body {
-    font-weight: 500;
+  font-weight: 500;
+  /* background-color: #932ED0; */
+  background-color: black;
+  font-size: 12px;
 }
 
 /* BEGIN MENU BAR */
 
 nav {
-    width: 100vw;
-    height: 25px;
-    background-color: #222;
-    color: #CCC;
-    position: relative;
-    -webkit-app-region: drag;
-    display: flex;
-    align-items: center;
+  width: 100vw;
+  height: 25px;
+  /* background-color: #222; */
+  background-color: #171717;
+  /* background-color: #111; */
+  color: #CCC;
+  position: relative;
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  border-radius: 15px 15px 0 0;
 }
 
 #menus {
-    height: 25px;
-    padding-left: 25px;
-    position: absolute;
-    left: 0;
-    display:flex;
-    align-items: center;
+  height: 25px;
+  padding-left: 25px;
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
 }
 
 .menuButton {
@@ -60,12 +68,16 @@ nav {
   border: 1px solid #444;
   border-radius: 2px;
   z-index: 1000;
-  padding: 5px 8px 5px 8px; /* TOP, RIGHT, BOTTOM, LEFT */
-  width: 250px;
+  /* padding: 5px 8px 5px 8px; */
+  padding: 5px;
+  /* TOP, RIGHT, BOTTOM, LEFT */
+  /* width: 250px; */
+  width: auto;
 }
 
 .menuItem {
-  padding: 3px 10px 3px 30px; /* TOP, RIGHT, BOTTOM, LEFT */
+  padding: 3px 10px 3px 30px;
+  /* TOP, RIGHT, BOTTOM, LEFT */
   cursor: pointer;
   background-color: #333;
   color: #fff;
@@ -79,9 +91,18 @@ nav {
   background-color: #555;
 }
 
-.icon {
+.menuItem.disabled {
+  cursor: not-allowed;
+  color: #888;
+}
+
+.menuItem.disabled:hover {
+  background-color: #333;
+}
+
+.menuItem .icon {
   position: absolute;
-  left: 15px;
+  left: 12px;
   width: 15px;
   height: 15px;
   background-size: contain;
@@ -90,18 +111,22 @@ nav {
   display: inline-block;
 }
 
-.itemText {
+.menuItem.disabled .icon {
+  filter: contrast(0.1);
+}
+
+.menuItem .itemText {
   flex: 1;
   text-align: left;
 }
 
-.accelerator {
+.menuItem .accelerator {
   flex: 0 0 auto;
   text-align: right;
   color: #999;
 }
 
-.key {
+.menuItem .accelerator .key {
   padding: 2px 6px;
   background-color: #444;
   border-radius: 4px;
@@ -110,11 +135,11 @@ nav {
   margin-left: 6px;
 }
 
-.key:first-child {
+.menuItem .accelerator .key:first-child {
   margin-left: 0;
 }
 
-.separator {
+.dropdownMenu .separator {
   height: 1px;
   background-color: #555;
   margin: 4px 0;
@@ -129,6 +154,15 @@ nav {
   transform: translate(-50%, -50%);
   line-height: 25px;
   -webkit-app-region: drag;
+  padding-bottom: 1px;
+}
+
+#windowTitle::before {
+  content: var(--projectTitle);
+}
+
+#windowTitle::after {
+  content: ' ・ ' var(--applicationName);
 }
 
 /* FOR WINDOW BUTTONS, ADD HOVER AND ACTIVE/INACTIVE BEHAVIOURS */
@@ -138,6 +172,7 @@ nav {
   margin-right: 13px;
   display: flex;
   gap: 8px;
+  padding-bottom: 1px;
 }
 
 #close,
@@ -145,7 +180,8 @@ nav {
 #max {
   width: 12px;
   height: 12px;
-  /* border: solid 1px; */ /* < CAUSES UNWANTED BEHAVIOUR WITH BUTTON DISPLAY SIZE */
+  /* border: solid 1px; */
+  /* < CAUSES UNWANTED BEHAVIOUR WITH BUTTON DISPLAY SIZE */
   border-radius: 50%;
   cursor: pointer;
 }
@@ -174,11 +210,12 @@ nav {
 }
 
 #mainContent {
-  height: 820px;
+  height: 800px;
   display: flex;
 }
 
-.topBarSection, .mainContentSection {
+.topBarSection,
+.mainContentSection {
   height: 100%;
   box-sizing: border-box;
 }
@@ -207,7 +244,8 @@ nav {
 
 .topBarSection:nth-child(1),
 .mainContentSection:nth-child(1) {
-  background-color: #2b2b2b;
+  /* background-color: #2b2b2b;*/
+  background-color: #252932;
   border-right: 1px solid #666;
 }
 
@@ -216,11 +254,13 @@ nav {
 .topBarSection:nth-child(4),
 .mainContentSection:nth-child(2),
 .mainContentSection:nth-child(4) {
-  background-color: #3c3c3c;
+  /* background-color: #3c3c3c; */
+  background-color: #252932;
 }
 
 .mainContentSection:nth-child(3) {
-  background-color: #454545;
+  /* background-color: #454545; */
+  background-color: #2b303b;
   border-left: 1px solid #666;
   border-right: 1px solid #666;
 }
@@ -233,10 +273,9 @@ nav {
 }
 
 /* END TOPBAR & MAINCONTENT -- GENERAL STYLES */
-
 /* START TOPBARSECTION LOGO */
-/* END TOPBARSECTION LOGO */
 
+/* END TOPBARSECTION LOGO */
 /* START TOPBARSECTION DETAILS */
 
 .topBarSection.details {
@@ -244,10 +283,12 @@ nav {
   align-items: center;
   padding-left: 15px;
   justify-content: space-between;
+  padding-bottom: 2px;
 }
 
-.topBarSection.details p + p {
+.topBarSection.details p+p {
   margin-top: 5px;
+  padding-top: 1px;
 }
 
 .detailsText {
@@ -258,6 +299,17 @@ nav {
 
 #appNameVersion {
   color: #fff;
+}
+
+#appNameVersion::before {
+  content: var(--applicationName);
+  font-weight: bold;
+}
+
+#appNameVersion::after {
+  content: var(--applicationVersion);
+  font-weight: bold;
+  /* font-size: 0.8em; */
 }
 
 #tagline {
@@ -275,7 +327,7 @@ nav {
 }
 
 .icon-link:hover {
-  background-color: #2b2b2b;
+  background-color: #171717;
 }
 
 /* END TOPBARSECTION DETAILS */
@@ -298,74 +350,129 @@ nav {
   color: #fff;
   display: flex;
   flex-direction: column;
-  text-align: center;   
+  text-align: center;
 }
 
 /* END TOPBARSECTION TESTAREA */
 /* START MAINCONTENTSECTION DOCUMENTS */
 
-#file-tree {
-  font-family: 'Inter', 'Monaco', monospace;
-  font-size: 14px;
-  color: #ccc;
-  padding: 10px;
-  width: 250px;
+.mainContentSection.documents p {
+  color: #fff;
+  padding: 12px 14px;
 }
 
-.file-list {
-  list-style-type: none;
-  margin: 0;
-  padding-left: 15px;
+#fileTreeContainer::-webkit-scrollbar {
+  width: 8px;
+  /* Adjust the width of the scrollbar */
 }
 
-.file-list .folder-name {
-  font-weight: bold;
+#fileTreeContainer::-webkit-scrollbar-thumb {
+  background-color: #666;
+  /* Color of the scrollbar thumb */
+  border-radius: 4px;
+  /* Make the scrollbar thumb rounded */
 }
 
-.file-list .folder-name::before {
-  content: "📂";
-  /* content: '\f07b';
-  font-family: 'Font Awesome 5 Free'; */
-  margin-right: 7px;
-  /* color: #6ab04c; */
-  color: #ccc;
+#fileTreeContainer::-webkit-scrollbar-track {
+  background: transparent;
+  /* Make the scrollbar track transparent */
 }
 
-.file-list .file::before {
-  content: "📄";
-  /* content: '\f15b';
-  font-family: 'Font Awesome 5 Free'; */
-  margin-right: 7px;
-  /* color: #f0932b; */
-  color: #ccc
-}
-
-.folder-name,
-.file {
-  cursor: pointer;
-  padding: 3px 0;
-}
-
-.folder-name:hover,
-.file:hover {
-  background-color: #555;
-}
-
-.folder > ul {
+/* Optional: Hide scrollbar buttons (up and down arrows) */
+#fileTreeContainer::-webkit-scrollbar-button {
   display: none;
 }
 
-.folder.open > ul {
+#fileTreeContainer {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100% - 39px);
+  color: white;
+  padding-left: 10px;
+}
+
+/* Basic styles for the file tree */
+ul {
+  list-style-type: none;
+  /* margin: 0 0 0 5px; */
+}
+
+li {
+  line-height: 1.5em;
+  cursor: pointer;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* Directory icon */
+li.directory::before {
+  content: "📁";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* File icon */
+li.file::before {
+  content: "📄";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Toggle display of child elements */
+li.directory>ul {
+  display: none;
+}
+
+li.directory.expanded>ul {
   display: block;
 }
 
+/* Styling for hover */
+li:hover>span {
+  background-color: #666;
+}
+
+/* Ensure only the hovered item is highlighted */
+li>span {
+  display: inline-block;
+  width: calc(100% - 15px);
+  /* Adjusts width to fit inside the padding */
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+/* Prevent child elements from being highlighted with the parent */
+li.directory>ul>li:hover>span {
+  background-color: #666;
+}
 
 /* END MAINCONTENTSECTION DOCUMENTS */
 /* START MAINCONTENTSECTION EDITOR */
 
-/* .CodeMirror {
-  height: 100% !important;
+.CodeMirror {
+  height: calc(100% - 5px) !important;
   width: 100% !important;
-} */
+  font-size: 18px;
+  line-height: 1.5;
+  padding-top: 5px;
+}
 
 /* END MAINCONTENTSECTION EDITOR */
+/* START FOOTER */
+
+footer {
+  -webkit-app-region: drag;
+  height: 20px;
+  background-color: #222;
+  color: #CCC;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  border-top: 1px solid #666;
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+
+/* END FOOTER */

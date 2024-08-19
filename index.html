@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com/; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com/; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net/ https://cdnjs.cloudflare.com/" 
+    content="default-src 'self'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com/; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com/; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net/ https://cdnjs.cloudflare.com/"
     ; 'unsafe-inline'">
   <link href=" ./styles.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/lib/codemirror.css">
@@ -125,7 +125,7 @@
       <div class="menuButton">Aide</div> -->
     </div>
 
-    <div id="windowTitle">test projet ・ QADDOE</div>
+    <div id="windowTitle"></div>
 
     <div id="windowButtons">
       <div id="max"></div>
@@ -138,7 +138,7 @@
       <div class="topBarSection logo"></div>
       <div class="topBarSection details">
         <span class="detailsText">
-          <p id="appNameVersion"><b>QADDOE ・ v1</b></p>
+          <p id="appNameVersion"><b> ・ v</b></p>
           <p id="tagline">Projet de Recherche Qualitative</p>
         </span>
         <a href="https://apport.ca/QADDOE/aide/tutoriel" target="_blank" class="icon-link">
@@ -146,12 +146,11 @@
             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help">
             <circle cx="12" cy="12" r="10" />
             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-            <path d="M12 17h.01" /></svg>
+            <path d="M12 17h.01" />
+          </svg>
         </a>
       </div>
-      <div class="topBarSection requete">
-        <!-- <button id="openFileButton">Import</button> -->
-      </div>
+      <div class="topBarSection requete"></div>
       <div class="topBarSection testArea">
         <div id="testAreaText">
           <p><b>VERSION TEST</b></p>
@@ -162,102 +161,25 @@
     <div id="mainContent">
       <div class="mainContentSection quickActions"></div>
       <div class="mainContentSection documents">
-        <ul id="fileTree" class="fileTree"></ul>
-        <div id="file-tree">
-          <ul class="file-list">
-            <li class="folder">
-              <span class="folder-name">.github</span>
-              <ul class="file-list">
-                <li class="file">README.md</li>
-                <li class="file">CONTRIBUTING.md</li>
-                <li class="folder">
-                  <span class="folder-name">workflows</span>
-                  <ul class="file-list">
-                    <li class="file">ci.yml</li>
-                    <li class="file">deploy.yml</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="folder">
-              <span class="folder-name">bin</span>
-              <ul class="file-list">
-                <li class="file">setup.sh</li>
-                <li class="file">deploy.sh</li>
-              </ul>
-            </li>
-            <li class="folder">
-              <span class="folder-name">docs</span>
-              <ul class="file-list">
-                <li class="file">index.html</li>
-                <li class="file">getting-started.md</li>
-                <li class="folder">
-                  <span class="folder-name">api</span>
-                  <ul class="file-list">
-                    <li class="file">v1.md</li>
-                    <li class="file">v2.md</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="folder">
-              <span class="folder-name">src</span>
-              <ul class="file-list">
-                <li class="folder">
-                  <span class="folder-name">components</span>
-                  <ul class="file-list">
-                    <li class="file">Header.js</li>
-                    <li class="file">Footer.js</li>
-                    <li class="folder">
-                      <span class="folder-name">Sidebar</span>
-                      <ul class="file-list">
-                        <li class="file">Sidebar.js</li>
-                        <li class="file">SidebarItem.js</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li class="folder">
-                  <span class="folder-name">containers</span>
-                  <ul class="file-list">
-                    <li class="file">App.js</li>
-                    <li class="file">Dashboard.js</li>
-                  </ul>
-                </li>
-                <li class="folder">
-                  <span class="folder-name">utils</span>
-                  <ul class="file-list">
-                    <li class="file">helpers.js</li>
-                    <li class="file">api.js</li>
-                    <li class="file">constants.js</li>
-                  </ul>
-                </li>
-                <li class="file">index.js</li>
-                <li class="file">App.css</li>
-              </ul>
-            </li>
-            <li class="folder">
-              <span class="folder-name">test</span>
-              <ul class="file-list">
-                <li class="file">App.test.js</li>
-                <li class="file">Dashboard.test.js</li>
-              </ul>
-            </li>
-            <li class="file">.gitignore</li>
-            <li class="file">package.json</li>
-            <li class="file">webpack.config.js</li>
-          </ul>
+        <div>
+          <p id="documentsTitle"><b>Dossiers & Fichiers</b></p>
         </div>
-        
+        <div id="fileTreeContainer">
+          <ul id="fileTree" class="fileTree"></ul>
+        </div>
       </div>
       <div class="mainContentSection editor">
         <div id="editorTabs"></div>
-        <!-- <textarea id="editor"></textarea> -->
-        <div id="editorStatusBar"></div>
+        <textarea id="editor"></textarea>
+        <!-- <div id="editorStatusBar"></div> -->
       </div>
       <div class="mainContentSection codes"></div>
     </div>
   </app>
+  <footer id="statusBar">
+    <span>Prêt</span>
+  </footer>
+
 
   <!-- You can also require other files to run in this process -->
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/lib/codemirror.js"></script>
@@ -265,7 +187,7 @@
 
   <script src="./renderer.js"></script>
   <script src="./menuBar.js"></script>
-  <!-- <script src="./windowButtons.js"></script> -->
+  <script src="./windowButtons.js"></script>
   <script src="./fileTree.js"></script>
   <!-- <script src="./textEdtior.js"></script> -->
   <!-- <script src="./codes.js"></script> -->

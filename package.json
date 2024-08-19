@@ -11,5 +11,9 @@
   },
   "devDependencies": {
     "electron": "^31.2.1"
+  },
+  "dependencies": {
+    "directory-tree": "^3.5.2",
+    "electron-reload": "^2.0.0-alpha.1"
   }
 }

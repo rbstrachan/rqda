@@ -1,43 +1,59 @@
-// Function to extract the file name from the full path
-function getFileName(filePath) {
-    return filePath.split('/').pop();
+function generateFileTreeHTML(tree) {
+    if (!tree || !tree.name) return '';
+
+    // Create a list item for the current directory or file
+    const listItem = document.createElement('li');
+
+    const span = document.createElement('span');
+    span.textContent = tree.name;
+
+    listItem.appendChild(span);
+
+    // If this is a directory, we need to handle its children
+    if (tree.children && tree.children.length > 0) {
+        listItem.classList.add('directory'); // Add a class for directories
+
+        const subList = document.createElement('ul');
+        tree.children.forEach(child => {
+            const childItem = generateFileTreeHTML(child);
+            if (childItem) subList.appendChild(childItem);
+        });
+
+        listItem.appendChild(subList);
+    } else {
+        listItem.classList.add('file'); // Add a class for files
+    }
+
+    return listItem;
 }
 
-// Function to display the files in the documents div
-function displayFiles(files) {
-    const fileTree = document.getElementById('fileTree');
-    fileTree.innerHTML = ''; // Clear previous content
-
-    files.forEach(file => {
-        const fileElement = document.createElement('li');
-        fileElement.classList.add('fileItem');
-        
-        const iconClass = file.isDirectory ? 'icon-folder' : 'icon-file';
-        fileElement.innerHTML = `<span class="${iconClass}"></span> ${file.name}`;
-        
-        if (file.isDirectory) {
-            // If it's a folder, fetch and display its contents
-            const subFiles = window.electronAPI.getFilesInDirectory(file.path);
-            const subFileTree = document.createElement('ul');
-            subFiles.forEach(subFile => {
-                const subFileElement = document.createElement('li');
-                const subIconClass = subFile.isDirectory ? 'icon-folder' : 'icon-file';
-                subFileElement.innerHTML = `<span class="${subIconClass}"></span> ${subFile.name}`;
-                subFileTree.appendChild(subFileElement);
-            });
-            fileElement.appendChild(subFileTree);
-        }
-
-        fileTree.appendChild(fileElement);
-    });
+// Function to append the generated tree to a given container element
+function renderFileTree(container, tree) {
+    const ul = document.createElement('ul');
+    const treeHTML = generateFileTreeHTML(tree);
+    ul.appendChild(treeHTML);
+    container.appendChild(ul);
 }
 
-// Event listener for your button to open files/folders
-document.getElementById('openFileButton').addEventListener('click', () => {
-    window.electronAPI.openFileOrFolder(true).then(filePaths => {
-        if (filePaths && filePaths.length > 0) {
-            const files = window.electronAPI.getFilesInDirectory(filePaths[0]);
-            displayFiles(files);
+// event listener for clicks on the file tree to expand/collapse directories
+document.addEventListener('DOMContentLoaded', function () {
+    const fileTreeContainer = document.getElementById('fileTree');
+
+    // Handle click events on the file tree
+    fileTreeContainer.addEventListener('click', function (event) {
+        const target = event.target;
+
+        // Check if the clicked element is a span inside a directory li
+        if (target.tagName === 'SPAN' && target.parentElement.classList.contains('directory')) {
+            const parentLi = target.parentElement;
+
+            // Toggle the 'expanded' class to show/hide the children
+            parentLi.classList.toggle('expanded');
         }
     });
 });
+
+function clearDirectoryTree() {
+    const fileTreeContainer = document.getElementById('fileTree');
+    fileTreeContainer.innerHTML = '';
+}

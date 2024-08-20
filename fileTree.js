@@ -1,7 +1,7 @@
-function generateFileTreeHTML(tree) {
+function generateFileTreeHTML(tree, isRoot = false) {
     if (!tree || !tree.name) return '';
 
-    // Create a list item for the current directory or file
+    // create a list item for the current directory or file
     const listItem = document.createElement('li');
 
     const span = document.createElement('span');
@@ -9,9 +9,14 @@ function generateFileTreeHTML(tree) {
 
     listItem.appendChild(span);
 
-    // If this is a directory, we need to handle its children
+    // if directory, handle its children
     if (tree.children && tree.children.length > 0) {
         listItem.classList.add('directory'); // Add a class for directories
+
+        // make sure the root folder of the project is expanded by default
+        if (isRoot) {
+            listItem.classList.add('rootFolder', 'expanded'); // mark as the root folder 
+        }
 
         const subList = document.createElement('ul');
         tree.children.forEach(child => {
@@ -27,33 +32,46 @@ function generateFileTreeHTML(tree) {
     return listItem;
 }
 
-// Function to append the generated tree to a given container element
+// append the generated tree to a given container element
 function renderFileTree(container, tree) {
     const ul = document.createElement('ul');
-    const treeHTML = generateFileTreeHTML(tree);
+    const treeHTML = generateFileTreeHTML(tree, true);
     ul.appendChild(treeHTML);
     container.appendChild(ul);
+}
+
+// sort the directory tree by name, putting folders first
+function sortDirectoryTree(tree) {
+    if (!tree || !tree.children) return;
+
+    tree.children.sort((a, b) => {
+        if (a.children && !b.children) return -1;
+        if (!a.children && b.children) return 1;
+        return a.name.localeCompare(b.name);
+    });
+
+    tree.children.forEach(sortDirectoryTree);
+}
+
+function clearDirectoryTree() {
+    const fileTreeContainer = document.getElementById('fileTree');
+    fileTreeContainer.innerHTML = '';
 }
 
 // event listener for clicks on the file tree to expand/collapse directories
 document.addEventListener('DOMContentLoaded', function () {
     const fileTreeContainer = document.getElementById('fileTree');
 
-    // Handle click events on the file tree
+    // handle click events on the file tree
     fileTreeContainer.addEventListener('click', function (event) {
         const target = event.target;
 
-        // Check if the clicked element is a span inside a directory li
+        // check if the clicked element is a span inside a directory li
         if (target.tagName === 'SPAN' && target.parentElement.classList.contains('directory')) {
             const parentLi = target.parentElement;
 
-            // Toggle the 'expanded' class to show/hide the children
+            // toggle the 'expanded' class to show/hide the children
             parentLi.classList.toggle('expanded');
         }
     });
 });
-
-function clearDirectoryTree() {
-    const fileTreeContainer = document.getElementById('fileTree');
-    fileTreeContainer.innerHTML = '';
-}

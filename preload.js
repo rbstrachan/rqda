@@ -22,5 +22,16 @@ contextBridge.exposeInMainWorld('api', {
     getDirTree: async (folderPath) => {
         const tree = await ipcRenderer.invoke('get-dir-tree', folderPath);
         return tree;
-    }
+    },
+    openNewWindow: async () => {
+        await ipcRenderer.invoke('open-new-window');
+    },
+    closeProject: async () => {
+        const result = await ipcRenderer.invoke('close-project');
+        return result;
+    },
+    // saveDialog: async () => {
+    //     const result = await ipcRenderer.invoke('save-dialog');
+    //     return result;
+    // },
 });

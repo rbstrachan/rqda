@@ -10,7 +10,19 @@ require('electron-reload')(path.join(__dirname, '**/*'), {
   electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
 });
 
-async function createWindow() {
+
+async function createApplicationWindow() {
+  // this window offsetting does not work as intended
+  const windowOffset = 50;
+  const lastWindow = BrowserWindow.getAllWindows().pop();
+  let x, y;
+
+  if (lastWindow) {
+    const lastWindowBounds = lastWindow.getBounds();
+    x = lastWindowBounds.x + windowOffset;
+    y = lastWindowBounds.y + windowOffset;
+  }
+
   const mainWindow = new BrowserWindow({
     width: 1440,
     height: 900,
@@ -18,6 +30,8 @@ async function createWindow() {
     autoHideMenuBar: true,
     frame: false,
     show: false,
+    x: x,
+    y: y,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
@@ -35,16 +49,58 @@ async function createWindow() {
   // show the window only when it is ready to be shown to prevent jittering
   mainWindow.on('ready-to-show', mainWindow.show);
 
+  // Handle window close event
+  mainWindow.on('close', (event) => {
+    event.preventDefault(); // Prevent the window from closing immediately
+
+    // const window = BrowserWindow.fromWebContents(event.sender);
+
+    const options = {
+      type: 'question',
+      buttons: ['Enregistrer', 'Ne pas enregistrer', 'Annuler'],
+      defaultId: 0,
+      title: 'Enregistrer les modifications',
+      message: 'Voulez-vous enregistrer les modifications apportées à ce projet avant de le fermer?',
+      detail: 'Ce projet contient des modifications. Si vous ne sauvegardez pas, elles seront perdues.',
+    };
+
+    dialog.showMessageBox(options).then((result) => {
+      if (result.response === 0) {
+        // handle save logic here
+        mainWindow.destroy();
+      } else if (result.response === 1) {
+        mainWindow.destroy();
+      }
+    });
+  });
+
+  // Handle "Fermer le projet" button click
+  ipcMain.handle('close-project', (event) => {
+    const options = {
+      type: 'question',
+      buttons: ['Save', 'Don\'t Save', 'Cancel'],
+      defaultId: 0,
+      title: 'Save Project',
+      message: 'Do you want to save your project before closing?',
+      detail: 'Your changes will be lost if you don\'t save them.',
+    };
+
+    const result = dialog.showMessageBox(mainWindow, options);
+    return result;
+  });
+
   // Open the DevTools programatically
   // mainWindow.webContents.openDevTools()
 
   // event handlers for the window buttons
   ipcMain.on('app/minimize', (event, arg) => {
-    mainWindow.minimize();
+    const window = BrowserWindow.fromWebContents(event.sender);
+    window.minimize();
   });
 
   ipcMain.on('app/close', (event, arg) => {
-    app.quit();
+    const window = BrowserWindow.fromWebContents(event.sender);
+    mainWindow.close();
   });
 
   // TO IMPLEMENT: MAKE MAXIMEMISE BUTTON TOGGLE BETWEEN MAXIMISE AND NORMAL SIZE
@@ -56,6 +112,11 @@ async function createWindow() {
   //   }
   // });
 }
+
+// handle IPC events
+ipcMain.handle('open-new-window', async (event, arg) => {
+  createApplicationWindow();
+});
 
 ipcMain.handle('open-folder-dialog', async (event, arg) => {
   const result = await dialog.showOpenDialog({
@@ -77,12 +138,12 @@ ipcMain.handle('get-dir-tree', async (event, folderPath) => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createWindow()
+  createApplicationWindow()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) createApplicationWindow()
   })
 })
 

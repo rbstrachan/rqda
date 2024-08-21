@@ -23,8 +23,8 @@ async function createApplicationWindows() {
   }
 
   const splashScreen = new BrowserWindow({
-    width: 800,
-    height: 650,
+    width: 1040,
+    height: 700,
     resizable: false,
     autoHideMenuBar: true,
     frame: false,
@@ -33,7 +33,7 @@ async function createApplicationWindows() {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
-      devTools: false
+      // devTools: false
     }
   });
 
@@ -62,10 +62,13 @@ async function createApplicationWindows() {
   mainWindow.loadFile('./mainWindow/main.html')
 
   // show the window only when it is ready to be shown to prevent jittering
-  splashScreen.on('ready-to-show', splashScreen.show, setTimeout(() => {
-    splashScreen.close();
-    mainWindow.show();
-  }, 5000));
+  splashScreen.on('ready-to-show',
+    splashScreen.show,
+    //   setTimeout(() => {
+    //   splashScreen.close();
+    //   mainWindow.show();
+    // }, 5000)
+  );
 
   // mainWindow.on('ready-to-show', mainWindow.show);
 

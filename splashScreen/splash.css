@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
+}
+
+body {
+  background-color: #932ED0;
+  font-size: 12px;
+  color: #DADADA;
+}
+
+/* nav {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  width: 100%;
+  -webkit-app-region: drag;
+} */
+
+#mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  height: 100vh;
+  width: 100vw;
+  border-radius: 40px;
+  background-color: #093A3B;
+  padding: 15px;
+  -webkit-app-region: drag;
+}
+
+#projectContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: calc(50% + 15px);
+  padding: 54px;
+  background-color: #1e1e1e;
+  border-radius: 25px;
+}
+
+#welcomeContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 18.77px;
+  font-weight: bold;
+  color: #DADADA;
+  padding-bottom: 6px;
+}
+
+p {
+  font-size: 10.95px;
+  color: #DADADA;
+}
+
+p+p {
+  padding-top: 6px;
+}
+
+#projectList {
+  display: flex;
+  flex-direction: column;
+  background-color: #262626;
+  border-radius: 15.64px;
+  padding: 20px;
+  margin: 27px 0;
+}
+
+.project {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project+.project {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 2px solid #363636;
+}
+
+.projectMeta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.projectImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 5.21px;
+  background-color: #DADADA;
+  margin-right: 15px;
+}
+
+.projectDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 3px
+}
+
+.projectName {
+  font-size: 12px;
+  color: #DADADA;
+  font-weight: 800;
+}
+
+.projectDirectory {
+  font-size: 9.38px;
+  color: #DADADA;
+}
+
+.projectCreationDate {
+  font-size: 9.38px;
+  color: #DADADA;
+}
+
+.openProjectButton {
+  font-size: 12px;
+  border-radius: 15px;
+  background-color: #DADADA;
+  color: #093A3B;
+  padding: 5px 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#newProjectButtonContainer {
+  display: flex;
+  width: auto;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  padding: 10px 10px;
+  margin: -10px 184px -10px 10px;
+  border-radius: 15.21px;
+}
+
+#newProjectButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5.21px;
+  background-color: #DADADA;
+  color: #093A3B;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+#newProjectButtonText {
+  font-size: 12px;
+  color: #DADADA;
+}
+
+#newProjectButtonContainer:hover {
+  background-color: #093A3B;
+  color: #DADADA;
+  font-weight: bold;
+  cursor: pointer;
+}

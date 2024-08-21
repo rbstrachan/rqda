@@ -6,12 +6,11 @@ const fs = require('node:fs');
 const dirTree = require('directory-tree');
 const { homedir } = require('node:os');
 
-require('electron-reload')(path.join(__dirname, '**/*'), {
-  electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+require('electron-reload')(path.join(__dirname, '../../**/*'), {
+  electron: path.join(__dirname, '../../node_modules', '.bin', 'electron'),
 });
 
-
-async function createApplicationWindow() {
+async function createApplicationWindows() {
   // this window offsetting does not work as intended
   const windowOffset = 50;
   const lastWindow = BrowserWindow.getAllWindows().pop();
@@ -22,6 +21,21 @@ async function createApplicationWindow() {
     x = lastWindowBounds.x + windowOffset;
     y = lastWindowBounds.y + windowOffset;
   }
+
+  const splashScreen = new BrowserWindow({
+    width: 800,
+    height: 650,
+    resizable: false,
+    autoHideMenuBar: true,
+    frame: false,
+    show: false,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: true,
+      devTools: false
+    }
+  });
 
   const mainWindow = new BrowserWindow({
     width: 1440,
@@ -44,10 +58,16 @@ async function createApplicationWindow() {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  splashScreen.loadFile('./splashScreen/splash.html')
+  mainWindow.loadFile('./mainWindow/main.html')
 
   // show the window only when it is ready to be shown to prevent jittering
-  mainWindow.on('ready-to-show', mainWindow.show);
+  splashScreen.on('ready-to-show', splashScreen.show, setTimeout(() => {
+    splashScreen.close();
+    mainWindow.show();
+  }, 5000));
+
+  // mainWindow.on('ready-to-show', mainWindow.show);
 
   // Handle window close event
   mainWindow.on('close', (event) => {
@@ -67,6 +87,7 @@ async function createApplicationWindow() {
     dialog.showMessageBox(options).then((result) => {
       if (result.response === 0) {
         // handle save logic here
+        // CHANGER mainWindow.destroy() À UTILISER LE PROTOCOL ipcMain.on('app/close') POUR FERMER LA FENÊTRE
         mainWindow.destroy();
       } else if (result.response === 1) {
         mainWindow.destroy();
@@ -100,7 +121,7 @@ async function createApplicationWindow() {
 
   ipcMain.on('app/close', (event, arg) => {
     const window = BrowserWindow.fromWebContents(event.sender);
-    mainWindow.close();
+    window.close();
   });
 
   // TO IMPLEMENT: MAKE MAXIMEMISE BUTTON TOGGLE BETWEEN MAXIMISE AND NORMAL SIZE
@@ -115,7 +136,7 @@ async function createApplicationWindow() {
 
 // handle IPC events
 ipcMain.handle('open-new-window', async (event, arg) => {
-  createApplicationWindow();
+  createApplicationWindows();
 });
 
 ipcMain.handle('open-folder-dialog', async (event, arg) => {
@@ -131,19 +152,16 @@ ipcMain.handle('get-dir-tree', async (event, folderPath) => {
   }
 });
 
-// const tree = dirTree(path.join(homedir(), 'Téléchargements'));
-// console.log(tree);
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createApplicationWindow()
+  createApplicationWindows()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createApplicationWindow()
+    if (BrowserWindow.getAllWindows().length === 0) createApplicationWindows()
   })
 })
 

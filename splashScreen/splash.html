@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QADDOE</title>
+    <link href="splash.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <nav></nav>
+    <splash>
+        <div id="splashScreenLeft">
+            <div id="recentProjects">
+                <p id="recentProjectsTitle">Projets récents</p>
+                <div id="recentProjectsList">
+                    <div class="recentProject">
+                        <div class="recentProjectIcon"></div>
+                        <div class="recentProjectText">
+                            <p class="recentProjectName">Projet 1</p>
+                            <p class="recentProjectPath">C:/Users/Utilisateur/Documents/Projet 1</p>
+                        </div>
+                        <div class="recentProjectOptions">
+                            <div class="recentProjectOption" title="Ouvrir le projet">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="#bbb" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-folder-open">
+                                    <path
+                                        d="M9 6l2 2 2-2M9 12l2 2 2-2M9 18l2 2 2-2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h5" />
+                                </svg>
+                            </div>
+                            <div class="recentProjectOption" title="Supprimer le projet">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="#bbb" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-trash-2">
+                                    <polyline points="3 6 5 6 21 6" />
+                                    <path d="M16 6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2" />
+                                    <line x1="10" y1="3" x2="10" y2="9" />
+                                    <line x1="14" y1="3" x2="14" y2="9" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="splashScreenRight">
+            <div id="logo"></div>
+            <div id="splashScreenText">
+                <p id="splashScreenAppName">QADDOE</p>
+                <p id="splashScreenVersion">Version 1 (Beta)</p>
+            </div>
+            <div id="optionsContainer">
+                <div id="quickStart">Démarrage rapide</div>
+                <div class="option">
+                    <div class="optionInfo">
+                        <div class="optionName">Créer un nouveau coffre</div>
+                        <div class="optionDescription">Crée un nouveau coffre Obsidian dans un dossier.</div>
+                    </div>
+                    <div class="optionCTAContainer"><button class="optionCTA">Créer</button></div>
+                </div>
+                <div class="option">
+                    <div class="optionInfo">
+                        <div class="optionName">Ouvrir un dossier comme coffre</div>
+                        <div class="optionDescription">Choisi un dossier de fichiers Markdown existant.</div>
+                    </div>
+                    <div class="optionCTAContainer"><button class="optionCTA">Créer</button></div>
+                </div>
+                <div class="option">
+                    <div class="optionInfo">
+                        <div class="optionName">Se connecter à Obsidian Sync</div>
+                        <div class="optionDescription">Configure un coffre synchronisé avec un coffre</div>
+                    </div>
+                    <div class="optionCTAContainer"><button class="optionCTA">Créer</button></div>
+                </div>
+                <div id="changeLanguage">
+                    <div id="lanuageControl">
+                        <select id="dropdown">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="splashScreenProgress">
+                    <div id="splashScreenProgressBar"></div>
+                    <p id="splashScreenProgressText">Chargement...</p>
+                </div>
+            </div>
+        </div>
+    </splash>
+
+    <script src="splash.js"></script>
+</body>
+
+</html>

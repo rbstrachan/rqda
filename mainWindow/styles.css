@@ -8,7 +8,6 @@
   margin: 0;
   padding: 0;
   font-family: 'Inter';
-  /* font-size: 12px; */
   user-select: none;
   -webkit-user-select: none;
   -webkit-app-region: no-drag;
@@ -29,7 +28,7 @@ nav {
   /* background-color: #171717; */
   background-color: #131313;
   /* background-color: #111; */
-  color: #CCC;
+  color: #DADADA;
   position: relative;
   -webkit-app-region: drag;
   display: flex;
@@ -58,7 +57,7 @@ nav {
 }
 
 .menuButton:hover {
-  background-color: #444;
+  background-color: #363636;
 }
 
 .dropdownMenu {
@@ -67,7 +66,7 @@ nav {
   top: calc(100% + 3px);
   left: 0;
   /* background-color: #333; */
-  background-color: #131313;
+  background-color: #262626;
   border: 1px solid #444;
   border-radius: 2px;
   z-index: 1000;
@@ -80,7 +79,7 @@ nav {
   /* TOP, RIGHT, BOTTOM, LEFT */
   padding: 3px 10px 3px 30px;
   cursor: pointer;
-  color: #fff;
+  color: #DADADA;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -88,7 +87,7 @@ nav {
 }
 
 .menuItem:hover {
-  background-color: #444;
+  background-color: #363636;
 }
 
 .menuItem.disabled {
@@ -97,7 +96,7 @@ nav {
 }
 
 .menuItem.disabled:hover {
-  background-color: #131313;
+  background-color: transparent;
 }
 
 .menuItem .icon {
@@ -113,8 +112,7 @@ nav {
 
 .menuItem.disabled .icon,
 .menuItem.disabled .accelerator .key {
-  /* filter: contrast(0.1); */
-  filter: brightness(0.5);
+  filter: brightness(0.6);
 }
 
 .menuItem .itemText {
@@ -125,12 +123,12 @@ nav {
 .menuItem .accelerator {
   flex: 0 0 auto;
   text-align: right;
-  color: #999;
+  color: #B3B3B3;
 }
 
 .menuItem .accelerator .key {
   padding: 2px 6px;
-  background-color: #444;
+  background-color: #363636;
   border-radius: 4px;
   border: 1px solid #666;
   font-family: monospace;
@@ -143,7 +141,7 @@ nav {
 
 .dropdownMenu .separator {
   height: 1px;
-  background-color: #555;
+  background-color: #515151;
   margin: 4px 0;
   width: calc(100% - 30px);
   margin-left: 30px;
@@ -182,8 +180,8 @@ nav {
 #max {
   width: 12px;
   height: 12px;
-  /* border: solid 1px; */
-  /* < CAUSES UNWANTED BEHAVIOUR WITH BUTTON DISPLAY SIZE */
+  border: solid 1px;
+  box-sizing: border-box;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -246,12 +244,14 @@ nav {
 
 .topBarSection:nth-child(1),
 .mainContentSection:nth-child(1) {
-  /* background-color: #2b2b2b;*/
   /* FROM FIGMA */
-  /* background-color: #252932; */
+  /* background-color: #2b2b2b;*/
   /* FROM RANDOM ATOM THEME */
-  background-color: #21252b;
+  /* background-color: #252932; */
   /* FROM ATOM DARK ONE UI THEME*/
+  /* background-color: #21252b; */
+  /* FROM OBSIDIAN */
+  background-color: #363636;
   border-right: 1px solid #666;
 }
 
@@ -262,13 +262,15 @@ nav {
 .mainContentSection:nth-child(4) {
   /* background-color: #3c3c3c; */
   /* background-color: #252932; */
-  background-color: #21252b;
+  /* background-color: #21252b; */
+  background-color: #262626;
 }
 
 .mainContentSection:nth-child(3) {
   /* background-color: #454545; */
   /* background-color: #2b303b; */
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  background-color: #1e1e1e;
   border-left: 1px solid #666;
   border-right: 1px solid #666;
 }
@@ -288,7 +290,6 @@ nav {
   display: flex;
   align-items: center;
   padding: 12px 2px 2px 12px;
-  /* padding-top: 5px; */
 }
 
 /* END TOPBARSECTION LOGO */
@@ -314,7 +315,7 @@ nav {
 }
 
 #appNameVersion {
-  color: #fff;
+  color: #DADADA;
 }
 
 #appNameVersion::before {
@@ -325,11 +326,11 @@ nav {
 #appNameVersion::after {
   content: var(--applicationVersion);
   font-weight: bold;
-  /* font-size: 0.8em; */
 }
 
 #tagline {
   color: #888;
+  /* color: #B3B3B3; */
   font-weight: 400;
 }
 
@@ -416,7 +417,7 @@ nav {
 }
 
 .quickAction:hover {
-  background-color: #131313;
+  background-color: #262626;
 }
 
 #quickActionsTop .quickActionHolder {
@@ -431,28 +432,23 @@ nav {
 /* START MAINCONTENTSECTION DOCUMENTS */
 
 .mainContentSection.documents p {
-  color: #fff;
+  color: #DADADA;
   padding: 12px 14px;
 }
 
 #fileTreeContainer::-webkit-scrollbar {
   width: 5px;
-  /* Adjust the width of the scrollbar */
 }
 
 #fileTreeContainer::-webkit-scrollbar-thumb {
-  background-color: #666;
-  /* Color of the scrollbar thumb */
+  background-color: #424242;
   border-radius: 4px;
-  /* Make the scrollbar thumb rounded */
 }
 
 #fileTreeContainer::-webkit-scrollbar-track {
   background: transparent;
-  /* Make the scrollbar track transparent */
 }
 
-/* Optional: Hide scrollbar buttons (up and down arrows) */
 #fileTreeContainer::-webkit-scrollbar-button {
   display: none;
 }
@@ -461,7 +457,8 @@ nav {
   overflow-y: auto;
   overflow-x: hidden;
   height: calc(100% - 39px);
-  color: white;
+  color: #B3B3B3;
+  /* color: #DADADA; */
   padding-left: 14px;
 }
 
@@ -505,7 +502,7 @@ li.directory.expanded>ul {
 
 /* Styling for hover */
 li:hover>span {
-  background-color: #666;
+  background-color: #363636;
 }
 
 /* Ensure only the hovered item is highlighted */
@@ -519,7 +516,7 @@ li>span {
 
 /* Prevent child elements from being highlighted with the parent */
 li.directory>ul>li:hover>span {
-  background-color: #666;
+  background-color: #363636;
 }
 
 /* END MAINCONTENTSECTION DOCUMENTS */
@@ -541,8 +538,8 @@ footer {
   height: 20px;
   font-size: 10px;
   font-weight: 600;
-  background-color: #222;
-  color: #CCC;
+  background-color: #1e1e1e;
+  color: #DADADA;
   display: flex;
   align-items: center;
   justify-content: space-between;

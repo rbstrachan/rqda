@@ -13,6 +13,9 @@ contextBridge.exposeInMainWorld('api', {
     send: (channel, data) => {
         ipcRenderer.send(channel, data);
     },
+    receive: (channel, func) => {
+        ipcRenderer.on(channel, (event, ...args) => func(...args));
+    },
     openFolderDialog: async () => {
         const { filePaths } = await ipcRenderer.invoke('open-folder-dialog');
         return filePaths[0];
@@ -31,7 +34,7 @@ contextBridge.exposeInMainWorld('api', {
     newProject: async () => {
         const result = await ipcRenderer.invoke('new-project');
         return result;
-    },
+    }
     // saveDialog: async () => {
     //     const result = await ipcRenderer.invoke('save-dialog');
     //     return result;

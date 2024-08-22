@@ -146,6 +146,18 @@ async function createApplicationWindows() {
   createApplicationWindows();
 }); */
 
+ipcMain.on('read-file', (event, filePath) => {
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error('Failed to read file:', err);
+      return;
+    }
+    const fileName = path.basename(filePath);
+    event.sender.send('file-content', fileName, data);
+    console.log('File content sent to renderer process');
+  });
+});
+
 ipcMain.handle('open-folder-dialog', async (event, arg) => {
   const result = await dialog.showOpenDialog({
     properties: ['openDirectory']

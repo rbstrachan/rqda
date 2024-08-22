@@ -81,7 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const filePath = target.parentElement.dataset.path;
 
             // open the file in a new tab in the editor
-            addNewTab(fileName, `Content for ${fileName}`); // Replace with actual file content loading logic
+            window.api.send('read-file', filePath);
         }
     });
+});
+
+window.api.receive('file-content', (fileName, content) => {
+    addNewTab(fileName, content);
 });

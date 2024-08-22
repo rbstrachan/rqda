@@ -226,6 +226,8 @@ function handleMenuAction(menu, action) {
                     });
                     break;
                 case 'Enregistrer':
+                    // createTab('example.md', '# Example Markdown Content');
+                    addNewTab('Document 3', '# Initial content for Document 3');
                     break;
                 case 'Enregistrer sous…':
                     break;

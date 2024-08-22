@@ -31,9 +31,9 @@ body {
   height: 100vh;
   width: 100vw;
   border-radius: 40px;
+  border-top-right-radius: 15px;
   background-color: #093A3B;
   padding: 15px;
-  -webkit-app-region: drag;
 }
 
 #projectContainer {
@@ -170,4 +170,28 @@ p+p {
   color: #DADADA;
   font-weight: bold;
   cursor: pointer;
+}
+
+#rightContentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  width: calc(50% - 15px);
+  padding-left: 30px;
+}
+
+#rightContent {
+  height: 100%;
+  background-image: url('./logoB.webp');
+  /* background-size: contain; */
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: opacity(0.3);
+}
+
+#footerText p {
+  color: #050505;
+  filter: opacity(0.35);
+  font-weight: 600;
 }

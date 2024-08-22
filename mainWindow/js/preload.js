@@ -8,8 +8,6 @@
  */
 
 const { contextBridge, ipcRenderer } = require('electron');
-// const path = require('path');
-// const fs = require('fs');
 
 contextBridge.exposeInMainWorld('api', {
     send: (channel, data) => {
@@ -28,6 +26,10 @@ contextBridge.exposeInMainWorld('api', {
     },
     closeProject: async () => {
         const result = await ipcRenderer.invoke('close-project');
+        return result;
+    },
+    newProject: async () => {
+        const result = await ipcRenderer.invoke('new-project');
         return result;
     },
     // saveDialog: async () => {

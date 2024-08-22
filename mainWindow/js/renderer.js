@@ -13,10 +13,3 @@ const windowTitleStyle = document.getElementById('windowTitle').style;
 // signalerProbleme.addEventListener('click', () => {
 //     console.log('l\'utilisateur a signalé un problème');
 // });
-
-// const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-//     lineNumbers: true,  // Adds line numbers to the editor
-//     mode: 'markdown',  // Set mode for syntax highlighting
-//     theme: 'dracula',  // Set theme
-//     gutter: '30px',  // Set width of gutter
-// });

@@ -6,36 +6,21 @@ const fs = require('node:fs');
 const dirTree = require('directory-tree');
 const { homedir } = require('node:os');
 
-require('electron-reload')(path.join(__dirname, '../../**/*'), {
-  electron: path.join(__dirname, '../../node_modules', '.bin', 'electron'),
-});
+// require('electron-reload')(path.join(__dirname, '../../**/*'), {
+//   electron: path.join(__dirname, '../../node_modules', '.bin', 'electron'),
+// });
 
 async function createApplicationWindows() {
   // this window offsetting does not work as intended
-  const windowOffset = 50;
-  const lastWindow = BrowserWindow.getAllWindows().pop();
-  let x, y;
+  // const windowOffset = 50;
+  // const lastWindow = BrowserWindow.getAllWindows().pop();
+  // let x, y;
 
-  if (lastWindow) {
-    const lastWindowBounds = lastWindow.getBounds();
-    x = lastWindowBounds.x + windowOffset;
-    y = lastWindowBounds.y + windowOffset;
-  }
-
-  const splashScreen = new BrowserWindow({
-    width: 1040,
-    height: 700,
-    resizable: false,
-    autoHideMenuBar: true,
-    frame: false,
-    show: false,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      sandbox: true,
-      // devTools: false
-    }
-  });
+  // if (lastWindow) {
+  //   const lastWindowBounds = lastWindow.getBounds();
+  //   x = lastWindowBounds.x + windowOffset;
+  //   y = lastWindowBounds.y + windowOffset;
+  // }
 
   const mainWindow = new BrowserWindow({
     width: 1440,
@@ -44,30 +29,44 @@ async function createApplicationWindows() {
     autoHideMenuBar: true,
     frame: false,
     show: false,
-    x: x,
-    y: y,
+    // x: x,
+    // y: y,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
-      transparent: true // this does nothing?
+      // transparent: true // this does nothing?
       // backgroundThrottling: false // not sure if this is needed
       // devTools: false
     }
   })
 
+
+  const splashScreen = new BrowserWindow({
+    width: 1040,
+    height: 700,
+    resizable: false,
+    autoHideMenuBar: true,
+    frame: false,
+    show: false,
+    parent: mainWindow,
+    webPreferences: {
+      preload: path.join(__dirname, '../../splashScreen/preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      // sandbox: false,
+      // devTools: false
+    }
+  });
+
   // and load the index.html of the app.
-  splashScreen.loadFile('./splashScreen/splash.html')
   mainWindow.loadFile('./mainWindow/main.html')
+  splashScreen.loadFile('./splashScreen/splash.html')
 
   // show the window only when it is ready to be shown to prevent jittering
   splashScreen.on('ready-to-show',
     splashScreen.show,
-    //   setTimeout(() => {
-    //   splashScreen.close();
-    //   mainWindow.show();
-    // }, 5000)
   );
 
   // mainWindow.on('ready-to-show', mainWindow.show);
@@ -116,6 +115,11 @@ async function createApplicationWindows() {
   // Open the DevTools programatically
   // mainWindow.webContents.openDevTools()
 
+  ipcMain.on('new-project', (event, arg) => {
+    splashScreen.destroy();
+    setTimeout(() => { mainWindow.show(); }, 1000);
+  });
+
   // event handlers for the window buttons
   ipcMain.on('app/minimize', (event, arg) => {
     const window = BrowserWindow.fromWebContents(event.sender);
@@ -138,9 +142,9 @@ async function createApplicationWindows() {
 }
 
 // handle IPC events
-ipcMain.handle('open-new-window', async (event, arg) => {
+/*ipcMain.handle('open-new-window', async (event, arg) => {
   createApplicationWindows();
-});
+}); */
 
 ipcMain.handle('open-folder-dialog', async (event, arg) => {
   const result = await dialog.showOpenDialog({
@@ -174,6 +178,3 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

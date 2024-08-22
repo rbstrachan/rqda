@@ -27,6 +27,7 @@ function generateFileTreeHTML(tree, isRoot = false) {
         listItem.appendChild(subList);
     } else {
         listItem.classList.add('file'); // Add a class for files
+        listItem.dataset.path = tree.path; // Store the file path as a data attribute
     }
 
     return listItem;
@@ -72,6 +73,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // toggle the 'expanded' class to show/hide the children
             parentLi.classList.toggle('expanded');
+        }
+
+        // check if the clicked element is a file
+        if (target.tagName === 'SPAN' && target.parentElement.classList.contains('file')) {
+            const fileName = target.textContent;
+            const filePath = target.parentElement.dataset.path;
+
+            // open the file in a new tab in the editor
+            addNewTab(fileName, `Content for ${fileName}`); // Replace with actual file content loading logic
         }
     });
 });

@@ -3,7 +3,7 @@
 
 * {
   --applicationName: 'QADDOE';
-  --applicationVersion: '1';
+  --applicationVersion: '1 (Beta)';
 
   margin: 0;
   padding: 0;
@@ -363,7 +363,7 @@ nav {
 #testAreaText {
   padding: 5px 15px 5px 15px;
   border-radius: 2px;
-  background-color: #dc3545;
+  background-color: darkred;
   font-weight: 400;
   color: #fff;
   display: flex;
@@ -522,12 +522,148 @@ li.directory>ul>li:hover>span {
 /* END MAINCONTENTSECTION DOCUMENTS */
 /* START MAINCONTENTSECTION EDITOR */
 
+#noDocumentsMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  color: #DADADA;
+  font-weight: bold;
+  font-size: large;
+}
+
+#editorTabs {
+  display: flex;
+  flex-direction: row;
+  background-color: #363636;
+  padding: 7px;
+  padding-bottom: 0;
+  margin: 0;
+  height: 30px;
+  list-style: none;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Individual tab styling */
+#editorTabs .tab {
+  padding: 0 15px;
+  cursor: pointer;
+  color: #DADADA;
+  background-color: #363636;
+  border-right: 1px solid #333;
+  display: flex;
+  align-items: center;
+  border-radius: 5px 5px 0 0;
+}
+
+#editorTabs .tab.active-tab {
+  padding: 0 10px 0 15px;
+  background-color: #1e1e1e;
+  font-weight: bold;
+}
+
+#editorTabs .tab:hover {
+  background-color: #464646;
+}
+
+#editorTabs .tab.active-tab:hover {
+  background-color: #1e1e1e;
+}
+
+.tab+.tab {
+  border-left: 1px solid #464646;
+  padding-left: 2px;
+  margin-left: 2px;
+}
+
+#editorTabs .tab span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+#editorTabs .tab .close {
+  margin-left: 5px;
+  font-size: 15px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  color: #AAAAAA;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  display: none;
+}
+
+#editorTabs .tab.active-tab .close {
+  display: block;
+}
+
+#editorTabs .tab.active-tab .close:hover {
+  background-color: #363636;
+}
+
+#editorContainer {
+  height: calc(100% - 41px);
+}
+
 .CodeMirror {
-  height: calc(100% - 5px) !important;
-  width: 100% !important;
-  font-size: 18px;
+  height: 100% !important;
+  width: 100%;
+  font-size: 15px;
   line-height: 1.5;
   padding-top: 5px;
+  background-color: transparent !important;
+  color: #DADADA !important;
+}
+
+.CodeMirror-gutters {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.CodeMirror-linenumber {
+  color: #666 !important;
+  padding-right: 20px !important;
+}
+
+.CodeMirror-cursor {
+  border-left: 1px solid #DADADA !important;
+}
+
+.CodeMirror-selected {
+  background-color: #093A3B !important;
+}
+
+.cm-header {
+  color: #DADADA !important;
+}
+
+.cm-header-1 {
+  font-size: 1.5em;
+}
+
+.cm-header-2 {
+  font-size: 1.4em;
+}
+
+.cm-header-3 {
+  font-size: 1.3em;
+}
+
+.cm-header-4 {
+  font-size: 1.2em;
+}
+
+.cm-header-5 {
+  font-size: 1.1em;
+}
+
+.cm-header-6 {
+  font-size: 1em;
 }
 
 /* END MAINCONTENTSECTION EDITOR */

@@ -29,19 +29,16 @@ async function createApplicationWindows() {
     autoHideMenuBar: true,
     frame: false,
     show: false,
-    // x: x,
-    // y: y,
+    transparent: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
-      // transparent: true // this does nothing?
       // backgroundThrottling: false // not sure if this is needed
       // devTools: false
     }
   })
-
 
   const splashScreen = new BrowserWindow({
     width: 1040,
@@ -50,6 +47,7 @@ async function createApplicationWindows() {
     autoHideMenuBar: true,
     frame: false,
     show: false,
+    transparent: true,
     parent: mainWindow,
     webPreferences: {
       preload: path.join(__dirname, '../../splashScreen/preload.js'),
@@ -66,7 +64,7 @@ async function createApplicationWindows() {
 
   // show the window only when it is ready to be shown to prevent jittering
   splashScreen.on('ready-to-show',
-    splashScreen.show,
+    splashScreen.show
   );
 
   // mainWindow.on('ready-to-show', mainWindow.show);
@@ -154,7 +152,6 @@ ipcMain.on('read-file', (event, filePath) => {
     }
     const fileName = path.basename(filePath);
     event.sender.send('file-content', fileName, data);
-    console.log('File content sent to renderer process');
   });
 });
 

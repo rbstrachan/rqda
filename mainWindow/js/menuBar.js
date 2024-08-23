@@ -11,13 +11,13 @@
 // MUST ALSO UPDATE handleMenuAction FUNCTION ON CHANGE OF THIS OBJECT
 const menuStructure = {
     'Projet': {
-        width: '300px',
+        // width: '300px',
         items: [
             { text: 'Nouveau projet', icon: 'plus', accelerator: 'Ctrl+N' },
             { text: 'Ouvrir un projet...', icon: 'folder-open', accelerator: 'Ctrl+O' },
-            'separator',
+            /*'separator',
             { text: 'Enregistrer', icon: 'disk', accelerator: 'Ctrl+S' },
-            { text: 'Enregistrer sous…', icon: 'disk', accelerator: 'Ctrl+Shift+S' },
+            { text: 'Enregistrer sous…', icon: 'disk', accelerator: 'Ctrl+Shift+S' },*/
             // 'separator',
             // { text: 'Fermer le projet', icon: 'circle-x', accelerator: 'Ctrl+W' }
         ],
@@ -25,27 +25,27 @@ const menuStructure = {
     'Fichier': {
         items: [
             { text: 'Nouveau fichier', icon: 'new-file', accelerator: '' },
-            { text: 'Importer des fichiers...', icon: 'import-file', accelerator: '' },
+            /*{ text: 'Importer des fichiers...', icon: 'import-file', accelerator: '' },
             { text: 'Importer des dossiers...', icon: 'import-folder', accelerator: '' },
             { text: 'Dupliquer', icon: 'duplicate', accelerator: '' },
             'separator',
             { text: 'Renommer', icon: 'rename', accelerator: '' },
-            { text: 'Déplacer', icon: 'move', accelerator: '' },
+            { text: 'Déplacer', icon: 'move', accelerator: '' },*/
             // 'separator',
             // { text: 'Enregister' },
             // { text: 'Enregistrer sous…' },
             // { text: 'Exporter' },
-            'separator',
+            /*'separator',
             { text: 'Imprimer', icon: 'print', accelerator: '' },
-            { text: 'Envoyer par email', icon: 'send', accelerator: '' },
+            { text: 'Envoyer par email', icon: 'send', accelerator: '' },*/
             // { text: 'Télécharger' },
             'separator',
             { text: 'Fermer', icon: 'circle-x', accelerator: '' },
-            { text: 'Supprimer', icon: 'delete', accelerator: '' }
+            /*{ text: 'Supprimer', icon: 'delete', accelerator: '' }*/
         ],
     },
-    'Édition': {
-        width: '300px',
+    /*'Édition': {
+        // width: '300px',
         items: [
             { text: 'Annuler', icon: 'undo', accelerator: 'Ctrl+Z' },
             { text: 'Rétablir', icon: 'redo', accelerator: 'Ctrl+Y' },
@@ -110,7 +110,7 @@ const menuStructure = {
             'separator',
             { text: 'Soutenir le projet', icon: 'support', accelerator: '' },
         ],
-    },
+    },*/
     // 'Parametres': {
     //     items: [
     //         { text: 'Changer de langue' },
@@ -136,7 +136,8 @@ function generateMenus(menuStructure) {
 
         const dropdownMenu = document.createElement('div');
         dropdownMenu.className = 'dropdownMenu';
-        dropdownMenu.style.width = menu.width || '250px';
+        // dropdownMenu.style.width = menu.width || '250px';
+        dropdownMenu.style.width = '200px';
 
         menu.items.forEach(item => {
             if (item === 'separator') {
@@ -160,9 +161,9 @@ function generateMenus(menuStructure) {
 
                 const acceleratorSpan = document.createElement('span');
                 acceleratorSpan.className = 'accelerator';
-                if (item.accelerator) {
-                    acceleratorSpan.innerHTML = item.accelerator.split('+').map(key => `<span class="key">${key}</span>`).join('');
-                }
+                // if (item.accelerator) {
+                //     acceleratorSpan.innerHTML = item.accelerator.split('+').map(key => `<span class="key">${key}</span>`).join('');
+                // }
 
                 menuItem.appendChild(iconSpan);
                 menuItem.appendChild(itemText);
@@ -208,6 +209,7 @@ function handleMenuAction(menu, action) {
                             }
                             windowTitleStyle.setProperty('--projectTitle', '');
                             clearDirectoryTree();
+                            closeAllTabs();
                             disableMenuButton('Nouveau projet');
                         }
                     })
@@ -269,6 +271,7 @@ function handleMenuAction(menu, action) {
                 case 'Envoyer par email':
                     break;
                 case 'Fermer':
+                    // closeTab();
                     break;
                 case 'Supprimer':
                     break;

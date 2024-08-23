@@ -11,18 +11,40 @@
 }
 
 body {
-  background-color: #932ED0;
+  /* background-color: #932ED0; */
+  background-color: transparent;
   font-size: 12px;
   color: #DADADA;
 }
 
-/* nav {
+nav {
   display: flex;
   flex-direction: row;
   height: 30px;
-  width: 100%;
+  width: calc(100% + 45px);
   -webkit-app-region: drag;
-} */
+  background-color: transparent;
+  margin: -15px 0 0 -30px;
+}
+
+#windowButton {
+  position: absolute;
+  right: 0;
+  margin-right: 13px;
+  padding-top: 12px;
+  display: flex;
+}
+
+#close {
+  width: 12px;
+  height: 12px;
+  border: solid 1px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #F96057;
+  border-color: #E1574E;
+}
 
 #mainContainer {
   display: flex;

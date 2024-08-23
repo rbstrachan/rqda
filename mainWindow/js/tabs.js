@@ -211,6 +211,17 @@ function closeTab(tab) {
 	}
 }
 
+function closeAllTabs() {
+	tabs.forEach((tab) => {
+		if (tab.editor) {
+			tab.editor.getWrapperElement().remove();
+		}
+		tab.element.remove();
+	});
+	tabs.length = 0;
+	showNoDocumentsMessage();
+}
+
 function showNoDocumentsMessage() {
 	const message = document.createElement('div');
 	message.id = 'noDocumentsMessage';

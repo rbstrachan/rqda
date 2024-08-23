@@ -15,8 +15,10 @@
 
 body {
   font-weight: 500;
-  background-color: #932ED0;
+  /* background-color: #932ED0; */
+  background-color: transparent;
   font-size: 12px;
+  /* filter: opacity(0.5); */
 }
 
 /* BEGIN MENU BAR */
@@ -129,7 +131,7 @@ nav {
 .menuItem .accelerator .key {
   padding: 2px 6px;
   background-color: #363636;
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid #666;
   font-family: monospace;
   margin-left: 6px;
@@ -528,7 +530,7 @@ li.directory>ul>li:hover>span {
   justify-content: center;
   text-align: center;
   height: 100%;
-  color: #DADADA;
+  color: #7C7C7C;
   font-weight: bold;
   font-size: large;
 }

@@ -1,24 +1,32 @@
 /* styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-* {
+:root {
   --applicationName: 'QADDOE';
   --applicationVersion: '1 (Beta)';
+  --font-family: 'Inter', sans-serif;
+  --font-family-mono: 'Fira Code', monospace;
+  --text-color: #DADADA;
+  --base-color: #1e1e1e;
+  --base-color-light: #262626;
+  --accent-color: #363636;
+  --border-color: #555;
+}
 
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Inter';
+  font-family: var(--font-family);
   user-select: none;
   -webkit-user-select: none;
   -webkit-app-region: no-drag;
 }
 
 body {
+  overflow: hidden;
   font-weight: 500;
-  /* background-color: #932ED0; */
   background-color: transparent;
   font-size: 12px;
-  /* filter: opacity(0.5); */
 }
 
 /* BEGIN MENU BAR */
@@ -26,11 +34,8 @@ body {
 nav {
   width: 100vw;
   height: 25px;
-  /* background-color: #222; */
-  /* background-color: #171717; */
   background-color: #131313;
-  /* background-color: #111; */
-  color: #DADADA;
+  color: var(--text-color);
   position: relative;
   -webkit-app-region: drag;
   display: flex;
@@ -59,7 +64,7 @@ nav {
 }
 
 .menuButton:hover {
-  background-color: #363636;
+  background-color: var(--accent-color);
 }
 
 .dropdownMenu {
@@ -67,21 +72,18 @@ nav {
   position: absolute;
   top: calc(100% + 3px);
   left: 0;
-  /* background-color: #333; */
   background-color: #262626;
-  border: 1px solid #444;
+  border: 1px solid var(--border-color);
   border-radius: 2px;
   z-index: 1000;
-  /* padding: 5px 8px 5px 8px; */
   padding: 5px;
   width: auto;
 }
 
 .menuItem {
-  /* TOP, RIGHT, BOTTOM, LEFT */
   padding: 3px 10px 3px 30px;
   cursor: pointer;
-  color: #DADADA;
+  color: var(--text-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -89,7 +91,7 @@ nav {
 }
 
 .menuItem:hover {
-  background-color: #363636;
+  background-color: var(--accent-color);
 }
 
 .menuItem.disabled {
@@ -130,10 +132,10 @@ nav {
 
 .menuItem .accelerator .key {
   padding: 2px 6px;
-  background-color: #363636;
+  background-color: var(--accent-color);
   border-radius: 2px;
-  border: 1px solid #666;
-  font-family: monospace;
+  border: 1px solid var(--border-color);
+  font-family: var(--font-family-mono);
   margin-left: 6px;
 }
 
@@ -246,15 +248,8 @@ nav {
 
 .topBarSection:nth-child(1),
 .mainContentSection:nth-child(1) {
-  /* FROM FIGMA */
-  /* background-color: #2b2b2b;*/
-  /* FROM RANDOM ATOM THEME */
-  /* background-color: #252932; */
-  /* FROM ATOM DARK ONE UI THEME*/
-  /* background-color: #21252b; */
-  /* FROM OBSIDIAN */
-  background-color: #363636;
-  border-right: 1px solid #666;
+  background-color: var(--accent-color);
+  border-right: 1px solid var(--border-color);
 }
 
 .topBarSection:nth-child(2),
@@ -262,26 +257,20 @@ nav {
 .topBarSection:nth-child(4),
 .mainContentSection:nth-child(2),
 .mainContentSection:nth-child(4) {
-  /* background-color: #3c3c3c; */
-  /* background-color: #252932; */
-  /* background-color: #21252b; */
-  background-color: #262626;
+  background-color: var(--base-color-light);
 }
 
 .mainContentSection:nth-child(3) {
-  /* background-color: #454545; */
-  /* background-color: #2b303b; */
-  /* background-color: #282c34; */
-  background-color: #1e1e1e;
-  border-left: 1px solid #666;
-  border-right: 1px solid #666;
+  background-color: var(--base-color);
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
 }
 
 
 .topBarSection:nth-child(2),
 .topBarSection:nth-child(3),
 .topBarSection:nth-child(4) {
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* END TOPBAR & MAINCONTENT -- GENERAL STYLES */
@@ -317,7 +306,7 @@ nav {
 }
 
 #appNameVersion {
-  color: #DADADA;
+  color: var(--text-color);
 }
 
 #appNameVersion::before {
@@ -332,7 +321,6 @@ nav {
 
 #tagline {
   color: #888;
-  /* color: #B3B3B3; */
   font-weight: 400;
 }
 
@@ -434,7 +422,7 @@ nav {
 /* START MAINCONTENTSECTION DOCUMENTS */
 
 .mainContentSection.documents p {
-  color: #DADADA;
+  color: var(--text-color);
   padding: 12px 14px;
 }
 
@@ -460,7 +448,7 @@ nav {
   overflow-x: hidden;
   height: calc(100% - 39px);
   color: #B3B3B3;
-  /* color: #DADADA; */
+  /* color: var(--text-color); */
   padding-left: 14px;
 }
 
@@ -504,21 +492,20 @@ li.directory.expanded>ul {
 
 /* Styling for hover */
 li:hover>span {
-  background-color: #363636;
+  background-color: var(--accent-color);
 }
 
 /* Ensure only the hovered item is highlighted */
 li>span {
   display: inline-block;
   width: calc(100% - 15px);
-  /* Adjusts width to fit inside the padding */
   padding: 2px 5px;
   border-radius: 3px;
 }
 
 /* Prevent child elements from being highlighted with the parent */
 li.directory>ul>li:hover>span {
-  background-color: #363636;
+  background-color: var(--accent-color);
 }
 
 /* END MAINCONTENTSECTION DOCUMENTS */
@@ -538,7 +525,7 @@ li.directory>ul>li:hover>span {
 #editorTabs {
   display: flex;
   flex-direction: row;
-  background-color: #363636;
+  background-color: var(--accent-color);
   padding: 7px;
   padding-bottom: 0;
   margin: 0;
@@ -548,13 +535,28 @@ li.directory>ul>li:hover>span {
   white-space: nowrap;
 }
 
-/* Individual tab styling */
+#editorTabs::-webkit-scrollbar {
+  height: 2px;
+}
+
+#editorTabs::-webkit-scrollbar-thumb {
+  background-color: #424242;
+  border-radius: 4px;
+}
+
+#editorTabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#editorTabs::-webkit-scrollbar-button {
+  display: none;
+}
+
 #editorTabs .tab {
   padding: 0 15px;
   cursor: pointer;
-  color: #DADADA;
-  background-color: #363636;
-  border-right: 1px solid #333;
+  color: var(--text-color);
+  background-color: var(--accent-color);
   display: flex;
   align-items: center;
   border-radius: 5px 5px 0 0;
@@ -562,7 +564,7 @@ li.directory>ul>li:hover>span {
 
 #editorTabs .tab.active-tab {
   padding: 0 10px 0 15px;
-  background-color: #1e1e1e;
+  background-color: var(--base-color);
   font-weight: bold;
 }
 
@@ -571,11 +573,10 @@ li.directory>ul>li:hover>span {
 }
 
 #editorTabs .tab.active-tab:hover {
-  background-color: #1e1e1e;
+  background-color: var(--base-color);
 }
 
 .tab+.tab {
-  border-left: 1px solid #464646;
   padding-left: 2px;
   margin-left: 2px;
 }
@@ -605,35 +606,78 @@ li.directory>ul>li:hover>span {
 }
 
 #editorTabs .tab.active-tab .close:hover {
-  background-color: #363636;
+  background-color: var(--accent-color);
 }
 
 #editorContainer {
   height: calc(100% - 41px);
 }
 
+.CodeMirror-vscrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.CodeMirror-vscrollbar::-webkit-scrollbar-track {
+  background: var(--base-color);
+}
+
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar {
+  height: 12px;
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-track {
+  background: var(--base-color);
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
+
+.CodeMirror-scrollbar-filler {
+  background-color: var(--base-color) !important;
+}
+
 .CodeMirror {
-  height: 100% !important;
+  height: calc(100% - 1px) !important;
   width: 100%;
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.25;
   padding-top: 5px;
-  background-color: transparent !important;
-  color: #DADADA !important;
+  background-color: var(--base-color) !important;
+  color: var(--text-color) !important;
 }
 
 .CodeMirror-gutters {
-  background-color: transparent !important;
+  background-color: var(--base-color) !important;
   border: none !important;
 }
 
 .CodeMirror-linenumber {
-  color: #666 !important;
+  color: var(--border-color) !important;
   padding-right: 20px !important;
+  font-family: var(--font-family-mono) !important;
 }
 
 .CodeMirror-cursor {
-  border-left: 1px solid #DADADA !important;
+  border-left: 1px solid var(--text-color) !important;
 }
 
 .CodeMirror-selected {
@@ -641,7 +685,7 @@ li.directory>ul>li:hover>span {
 }
 
 .cm-header {
-  color: #DADADA !important;
+  color: var(--text-color) !important;
 }
 
 .cm-header-1 {
@@ -676,12 +720,12 @@ footer {
   height: 20px;
   font-size: 10px;
   font-weight: 600;
-  background-color: #1e1e1e;
-  color: #DADADA;
+  background-color: var(--base-color);
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid #666;
+  border-top: 1px solid var(--border-color);
   box-sizing: border-box;
   line-height: 19px;
 }

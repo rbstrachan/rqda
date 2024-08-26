@@ -39,9 +39,9 @@ const menuStructure = {
             { text: 'Imprimer', icon: 'print', accelerator: '' },
             { text: 'Envoyer par email', icon: 'send', accelerator: '' },*/
             // { text: 'Télécharger' },
-            'separator',
+            /*'separator',
             { text: 'Fermer', icon: 'circle-x', accelerator: '' },
-            /*{ text: 'Supprimer', icon: 'delete', accelerator: '' }*/
+            { text: 'Supprimer', icon: 'delete', accelerator: '' }*/
         ],
     },
     /*'Édition': {
@@ -205,7 +205,7 @@ function handleMenuAction(menu, action) {
                     window.api.closeProject().then(result => {
                         if (result.response !== 2) {
                             if (result.reponse === 0) {
-                                console.log('Save the project');
+                                // implement project saving here
                             }
                             windowTitleStyle.setProperty('--projectTitle', '');
                             clearDirectoryTree();

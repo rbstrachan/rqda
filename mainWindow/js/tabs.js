@@ -106,10 +106,11 @@
 // });
 
 class Tab {
-	constructor(id, title, content) {
+	constructor(id, title, content, path) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
+		this.path = path;
 		this.editor = null;
 		this.element = null;
 	}
@@ -178,6 +179,7 @@ function activateTab(tab) {
 		tab.editor = CodeMirror(editorContainer, {
 			value: tab.content,
 			lineNumbers: true,
+			// theme: 'dracula',
 			mode: 'markdown'
 		});
 	}
@@ -186,8 +188,8 @@ function activateTab(tab) {
 	tab.editor.focus();
 }
 
-function addNewTab(title = 'New Document', content = '') {
-	const newTab = new Tab(`tab${tabs.length + 1}`, title, content);
+function addNewTab(title = 'New Document', content = '', filePath = '') {
+	const newTab = new Tab(`tab${tabs.length + 1}`, title, content, filePath);
 	tabs.push(newTab);
 	const tabElement = createTabElement(newTab);
 	tabsContainer.appendChild(tabElement);
@@ -196,6 +198,11 @@ function addNewTab(title = 'New Document', content = '') {
 
 function closeTab(tab) {
 	const index = tabs.indexOf(tab);
+
+	// save the content of the tab before closing it
+	// update the tab.content with the current value in the editor
+	saveTabContentsToFile(tab);
+
 	if (index !== -1) {
 		tabs.splice(index, 1);
 		tab.element.remove();
@@ -212,14 +219,23 @@ function closeTab(tab) {
 }
 
 function closeAllTabs() {
-	tabs.forEach((tab) => {
-		if (tab.editor) {
-			tab.editor.getWrapperElement().remove();
-		}
-		tab.element.remove();
-	});
-	tabs.length = 0;
-	showNoDocumentsMessage();
+	if (tabs.length) {
+		tabs.forEach((tab) => {
+			if (tab.editor) {
+				tab.editor.getWrapperElement().remove();
+			}
+			tab.element.remove();
+		});
+		tabs.length = 0;
+		showNoDocumentsMessage();
+	}
+}
+
+function saveTabContentsToFile(tab) {
+	if (tab.path) {
+		tab.content = tab.editor.getValue();
+		window.api.send('save-file', { filePath: tab.path, content: tab.content });
+	}
 }
 
 function showNoDocumentsMessage() {
@@ -238,8 +254,8 @@ function hideNoDocumentsMessage() {
 
 document.addEventListener('DOMContentLoaded', () => {
 	populateTabsContainer();
-
-	// Example: Add a new tab
-	/* addNewTab('memos', '# Initial content for Document 1');
-	addNewTab('research_ideas', '# Initial content for Document 2'); */
+	addNewTab(
+		'Bienvenue!',
+		'# Bienvenue dans QADDOE!\n\nPour commencer, ouvrir un projet déjà commencé ou créer de nouveaux fichiers.\n\nVous pouvez également importer un fichier existant.\n\nVotre travail sera enregistré automatiquement, chaque 30 secondes. Cependant, vous pouvez toujours sauvguarder manuellement.\n\nPour fermer un document, cliquez sur le bouton \'×\' dans l\'onglet correspondant.'
+	);
 });

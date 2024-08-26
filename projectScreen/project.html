@@ -8,7 +8,7 @@
     content="default-src 'self'; img-src 'self'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com/; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com/; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net/ https://cdnjs.cloudflare.com/"
     ; 'unsafe-inline'">
   <title>QADDOE</title>
-  <link href=" splash.css" type="text/css" rel="stylesheet">
+  <link href=" project.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -16,10 +16,10 @@
     <div id="projectContainer">
       <div id="welcomeContainer">
         <div id="welcomeText">
-          <h1>Bienvenue!</h1>
-          <p>Ceci est un logiciel de recherche qualitative qui vous permet de coder et d'analyser des données
-            textuelles.</p>
-          <p>Créez un nouveau projet ou ouvrez un projet existant pour commencer.</p>
+          <h1 id="welcomeTextTitle">Bienvenue!</h1>
+          <p id="welcomeTextBlurb1">Ceci est un logiciel de recherche qualitative qui vous permet de coder et d'analyser
+            des données textuelles.</p>
+          <p id="welcomeTextBlurb2">Créez un nouveau projet ou ouvrez un projet existant pour commencer.</p>
         </div>
       </div>
       <div id="projectList">
@@ -50,6 +50,9 @@
           </div>
         </div> -->
       </div>
+      <div id="newProjectNameInputContainer">
+        <input type="text" id="newProjectNameInput" placeholder="Nom du projet">
+      </div>
       <div id="newProjectButtonContainer">
         <div id="newProjectButton">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -61,12 +64,23 @@
         <div id="newProjectButtonText">
           Créer un nouveau projet
         </div>
+        <div id="createProjectButton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="#093A3B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-right">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </div>
+        <div id="createProjectButtonText">
+          Créer le projet
+        </div>
       </div>
     </div>
     <div id="rightContentContainer">
       <nav>
         <div id="windowButton">
-          <div id="close"></div>
+          <div id="close">x</div>
         </div>
       </nav>
       <div id="rightContent"></div>
@@ -77,7 +91,7 @@
       </div>
     </div>
 
-    <script src="splash.js"></script>
+    <script src="project.js"></script>
 </body>
 
 </html>

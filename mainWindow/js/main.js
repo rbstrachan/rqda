@@ -6,22 +6,7 @@ const fs = require('node:fs');
 const dirTree = require('directory-tree');
 const { homedir } = require('node:os');
 
-// require('electron-reload')(path.join(__dirname, '../../**/*'), {
-//   electron: path.join(__dirname, '../../node_modules', '.bin', 'electron'),
-// });
-
 async function createApplicationWindows() {
-	// this window offsetting does not work as intended
-	// const windowOffset = 50;
-	// const lastWindow = BrowserWindow.getAllWindows().pop();
-	// let x, y;
-
-	// if (lastWindow) {
-	//   const lastWindowBounds = lastWindow.getBounds();
-	//   x = lastWindowBounds.x + windowOffset;
-	//   y = lastWindowBounds.y + windowOffset;
-	// }
-
 	const mainWindow = new BrowserWindow({
 		width: 1440,
 		height: 900,
@@ -39,7 +24,7 @@ async function createApplicationWindows() {
 		}
 	})
 
-	const splashScreen = new BrowserWindow({
+	const projectScreen = new BrowserWindow({
 		width: 1040,
 		height: 700,
 		resizable: false,
@@ -49,7 +34,7 @@ async function createApplicationWindows() {
 		transparent: true,
 		parent: mainWindow,
 		webPreferences: {
-			preload: path.join(__dirname, '../../splashScreen/preload.js'),
+			preload: path.join(__dirname, '../../projectScreen/preload.js'),
 			nodeIntegration: false,
 			contextIsolation: true,
 			// sandbox: false,
@@ -57,22 +42,42 @@ async function createApplicationWindows() {
 		}
 	});
 
-	// and load the index.html of the app.
+	// handle the setup of the application
+	// by vreating necessary directories and files for execution
+	async function setupApplication() {
+		const appDataPath = path.join(app.getPath('documents'), 'QADDOE');
+		const projectsPath = path.join(appDataPath, 'projets');
+		const codesPath = path.join(appDataPath, 'codes');
+		const dotPath = path.join(appDataPath, '.qaddoe');
+		const appConfigPath = path.join(dotPath, 'config.json');
+		const settingsPath = path.join(dotPath, 'settings.json');
+
+		// create the appData directory if it doesn't exist
+		if (!fs.existsSync(appDataPath)) {
+			fs.mkdirSync(projectsPath, { recursive: true });
+			fs.mkdirSync(codesPath, { recursive: true });
+			fs.mkdirSync(dotPath, { recursive: true });
+			fs.writeFileSync(appConfigPath, JSON.stringify({}));
+			fs.writeFileSync(settingsPath, JSON.stringify({}));
+		}
+
+		// show the projectCreen window
+		projectScreen.show();
+	}
+
+	// and load the index.html of the app, triggering the js files
+	projectScreen.loadFile('./projectScreen/project.html')
 	mainWindow.loadFile('./mainWindow/main.html')
-	splashScreen.loadFile('./splashScreen/splash.html')
 
 	// show the window only when it is ready to be shown to prevent jittering
-	splashScreen.on('ready-to-show',
-		splashScreen.show
+	projectScreen.on('ready-to-show',
+		// projectScreen.show
+		setupApplication
 	);
 
-	// mainWindow.on('ready-to-show', mainWindow.show);
-
-	// Handle window close event
+	// handle window close event
 	mainWindow.on('close', (event) => {
-		event.preventDefault(); // Prevent the window from closing immediately
-
-		// const window = BrowserWindow.fromWebContents(event.sender);
+		event.preventDefault();
 
 		const options = {
 			type: 'question',
@@ -80,7 +85,7 @@ async function createApplicationWindows() {
 			defaultId: 0,
 			title: 'Enregistrer les modifications',
 			message: 'Voulez-vous enregistrer les modifications apportées à ce projet avant de le fermer?',
-			detail: 'Ce projet contient des modifications. Si vous ne sauvegardez pas, elles seront perdues.',
+			detail: 'Ce projet contient des modifications. Si vous ne les sauvegardez pas, elles seront perdues.',
 		};
 
 		dialog.showMessageBox(options).then((result) => {
@@ -109,24 +114,16 @@ async function createApplicationWindows() {
 		return result;
 	});
 
+	ipcMain.on('create-new-project', (event, arg) => {
+		// ask for project name
+		// create new project in projects folder with provided name
+		// pass the project path to the mainScreen window
+		projectScreen.destroy();
+		setTimeout(() => { mainWindow.show(); }, 500);
+	});
+
 	// Open the DevTools programatically
 	// mainWindow.webContents.openDevTools()
-
-	ipcMain.on('new-project', (event, arg) => {
-		splashScreen.destroy();
-		setTimeout(() => { mainWindow.show(); }, 1000);
-	});
-
-	// event handlers for the window buttons
-	ipcMain.on('app/minimize', (event, arg) => {
-		const window = BrowserWindow.fromWebContents(event.sender);
-		window.minimize();
-	});
-
-	ipcMain.on('app/close', (event, arg) => {
-		const window = BrowserWindow.fromWebContents(event.sender);
-		window.close();
-	});
 
 	// TO IMPLEMENT: MAKE MAXIMEMISE BUTTON TOGGLE BETWEEN MAXIMISE AND NORMAL SIZE
 	// ipcMain.on('app/maximize', (event, arg) => {
@@ -139,9 +136,16 @@ async function createApplicationWindows() {
 }
 
 // handle IPC events
-/*ipcMain.handle('open-new-window', async (event, arg) => {
-  createApplicationWindows();
-}); */
+// event handlers for the window buttons
+ipcMain.on('app/minimize', (event, arg) => {
+	const window = BrowserWindow.fromWebContents(event.sender);
+	window.minimize();
+});
+
+ipcMain.on('app/close', (event, arg) => {
+	const window = BrowserWindow.fromWebContents(event.sender);
+	window.close();
+});
 
 ipcMain.on('read-file', (event, filePath) => {
 	fs.readFile(filePath, 'utf-8', (err, data) => {

@@ -10,7 +10,7 @@ function generateFileTreeHTML(tree, isRoot = false) {
 	listItem.appendChild(span);
 
 	// if directory, handle its children
-	if (tree.children && tree.children.length > 0) {
+	if (tree.children !== undefined) {
 		listItem.classList.add('directory'); // Add a class for directories
 
 		// make sure the root folder of the project is expanded by default

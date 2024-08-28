@@ -114,12 +114,30 @@ async function createApplicationWindows() {
 		return result;
 	});
 
-	ipcMain.on('create-new-project', (event, arg) => {
-		// ask for project name
-		// create new project in projects folder with provided name
+	ipcMain.on('create-new-project', (event, projectName) => {
+		// create new project in projects folder with provided project name and its subfolders
+		const projectPath = path.join(app.getPath('documents'), 'QADDOE', 'projets', projectName);
+		fs.mkdirSync(path.join(projectPath, 'Documents'), { recursive: true });
+		fs.mkdirSync(path.join(projectPath, 'Memos'), { recursive: true });
+		fs.mkdirSync(path.join(projectPath, 'Notes'), { recursive: true });
+
 		// pass the project path to the mainScreen window
+		mainWindow.webContents.send('open-project', projectPath);
+
 		projectScreen.destroy();
 		setTimeout(() => { mainWindow.show(); }, 500);
+	});
+
+	ipcMain.on('request-open-project', (event, projectPath) => {
+		mainWindow.webContents.send('open-project', projectPath);
+
+		projectScreen.destroy();
+		setTimeout(() => { mainWindow.show(); }, 500);
+	});
+
+	ipcMain.on('request-close-project-screen', (event) => {
+		projectScreen.destroy();
+		mainWindow.destroy();
 	});
 
 	// Open the DevTools programatically
@@ -175,6 +193,26 @@ ipcMain.handle('get-dir-tree', async (event, folderPath) => {
 	if (folderPath) {
 		return dirTree(folderPath);
 	}
+});
+
+// ipcMain.handle('get-list-of-projects', (event, arg) => {
+// 	const projectsDir = path.join(app.getPath('documents'), 'QADDOE', 'projets');
+// 	const results = fs.readdirSync(projectsDir);
+// 	return results;
+// });
+
+ipcMain.handle('get-list-of-projects', (event, arg) => {
+	const projectsDir = path.join(app.getPath('documents'), 'QADDOE', 'projets');
+	const results = fs.readdirSync(projectsDir).map(project => {
+		const projectPath = path.join(projectsDir, project);
+		const stats = fs.statSync(projectPath);
+		return {
+			name: project,
+			path: projectPath,
+			creationDate: stats.birthtime
+		};
+	});
+	return results;
 });
 
 // This method will be called when Electron has finished

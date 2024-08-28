@@ -29,22 +29,12 @@ nav {
 
 #windowButton {
   position: absolute;
-  right: 0;
-  margin-right: 13px;
-  padding-top: 12px;
-  display: flex;
+  right: 13px;
+  top: 12px;
+  cursor: pointer;
 }
 
-#close {
-  width: 30px;
-  height: 30px;
-  font-family: monospace;
-  font-size: 30px;
-  cursor: pointer;
-  color: black;
-  font-weight: bold;
-  filter: opacity(0.3);
-}
+/* #close {} */
 
 #mainContainer {
   display: flex;
@@ -121,8 +111,11 @@ p+p {
   width: 40px;
   height: 40px;
   border-radius: 5.21px;
-  background-color: #DADADA;
+  background-color: #363636;
   margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .projectDetails {
@@ -194,8 +187,7 @@ p+p {
   cursor: pointer;
 }
 
-#newProjectButton,
-#createProjectButton {
+#newProjectButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -209,15 +201,9 @@ p+p {
   margin-right: 15px;
 }
 
-#newProjectButtonText,
-#createProjectButtonText {
+#newProjectButtonText {
   font-size: 12px;
   color: #DADADA;
-}
-
-#createProjectButton,
-#createProjectButtonText {
-  display: none;
 }
 
 #rightContentContainer {

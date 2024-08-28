@@ -31,11 +31,11 @@ const menuStructure = {
             'separator',
             { text: 'Renommer', icon: 'rename', accelerator: '' },
             { text: 'Déplacer', icon: 'move', accelerator: '' },*/
-            // 'separator',
-            // { text: 'Enregister' },
-            // { text: 'Enregistrer sous…' },
-            // { text: 'Exporter' },
-            /*'separator',
+            'separator',
+            { text: 'Enregister' },
+            /*{ text: 'Enregistrer sous…' },
+            { text: 'Exporter' },
+            'separator',
             { text: 'Imprimer', icon: 'print', accelerator: '' },
             { text: 'Envoyer par email', icon: 'send', accelerator: '' },*/
             // { text: 'Télécharger' },
@@ -217,13 +217,7 @@ function handleMenuAction(menu, action) {
                 case 'Ouvrir un projet...':
                     window.api.openFolderDialog().then(folderPath => {
                         if (folderPath) {
-                            window.api.getDirTree(folderPath).then(directoryTree => {
-                                sortDirectoryTree(directoryTree);
-                                clearDirectoryTree();
-                                windowTitleStyle.setProperty('--projectTitle', `"${folderPath.split('/').pop()}" " ・ "`);
-                                renderFileTree(document.getElementById('fileTree'), directoryTree);
-                                enableMenuButton('Nouveau projet');
-                            });
+                            openProjectInFileTree(folderPath);
                         }
                     });
                     break;
@@ -483,3 +477,18 @@ function attachMenuEventListeners() {
 
 // call the function to generate menus on page load
 generateMenus(menuStructure);
+
+// list of menu button functions
+window.api.receive('open-project', (folderPath) => {
+    openProjectInFileTree(folderPath);
+});
+
+function openProjectInFileTree(folderPath) {
+    window.api.getDirTree(folderPath).then(directoryTree => {
+        sortDirectoryTree(directoryTree);
+        clearDirectoryTree();
+        windowTitleStyle.setProperty('--projectTitle', `"${folderPath.split('/').pop()}" " ・ "`);
+        renderFileTree(document.getElementById('fileTree'), directoryTree);
+        enableMenuButton('Nouveau projet');
+    });
+}

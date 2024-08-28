@@ -22,34 +22,7 @@
           <p id="welcomeTextBlurb2">Créez un nouveau projet ou ouvrez un projet existant pour commencer.</p>
         </div>
       </div>
-      <div id="projectList">
-        <div class="project">
-          <div class="projectMeta">
-            <div class="projectImage"></div>
-            <div class="projectDetails">
-              <h2 class="projectName">Projet Exemple</h2>
-              <span class="projectDirectory">reiwa/Documents/QADDOE/sandbox</span>
-              <span class="projectCreationDate">créé le 1er janvier 2025</span>
-            </div>
-          </div>
-          <div>
-            <div class="openProjectButton">Ouvrir</div>
-          </div>
-        </div>
-        <!-- <div class="project">
-          <div class="projectMeta">
-            <div class="projectImage"></div>
-            <div class="projectDetails">
-              <h2 class="projectName">projetThese</h2>
-              <span class="projectDirectory">reiwa/Documents/git/QADDOE</span>
-              <span class="projectCreationDate">créé le 1er janvier 2025</span>
-            </div>
-          </div>
-          <div>
-            <div class="openProjectButton">Reprendre</div>
-          </div>
-        </div> -->
-      </div>
+      <div id="projectList"></div>
       <div id="newProjectNameInputContainer">
         <input type="text" id="newProjectNameInput" placeholder="Nom du projet">
       </div>
@@ -64,23 +37,19 @@
         <div id="newProjectButtonText">
           Créer un nouveau projet
         </div>
-        <div id="createProjectButton">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="#093A3B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-arrow-right">
-            <path d="M5 12h14" />
-            <path d="m12 5 7 7-7 7" />
-          </svg>
-        </div>
-        <div id="createProjectButtonText">
-          Créer le projet
-        </div>
       </div>
     </div>
     <div id="rightContentContainer">
       <nav>
         <div id="windowButton">
-          <div id="close">x</div>
+          <div id="close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="#0a1d1d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-x-circle">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M15 9l-6 6M9 9l6 6" />
+            </svg>
+          </div>
         </div>
       </nav>
       <div id="rightContent"></div>

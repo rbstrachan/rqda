@@ -124,7 +124,11 @@
         <div id="editorTabs"></div>
         <div id="editorContainer"></div>
       </div>
-      <div class="mainContentSection codes"></div>
+      <div class="mainContentSection codes">
+        <div>
+          <p id="documentsTitle"><b>Codes</b></p>
+        </div>
+      </div>
     </div>
   </app>
   <footer id="statusBar">
@@ -140,19 +144,25 @@
     </div>
   </footer>
 
+  <div id="formattingBar" class="formatting-bar">
+    <button id="codeTextButton">Coder cet extrait</button>
+  </div>
 
-  <!-- You can also require other files to run in this process -->
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/lib/codemirror.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/mode/markdown/markdown.js"></script>
 
   <script src="./js/renderer.js"></script>
   <script src="./js/menuBar.js"></script>
   <script src="./js/windowButtons.js"></script>
+  <!-- <script src="./js/search.js"></script> -->
+  <!-- <script src="./js/quickActions.js"></script> -->
   <script src="./js/fileTree.js"></script>
   <script src="./js/tabs.js"></script>
-  <script src="./js/editor.js"></script>
+  <!-- <script src="./js/editor.js"></script> --> <!-- EMPTY. PUT TINYMCE HERE? -->
+  <script src="./js/contextBar.js"></script>
   <!-- <script src="./js/codes.js"></script> -->
   <!-- <script src="./js/footer.js"></script> -->
+  <!-- <script src="./js/contextMenus.js"></script> -->
 </body>
 
 </html>

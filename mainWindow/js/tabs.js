@@ -180,7 +180,8 @@ function activateTab(tab) {
 			value: tab.content,
 			lineNumbers: true,
 			// theme: 'dracula',
-			mode: 'markdown'
+			mode: 'markdown',
+			lineWrapping: true
 		});
 	}
 

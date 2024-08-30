@@ -713,6 +713,42 @@ li.directory>ul>li:hover>span {
 }
 
 /* END MAINCONTENTSECTION EDITOR */
+/* START MAINCONTENTSECTION EDITORMENU */
+
+.formatting-bar {
+  display: none;
+  position: absolute;
+  background-color: var(--base-color-light);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.formatting-bar button {
+  /* margin: 0 5px; */
+  padding: 5px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.formatting-bar button:hover {
+  background-color: var(--accent-color);
+}
+
+/* END MAINCONTENTSECTION EDITORMENU */
+
+/* START MAINCONTENTSECTION CODES */
+
+.mainContentSection.codes p {
+  color: var(--text-color);
+  padding: 12px 14px;
+}
+
+/* END MAINCONTENTSECTION CODES */
 /* START FOOTER */
 
 footer {

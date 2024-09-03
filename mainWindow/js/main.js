@@ -75,6 +75,14 @@ async function createApplicationWindows() {
 		setupApplication
 	);
 
+	mainWindow.on('focus', () => {
+		mainWindow.webContents.send('window-focus', true);
+	});
+
+	mainWindow.on('blur', () => {
+		mainWindow.webContents.send('window-focus', false);
+	});
+
 	// handle window close event
 	mainWindow.on('close', (event) => {
 		event.preventDefault();
@@ -100,19 +108,19 @@ async function createApplicationWindows() {
 	});
 
 	// Handle "Fermer le projet" button click
-	ipcMain.handle('close-project', (event) => {
-		const options = {
-			type: 'question',
-			buttons: ['Save', 'Don\'t Save', 'Cancel'],
-			defaultId: 0,
-			title: 'Save Project',
-			message: 'Do you want to save your project before closing?',
-			detail: 'Your changes will be lost if you don\'t save them.',
-		};
+	// ipcMain.handle('close-project', (event) => {
+	// 	const options = {
+	// 		type: 'question',
+	// 		buttons: ['Save', 'Don\'t Save', 'Cancel'],
+	// 		defaultId: 0,
+	// 		title: 'Save Project',
+	// 		message: 'Do you want to save your project before closing?',
+	// 		detail: 'Your changes will be lost if you don\'t save them.',
+	// 	};
 
-		const result = dialog.showMessageBox(mainWindow, options);
-		return result;
-	});
+	// 	const result = dialog.showMessageBox(mainWindow, options);
+	// 	return result;
+	// });
 
 	ipcMain.on('create-new-project', (event, projectName) => {
 		// create new project in projects folder with provided project name and its subfolders
@@ -195,12 +203,6 @@ ipcMain.handle('get-dir-tree', async (event, folderPath) => {
 	}
 });
 
-// ipcMain.handle('get-list-of-projects', (event, arg) => {
-// 	const projectsDir = path.join(app.getPath('documents'), 'QADDOE', 'projets');
-// 	const results = fs.readdirSync(projectsDir);
-// 	return results;
-// });
-
 ipcMain.handle('get-list-of-projects', (event, arg) => {
 	const projectsDir = path.join(app.getPath('documents'), 'QADDOE', 'projets');
 	const results = fs.readdirSync(projectsDir).map(project => {
@@ -213,6 +215,32 @@ ipcMain.handle('get-list-of-projects', (event, arg) => {
 		};
 	});
 	return results;
+});
+
+ipcMain.handle('save-dialog', async (event, arg) => {
+	const result = await dialog.showSaveDialog({
+		title: 'Créer un nouveau fichier',
+		buttonLabel: 'Créer',
+		defaultPath: arg.defaultPath,
+		filters: [
+			{ name: 'Tous les fichiers', extensions: ['*'] }
+		]
+	});
+
+	if (!result.canceled) {
+		const filePath = result.filePath;
+		const fileName = path.basename(filePath);
+		return { filePath, fileName };
+	}
+});
+
+ipcMain.handle('create-file', async (event, filePath) => {
+	fs.writeFileSync(filePath, '', 'utf-8');
+});
+
+ipcMain.handle('read-file', async (event, filePath) => {
+	const content = fs.readFileSync(filePath, 'utf-8');
+	return content;
 });
 
 // This method will be called when Electron has finished

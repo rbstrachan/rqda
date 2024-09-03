@@ -43,6 +43,10 @@ nav {
   border-radius: 15px 15px 0 0;
 }
 
+nav.unfocused {
+  background-color: #363636;
+}
+
 #menus {
   height: 25px;
   padding-left: 25px;
@@ -188,6 +192,13 @@ nav {
   box-sizing: border-box;
   border-radius: 50%;
   cursor: pointer;
+}
+
+#close.unfocused,
+#min.unfocused,
+#max.unfocused {
+  background-color: #262626;
+  border-color: #1e1e1e;
 }
 
 #max {

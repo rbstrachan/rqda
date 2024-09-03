@@ -8,6 +8,7 @@
  */
 
 const { contextBridge, ipcRenderer } = require('electron');
+const { readFile } = require('original-fs');
 
 contextBridge.exposeInMainWorld('api', {
     send: (channel, data) => {
@@ -34,9 +35,17 @@ contextBridge.exposeInMainWorld('api', {
     newProject: async () => {
         const result = await ipcRenderer.invoke('new-project');
         return result;
-    }
-    // saveDialog: async () => {
-    //     const result = await ipcRenderer.invoke('save-dialog');
-    //     return result;
-    // },
+    },
+    saveDialog: async (arg) => {
+        const result = await ipcRenderer.invoke('save-dialog', arg);
+        return result;
+    },
+    createFile: async (filePath) => {
+        await ipcRenderer.invoke('create-file', filePath);
+    },
+    readFile: async (filePath) => {
+        const content = await ipcRenderer.invoke('read-file', filePath);
+        return content;
+    },
+    onWindowFocusChange: (callback) => ipcRenderer.on('window-focus', callback)
 });

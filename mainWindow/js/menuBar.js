@@ -13,13 +13,11 @@ const menuStructure = {
     'Projet': {
         // width: '300px',
         items: [
-            { text: 'Nouveau projet', icon: 'plus', accelerator: 'Ctrl+N' },
+            // { text: 'Nouveau projet', icon: 'plus', accelerator: 'Ctrl+N' },
             { text: 'Ouvrir un projet...', icon: 'folder-open', accelerator: 'Ctrl+O' },
             /*'separator',
             { text: 'Enregistrer', icon: 'disk', accelerator: 'Ctrl+S' },
             { text: 'Enregistrer sous…', icon: 'disk', accelerator: 'Ctrl+Shift+S' },*/
-            // 'separator',
-            // { text: 'Fermer le projet', icon: 'circle-x', accelerator: 'Ctrl+W' }
         ],
     },
     'Fichier': {
@@ -201,18 +199,17 @@ function handleMenuAction(menu, action) {
         case 'Projet':
             switch (action) {
                 case 'Nouveau projet':
-                    // window.api.openNewWindow();
-                    window.api.closeProject().then(result => {
-                        if (result.response !== 2) {
-                            if (result.reponse === 0) {
-                                // implement project saving here
-                            }
-                            windowTitleStyle.setProperty('--projectTitle', '');
-                            clearDirectoryTree();
-                            closeAllTabs();
-                            disableMenuButton('Nouveau projet');
-                        }
-                    })
+                    // window.api.closeProject().then(result => {
+                    //     if (result.response !== 2) {
+                    //         if (result.reponse === 0) {
+                    //             // implement project saving here
+                    //         }
+                    //         windowTitleStyle.setProperty('--projectTitle', '');
+                    //         clearDirectoryTree();
+                    //         closeAllTabs();
+                    //         disableMenuButton('Nouveau projet');
+                    //     }
+                    // });
                     break;
                 case 'Ouvrir un projet...':
                     window.api.openFolderDialog().then(folderPath => {
@@ -225,18 +222,6 @@ function handleMenuAction(menu, action) {
                     break;
                 case 'Enregistrer sous…':
                     break;
-                // case 'Fermer le projet':
-                //     window.api.closeProject().then(result => {
-                //         if (result.response !== 2) {
-                //             if (result.reponse === 0) {
-                //                 // save project
-                //             }
-                //             windowTitleStyle.setProperty('--projectTitle', '');
-                //             clearDirectoryTree();
-                //             disableMenuButton('Nouveau projet');
-                //         }
-                //     });
-                //     break;
                 default:
                     console.log(`No action defined for ${action} under ${menu}`);
             }
@@ -244,7 +229,18 @@ function handleMenuAction(menu, action) {
         case 'Fichier':
             switch (action) {
                 case 'Nouveau fichier':
-                    addNewTab('Nouveau fichier');
+                    window.api.saveDialog({ defaultPath: currentProjectDirectoy }).then(result => {
+                        if (result) {
+                            const { filePath, fileName } = result;
+                            window.api.createFile(filePath).then(() => {
+                                updateFileTree();
+                                window.api.readFile(filePath).then(content => {
+                                    addNewTab(fileName, content, filePath);
+                                });
+                            });
+                        }
+                    });
+                    // addNewTab('Nouveau fichier');
                     break;
                 case 'Importer des fichiers...':
                     break;
@@ -479,7 +475,9 @@ function attachMenuEventListeners() {
 generateMenus(menuStructure);
 
 // list of menu button functions
+let currentProjectDirectoy;
 window.api.receive('open-project', (folderPath) => {
+    currentProjectDirectoy = folderPath;
     openProjectInFileTree(folderPath);
 });
 

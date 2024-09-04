@@ -177,10 +177,10 @@ function activateTab(tab) {
 		tab.editor.getWrapperElement().style.display = 'block';
 	} else {
 		tab.editor = CodeMirror(editorContainer, {
+			mode: 'markdown',
 			value: tab.content,
 			lineNumbers: true,
 			// theme: 'dracula',
-			mode: 'markdown',
 			lineWrapping: true
 		});
 	}

@@ -683,7 +683,7 @@ li.directory>ul>li:hover>span {
 
 .CodeMirror-linenumber {
   color: var(--border-color) !important;
-  padding-right: 20px !important;
+  padding-right: 15px !important;
   font-family: var(--font-family-mono) !important;
 }
 
@@ -724,7 +724,7 @@ li.directory>ul>li:hover>span {
 }
 
 /* END MAINCONTENTSECTION EDITOR */
-/* START MAINCONTENTSECTION EDITORMENU */
+/* START MAINCONTENTSECTION FORMATTINGBAR */
 
 .formatting-bar {
   display: none;
@@ -746,17 +746,68 @@ li.directory>ul>li:hover>span {
   color: var(--text-color);
 }
 
+/* .formatting-bar button+button {
+  border-left: 1px solid var(--border-color);
+} */
+
+.formatting-bar #italicButton i {
+  font-family: monospace;
+}
+
 .formatting-bar button:hover {
   background-color: var(--accent-color);
 }
 
-/* END MAINCONTENTSECTION EDITORMENU */
+.coding-bar {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background-color: var(--base-color-light);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  padding: 5px;
+  border-radius: 8px;
+}
 
+.coding-bar button {
+  padding: 7px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-color);
+  width: 100%;
+  border-radius: 4px;
+}
+
+.coding-bar input {
+  padding: 10px 0px 10px 10px;
+  border: 1px solid var(--border-color);
+  background: none;
+  cursor: pointer;
+  color: var(--text-color);
+  border-radius: 4px;
+}
+
+.coding-bar button:hover {
+  background-color: var(--accent-color);
+}
+
+/* END MAINCONTENTSECTION FORMATTINGBAR */
 /* START MAINCONTENTSECTION CODES */
 
 .mainContentSection.codes p {
   color: var(--text-color);
   padding: 12px 14px;
+}
+
+.category-highlight {
+  background-color: #69e465;
+  color: var(--base-color);
 }
 
 /* END MAINCONTENTSECTION CODES */

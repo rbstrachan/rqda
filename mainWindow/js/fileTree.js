@@ -101,22 +101,22 @@ function regenerateFileTree() {
 	openProjectInFileTree(currentProjectDirectoy);
 }
 
-function restoreExpandedFolders(expandedFolders) {
-	const folders = document.querySelectorAll('.directory');
-	console.log(folders);
-	expandedFolders.forEach(path => {
-		folders.forEach(folderName => {
-			if (folderName.textContent === path) {
-				folderName.parentElement.classList.add('expanded');
-			}
-		});
-	});
-}
+// function restoreExpandedFolders(expandedFolders) {
+// 	const folders = document.querySelectorAll('.directory');
+// 	expandedFolders.forEach(path => {
+// 		folders.forEach(folderName => {
+// 			if (folderName.textContent === path) {
+// 				folderName.parentElement.classList.add('expanded');
+// 			}
+// 		});
+// 	});
+// }
+
 
 function updateFileTree() {
 	const expandedFolders = getExpandedFolders();
 	regenerateFileTree();
-	restoreExpandedFolders(expandedFolders);
+	// restoreExpandedFolders(expandedFolders);
 }
 
 window.api.receive('file-content', (fileName, content, filePath) => {

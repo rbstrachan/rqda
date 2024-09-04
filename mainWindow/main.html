@@ -20,7 +20,7 @@
     <div id="menus"></div>
     <div id="windowTitle"></div>
     <div id="windowButtons">
-      <div id="max"></div>
+      <!-- <div id="max"></div> -->
       <div id="min"></div>
       <div id="close"></div>
     </div>
@@ -145,13 +145,23 @@
   </footer>
 
   <div id="formattingBar" class="formatting-bar">
+    <button id="boldButton"><b>G</b></button>
+    <button id="italicButton"><i>I</i></button>
+    <!-- <button id="underlineButton"><u>S</u></button> -->
+    <!-- <button id="strikethroughButton"><s>ABC</s></button> -->
     <button id="codeTextButton">Coder cet extrait</button>
+  </div>
+  <div id="codingBar" class="coding-bar">
+    <input type="text" id="codeInput" placeholder="Nom du code">
+    <button id="addCodeButton">Créer un nouveau code parent</button>
+    <button id="addSubCodeButton">Créer un nouveau code enfant</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/lib/codemirror.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/mode/markdown/markdown.js"></script>
 
   <script src="./js/renderer.js"></script>
+  <script src="./js/shortcuts.js"></script>
   <script src="./js/menuBar.js"></script>
   <script src="./js/windowButtons.js"></script>
   <!-- <script src="./js/search.js"></script> -->
@@ -159,8 +169,8 @@
   <script src="./js/fileTree.js"></script>
   <script src="./js/tabs.js"></script>
   <!-- <script src="./js/editor.js"></script> --> <!-- EMPTY. PUT TINYMCE HERE? -->
+  <script src="./js/codes.js"></script>
   <script src="./js/contextBar.js"></script>
-  <!-- <script src="./js/codes.js"></script> -->
   <!-- <script src="./js/footer.js"></script> -->
   <!-- <script src="./js/contextMenus.js"></script> -->
 </body>

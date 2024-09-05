@@ -181,7 +181,8 @@ function activateTab(tab) {
 			value: tab.content,
 			lineNumbers: true,
 			// theme: 'dracula',
-			lineWrapping: true
+			lineWrapping: true,
+			historyEventDelay: 500
 		});
 	}
 

@@ -1,10 +1,41 @@
+const formatDict = {
+    'b': 'Bold',
+    'i': 'Italic',
+    'u': 'Underline',
+    's': 'Strike',
+    // 'Subscript': 'subscript',
+    // 'Superscript': 'superscript',
+    // 'JustifyLeft': 'justifyLeft',
+    // 'JustifyCenter': 'justifyCenter',
+    // 'JustifyRight': 'justifyRight',
+    // 'JustifyFull': 'justifyFull',
+    // 'InsertOrderedList': 'insertOrderedList',
+    // 'InsertUnorderedList': 'insertUnorderedList',
+    // 'Outdent': 'outdent',
+    // 'Indent': 'indent',
+    // 'InsertHorizontalRule': 'insertHorizontalRule',
+    // 'InsertImage': 'insertImage',
+    // 'CreateLink': 'createLink',
+    // 'Unlink': 'unlink',
+    // 'InsertTable': 'insertTable',
+    // 'InsertParagraph': 'insertParagraph',
+    // 'InsertText': 'insertText',
+    // 'FontName': 'fontName',
+    // 'FontSize': 'fontSize',
+    // 'ForeColor': 'foreColor',
+    // 'BackColor': 'backColor',
+    // 'ClearFormatting': 'clearFormatting',
+    // 'Print': 'print',
+    // 'Undo': 'undo',
+    // 'Redo': 'redo',
+    // 'Cut': 'cut',
+    // 'Copy': 'copy',
+    // 'Paste': 'paste',
+    // 'SelectAll': 'selectAll'
+};
 document.addEventListener('keydown', function (event) {
-    if (event.ctrlKey && event.key === 'b') {
+    if (event.ctrlKey && ['b', 'i', 'u', 's'].includes(event.key)) {
         event.preventDefault();
-        boldSelection();
-    }
-    if (event.ctrlKey && event.key === 'i') {
-        event.preventDefault();
-        italicSeletion();
+        formatSelection(formatDict[event.key]);
     }
 });

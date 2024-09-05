@@ -744,6 +744,7 @@ li.directory>ul>li:hover>span {
   background: none;
   cursor: pointer;
   color: var(--text-color);
+  border-radius: 3px;
 }
 
 /* .formatting-bar button+button {
@@ -786,7 +787,7 @@ li.directory>ul>li:hover>span {
 
 .coding-bar input {
   padding: 10px 0px 10px 10px;
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
   background: none;
   cursor: pointer;
   color: var(--text-color);
@@ -797,6 +798,40 @@ li.directory>ul>li:hover>span {
   background-color: var(--accent-color);
 }
 
+.innerBold {
+  font-weight: 800;
+}
+
+.innerItalic {
+  font-style: italic;
+}
+
+.innerUnderline {
+  position: relative;
+}
+
+.innerUnderline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-bottom: 1px solid;
+}
+
+.innerStrike {
+  position: relative;
+}
+
+.innerStrike::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 1px solid;
+}
+
 /* END MAINCONTENTSECTION FORMATTINGBAR */
 /* START MAINCONTENTSECTION CODES */
 
@@ -805,9 +840,13 @@ li.directory>ul>li:hover>span {
   padding: 12px 14px;
 }
 
-.category-highlight {
-  background-color: #69e465;
+.code-highlight {
+  background-color: rgba(105, 228, 101, 1);
   color: var(--base-color);
+}
+
+.code {
+  color: var(--text-color)
 }
 
 /* END MAINCONTENTSECTION CODES */

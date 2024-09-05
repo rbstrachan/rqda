@@ -33,62 +33,52 @@ document.addEventListener('mousedown', function (event) {
 });
 
 /* event listeners for contextBar buttons */
-boldButton.addEventListener('click', boldSelection);
+boldButton.addEventListener('click', () => {
+    formatSelection('Bold');
+});
 
-italicButton.addEventListener('click', italicSeletion);
+italicButton.addEventListener('click', () => {
+    formatSelection('Italic');
+});
 
-// underlineButton.addEventListener('click', underlineSelection);
+underlineButton.addEventListener('click', () => {
+    formatSelection('Underline');
+});
 
-// strikethroughButton.addEventListener('click', strikethroughSelection);
+strikethroughButton.addEventListener('click', () => {
+    formatSelection('Strike');
+});
 
 codeButton.addEventListener('click', () => {
-    codeText(barLeft, barTop);
+    showCodeBar(barLeft, barTop);
 });
 
 /* formatting and coding function definitions */
-function boldSelection() {
+function formatSelection(operation) {
     const editor = document.querySelector('.CodeMirror').CodeMirror;
     const doc = editor.getDoc();
-    const selection = doc.getSelection();
 
-    doc.replaceSelection(`**${selection}**`);
+    const start = doc.getCursor('start');
+    const end = doc.getCursor('end');
+    const marks = doc.findMarks(start, end);
+    let isOperation = false;
+
+    marks.forEach(mark => {
+        if (mark.className === `inner${operation}`) {
+            isOperation = true;
+            mark.clear();
+        }
+    });
+
+    if (!isOperation) {
+        doc.markText(start, end, {
+            className: `inner${operation}`,
+        });
+    }
 
     editor.focus();
     hideFormattingBar();
 }
-
-function italicSeletion() {
-    const editor = document.querySelector('.CodeMirror').CodeMirror;
-    const doc = editor.getDoc();
-    const selection = doc.getSelection();
-
-    doc.replaceSelection(`*${selection}*`);
-
-    editor.focus();
-    hideFormattingBar();
-}
-
-// function underlineSelection() {
-//     const editor = document.querySelector('.CodeMirror').CodeMirror;
-//     const doc = editor.getDoc();
-//     const selection = doc.getSelection();
-
-//     doc.replaceSelection(`<u>${selection}</u>`);
-
-//     editor.focus();
-//     hideFormattingBar();
-// }
-
-// function strikethroughSelection() {
-//     const editor = document.querySelector('.CodeMirror').CodeMirror;
-//     const doc = editor.getDoc();
-//     const selection = doc.getSelection();
-
-//     doc.replaceSelection(`~~${selection}~~`);
-
-//     editor.focus();
-//     hideFormattingBar();
-// }
 
 function hideFormattingBar() {
     formattingBar.style.display = 'none';

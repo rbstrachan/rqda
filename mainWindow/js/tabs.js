@@ -113,6 +113,7 @@ class Tab {
 		this.path = path;
 		this.editor = null;
 		this.element = null;
+		this.codedSections = [];
 	}
 }
 
@@ -193,8 +194,23 @@ function activateTab(tab) {
 function addNewTab(title = 'New Document', content = '', filePath = '') {
 	const newTab = new Tab(`tab${tabs.length + 1}`, title, content, filePath);
 	tabs.push(newTab);
+
 	const tabElement = createTabElement(newTab);
 	tabsContainer.appendChild(tabElement);
+
+	if (filePath) {
+		const metadataFilePath = filePath.replace('.md', '.json');
+		window.api.send('load-metadata', { metadataFilePath });
+
+		window.api.receive('metadata-loaded', (metadata) => {
+			if (metadata && metadata.codedSections) {
+				console.log('metadata-loaded', metadata);
+				newTab.codedSections = metadata.codedSections;
+				loadCodedMetadata(newTab);
+			}
+		});
+	}
+
 	activateTab(newTab);
 }
 
@@ -236,7 +252,17 @@ function closeAllTabs() {
 function saveTabContentsToFile(tab) {
 	if (tab.path) {
 		tab.content = tab.editor.getValue();
-		window.api.send('save-file', { filePath: tab.path, content: tab.content });
+
+		const metadata = {
+			codedSections: tab.codedSections || []
+		};
+
+		window.api.send('save-file', {
+			filePath: tab.path,
+			content: tab.content,
+			metadataFilePath: tab.path.replace('.md', '.json'),
+			metadata: metadata
+		});
 	}
 }
 

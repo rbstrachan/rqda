@@ -188,6 +188,18 @@ ipcMain.on('save-file', (event, data) => {
 	fs.writeFile(data.filePath, data.content, (err) => {
 		if (err) { console.error('Error writing file:', err); }
 	});
+	fs.writeFile(data.metadataFilePath, JSON.stringify(data.metadata), (err) => {
+		if (err) { console.error('Error writing metadata file:', err); }
+	});
+});
+
+ipcMain.on('load-metadata', (event, data) => {
+	if (fs.existsSync(data.metadataFilePath)) {
+		const metadata = JSON.parse(fs.readFileSync(data.metadataFilePath, 'utf-8'));
+		event.reply('metadata-loaded', metadata);
+	} else {
+		event.reply('metadata-loaded', null);
+	}
 });
 
 ipcMain.handle('open-folder-dialog', async (event, arg) => {

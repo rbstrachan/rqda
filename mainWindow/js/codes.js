@@ -64,21 +64,20 @@ codingBarNewParentButton.addEventListener('click', function () {
     let codedSections = activeTab.codedSections;
     let codeName = codingBarInput.value.trim();
 
-    console.log('codingBarNewParentButton clicked');
-
     let start = editor.getCursor("start");
     let end = editor.getCursor("end");
 
-    editor.markText(start, end, {
+    let marker = editor.markText(start, end, {
         className: 'code-highlight',
         attributes: { 'code': codeName }
     });
 
     codedSections.push({
         id: codedSections.length + 1,
-        start: start,
-        end: end,
-        code: codeName
+        // start: start,
+        // end: end,
+        code: codeName,
+        marker: marker
     });
 
     hideCodingBar();
@@ -89,11 +88,20 @@ function loadCodedMetadata(tab) {
     let editor = tab.editor;
     let codedSections = tab.codedSections;
 
+    // codedSections.forEach(section => {
+    //     editor.markText(section.start, section.end, {
+    //         className: 'code-highlight',
+    //         attributes: { 'code': section.code }
+    //     });
+    // });
+
     codedSections.forEach(section => {
-        editor.markText(section.start, section.end, {
+        const marker = editor.markText(section.start, section.end, {
             className: 'code-highlight',
             attributes: { 'code': section.code }
         });
+
+        section.marker = marker;
     });
 }
 

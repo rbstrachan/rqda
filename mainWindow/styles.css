@@ -723,6 +723,23 @@ li.directory>ul>li:hover>span {
   font-size: 1em;
 }
 
+.CodeMirror .cm-header,
+.CodeMirror .cm-strong,
+.CodeMirror .cm-em,
+.CodeMirror .cm-link,
+.CodeMirror .cm-string,
+.CodeMirror .cm-variable-2,
+.CodeMirror .cm-variable-3,
+.CodeMirror .cm-quote,
+.CodeMirror .cm-bullet,
+.CodeMirror .cm-list-1,
+.CodeMirror .cm-list-2,
+.CodeMirror .cm-list-3,
+.CodeMirror .cm-quote,
+.CodeMirror .cm-comment {
+  color: inherit !important;
+}
+
 /* END MAINCONTENTSECTION EDITOR */
 /* START MAINCONTENTSECTION FORMATTINGBAR */
 

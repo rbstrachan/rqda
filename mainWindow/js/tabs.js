@@ -204,7 +204,6 @@ function addNewTab(title = 'New Document', content = '', filePath = '') {
 
 		window.api.receive('metadata-loaded', (metadata) => {
 			if (metadata && metadata.codedSections) {
-				console.log('metadata-loaded', metadata);
 				newTab.codedSections = metadata.codedSections;
 				loadCodedMetadata(newTab);
 			}
@@ -254,7 +253,19 @@ function saveTabContentsToFile(tab) {
 		tab.content = tab.editor.getValue();
 
 		const metadata = {
-			codedSections: tab.codedSections || []
+			// codedSections: tab.codedSections || []
+			codedSections: tab.codedSections.map(section => {
+				const marker = section.marker.find();
+
+				if (!marker) { return null; }
+
+				return {
+					id: section.id,
+					code: section.code,
+					start: marker.from,
+					end: marker.to
+				}
+			})
 		};
 
 		window.api.send('save-file', {

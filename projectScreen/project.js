@@ -1,4 +1,6 @@
 let isNamingProject = false;
+const createNewProjectButton = document.getElementById('newProjectButtonContainer');
+const projectNameInput = document.getElementById('newProjectNameInput');
 
 document.getElementById('windowButton').addEventListener('click', () => {
     projectAPI.send('request-close-project-screen');
@@ -58,17 +60,23 @@ projectAPI.getListOfProjects().then(projects => {
     generateProjectsHTML(projects);
 });
 
-document.getElementById('newProjectButtonContainer').addEventListener('click', () => {
+createNewProjectButton.addEventListener('click', () => {
     if (!isNamingProject) {
         displayProjectInputInfoScreen();
         isNamingProject = true;
     } else {
-        const projectName = document.getElementById('newProjectNameInput').value;
+        const projectName = projectNameInput.value;
         if (projectName) {
             projectAPI.newProject(projectName);
         } else {
             alert('Veuillez entrer un nom de projet.');
         }
+    }
+});
+
+projectNameInput.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        createNewProjectButton.click();
     }
 });
 

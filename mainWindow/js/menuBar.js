@@ -482,10 +482,10 @@ window.api.receive('open-project', (folderPath) => {
 });
 
 function openProjectInFileTree(folderPath) {
-    window.api.getDirTree(folderPath).then(directoryTree => {
+    window.api.getDirTree(folderPath).then(({ directoryTree, projectTitle }) => {
         sortDirectoryTree(directoryTree);
         clearDirectoryTree();
-        windowTitleStyle.setProperty('--projectTitle', `"${folderPath.split('/').pop()}" " ・ "`);
+        windowTitleStyle.setProperty('--projectTitle', `"${projectTitle}" " ・ "`);
         renderFileTree(document.getElementById('fileTree'), directoryTree);
         enableMenuButton('Nouveau projet');
     });

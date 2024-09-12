@@ -19,7 +19,7 @@ editorContainer.addEventListener('mouseup', function (event) {
         barLeft = mouseX + scrollX - (formattingBar.offsetWidth / 2);
         formattingBar.style.left = `${barLeft}px`;
 
-        barTop = mouseY + scrollY - formattingBar.offsetHeight - 10;
+        barTop = mouseY + scrollY - formattingBar.offsetHeight - 15;
         formattingBar.style.top = `${barTop}px`;
     } else {
         hideFormattingBar();

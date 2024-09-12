@@ -11,12 +11,12 @@ window.api.onWindowFocusChange((event, isFocused) => {
         navBar.classList.remove('unfocused');
         closeButton.classList.remove('unfocused');
         minimizeButton.classList.remove('unfocused');
-        // maximizeButton.classList.remove('unfocused');
+        maximizeButton.classList.remove('unfocused');
     } else {
         navBar.classList.add('unfocused');
         closeButton.classList.add('unfocused');
         minimizeButton.classList.add('unfocused');
-        // maximizeButton.classList.add('unfocused');
+        maximizeButton.classList.add('unfocused');
     }
 });
 

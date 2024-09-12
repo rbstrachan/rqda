@@ -6,6 +6,13 @@ const fs = require('node:fs');
 const dirTree = require('directory-tree');
 const { homedir } = require('node:os');
 
+const appDataPath = path.join(app.getPath('documents'), 'QADDOE');
+const projectsPath = path.join(appDataPath, 'projets');
+const codesPath = path.join(appDataPath, 'codes');
+const dotPath = path.join(appDataPath, '.qaddoe');
+const appConfigPath = path.join(dotPath, 'config.json');
+const settingsPath = path.join(dotPath, 'settings.json');
+
 async function createApplicationWindows() {
 	const mainWindow = new BrowserWindow({
 		width: 1440,
@@ -45,13 +52,6 @@ async function createApplicationWindows() {
 	// handle the setup of the application
 	// by vreating necessary directories and files for execution
 	async function setupApplication() {
-		const appDataPath = path.join(app.getPath('documents'), 'QADDOE');
-		const projectsPath = path.join(appDataPath, 'projets');
-		const codesPath = path.join(appDataPath, 'codes');
-		const dotPath = path.join(appDataPath, '.qaddoe');
-		const appConfigPath = path.join(dotPath, 'config.json');
-		const settingsPath = path.join(dotPath, 'settings.json');
-
 		// create the appData directory if it doesn't exist
 		if (!fs.existsSync(appDataPath)) {
 			fs.mkdirSync(projectsPath, { recursive: true });
@@ -188,6 +188,7 @@ ipcMain.on('save-file', (event, data) => {
 	fs.writeFile(data.filePath, data.content, (err) => {
 		if (err) { console.error('Error writing file:', err); }
 	});
+	// need to make it so that this file is only created iff codes exist in the document
 	fs.writeFile(data.metadataFilePath, JSON.stringify(data.metadata), (err) => {
 		if (err) { console.error('Error writing metadata file:', err); }
 	});
@@ -211,7 +212,9 @@ ipcMain.handle('open-folder-dialog', async (event, arg) => {
 
 ipcMain.handle('get-dir-tree', async (event, folderPath) => {
 	if (folderPath) {
-		return dirTree(folderPath);
+		const directoryTree = dirTree(folderPath);
+		const projectTitle = folderPath.split(path.sep).pop();
+		return { directoryTree, projectTitle };
 	}
 });
 

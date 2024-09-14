@@ -20,6 +20,12 @@
   user-select: none;
   -webkit-user-select: none;
   -webkit-app-region: no-drag;
+  /* box-sizing: border-box */
+}
+
+body,
+html {
+  height: 100%;
 }
 
 body {
@@ -32,7 +38,8 @@ body {
 /* BEGIN MENU BAR */
 
 nav {
-  width: 100vw;
+  /* width: 100vw; */
+  width: 100%;
   height: 25px;
   background-color: #131313;
   color: var(--text-color);
@@ -225,20 +232,32 @@ nav.unfocused {
 }
 
 #mainContent {
-  height: 800px;
+  /* height: 800px; */
   display: flex;
+  flex: 1;
+  height: calc(100% - 100px);
 }
 
-.topBarSection,
+.topBarSection.fixed,
+.mainContentSection.fixed {
+  flex: 0 0 auto;
+}
+
+.topBarSection.flexible,
+.mainContentSection.flexible {
+  flex: 1;
+}
+
+/* .topBarSection,
 .mainContentSection {
   height: 100%;
   box-sizing: border-box;
-}
+} */
 
 /* CAN MERGE THIS WITH CSS ABOVE? */
-.topBarSection {
+/* .topBarSection {
   padding-left: 15px;
-}
+} */
 
 .topBarSection:nth-child(1),
 .mainContentSection:nth-child(1) {
@@ -252,10 +271,10 @@ nav.unfocused {
   width: 265px;
 }
 
-.topBarSection:nth-child(3),
+/* .topBarSection:nth-child(3),
 .mainContentSection:nth-child(3) {
   width: 855px;
-}
+} */
 
 .topBarSection:nth-child(1),
 .mainContentSection:nth-child(1) {
@@ -287,12 +306,12 @@ nav.unfocused {
 /* END TOPBAR & MAINCONTENT -- GENERAL STYLES */
 /* START TOPBARSECTION LOGO */
 
-.topBarSection.logo {
-  content: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.3333 19.3333C10.7407 19.3333 0 29 0 29C0 29 7.22559 14.9394 15.037 14.0606C22.8485 13.1818 29 0 29 0C29 0 27.9259 19.3333 19.3333 19.3333Z' fill='%23D9D9D9'/%3E%3C/svg%3E");
-  display: flex;
-  align-items: center;
-  padding: 12px 2px 2px 12px;
-}
+/* .topBarSection.logo {
+  width: 55px;
+  height: 52px;
+  padding-left: 3px;
+  content: url('../res/qLogo.png');
+} */
 
 /* END TOPBARSECTION LOGO */
 /* START TOPBARSECTION DETAILS */
@@ -859,7 +878,8 @@ li.directory>ul>li:hover>span {
 
 .code-highlight {
   background-color: rgba(105, 228, 101, 1);
-  color: var(--base-color);
+  color: var(--base-color) !important;
+  border-radius: 2px;
 }
 
 .code {

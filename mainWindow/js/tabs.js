@@ -266,6 +266,7 @@ function saveTabContentsToFile(tab) {
 					end: marker.to
 				}
 			})
+			// .filter(section => section !== null)
 		};
 
 		window.api.send('save-file', {

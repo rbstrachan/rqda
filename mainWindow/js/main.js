@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, screen } = require('electron')
 const path = require('node:path')
 const os = require('node:os');
 const fs = require('node:fs');
@@ -14,10 +14,22 @@ const appConfigPath = path.join(dotPath, 'config.json');
 const settingsPath = path.join(dotPath, 'settings.json');
 
 async function createApplicationWindows() {
+	const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
+
+	// Desired initial window size
+	const desiredWidth = 1440;
+	const desiredHeight = 900;
+
+	// Set the window size to the smaller of the desired size or available screen size
+	const windowWidth = Math.min(desiredWidth, screenWidth);
+	const windowHeight = Math.min(desiredHeight, screenHeight);
+
 	const mainWindow = new BrowserWindow({
-		width: 1440,
-		height: 900,
-		resizable: false,
+		width: windowWidth,
+		height: windowHeight,
+		minWidth: 900,
+		minHeight: 500,
+		// resizable: false,
 		autoHideMenuBar: true,
 		frame: false,
 		show: false,
@@ -29,7 +41,7 @@ async function createApplicationWindows() {
 			sandbox: false,
 			// devTools: false
 		}
-	})
+	});
 
 	const projectScreen = new BrowserWindow({
 		width: 1040,
@@ -50,7 +62,7 @@ async function createApplicationWindows() {
 	});
 
 	// handle the setup of the application
-	// by vreating necessary directories and files for execution
+	// by creating necessary directories and files for execution
 	async function setupApplication() {
 		// create the appData directory if it doesn't exist
 		if (!fs.existsSync(appDataPath)) {
@@ -163,6 +175,15 @@ async function createApplicationWindows() {
 
 // handle IPC events
 // event handlers for the window buttons
+ipcMain.on('app/toggle-maximize', (event, arg) => {
+	const window = BrowserWindow.fromWebContents(event.sender);
+	if (window.isMaximized()) {
+		window.unmaximize();
+	} else {
+		window.maximize();
+	}
+});
+
 ipcMain.on('app/minimize', (event, arg) => {
 	const window = BrowserWindow.fromWebContents(event.sender);
 	window.minimize();
@@ -198,8 +219,6 @@ ipcMain.on('load-metadata', (event, data) => {
 	if (fs.existsSync(data.metadataFilePath)) {
 		const metadata = JSON.parse(fs.readFileSync(data.metadataFilePath, 'utf-8'));
 		event.reply('metadata-loaded', metadata);
-	} else {
-		event.reply('metadata-loaded', null);
 	}
 });
 

@@ -28,16 +28,15 @@ const menuStructure = {
             { text: 'Dupliquer', icon: 'duplicate', accelerator: '' },
             'separator',
             { text: 'Renommer', icon: 'rename', accelerator: '' },
-            { text: 'Déplacer', icon: 'move', accelerator: '' },*/
+            { text: 'Déplacer', icon: 'move', accelerator: '' },
             'separator',
             { text: 'Enregister' },
-            /*{ text: 'Enregistrer sous…' },
-            { text: 'Exporter' },
+            { text: 'Enregistrer sous…' },
             'separator',
+            { text: 'Afficher l'emplacement' },
             { text: 'Imprimer', icon: 'print', accelerator: '' },
-            { text: 'Envoyer par email', icon: 'send', accelerator: '' },*/
-            // { text: 'Télécharger' },
-            /*'separator',
+            { text: 'Envoyer par email', icon: 'send', accelerator: '' },
+            'separator',
             { text: 'Fermer', icon: 'circle-x', accelerator: '' },
             { text: 'Supprimer', icon: 'delete', accelerator: '' }*/
         ],
@@ -62,9 +61,9 @@ const menuStructure = {
     },
     'Affichage': {
         items: [
-            { text: 'Zoom avant', icon: 'zoom-in', accelerator: 'Ctrl++' },
-            { text: 'Zoom arrière', icon: 'zoom-out', accelerator: 'Ctrl+-' },
-            { text: 'Réinitialiser le zoom', icon: 'reset-zoom', accelerator: 'Ctrl+0' }
+            // { text: 'Zoom avant', icon: 'zoom-in', accelerator: 'Ctrl++' },
+            // { text: 'Zoom arrière', icon: 'zoom-out', accelerator: 'Ctrl+-' },
+            // { text: 'Réinitialiser le zoom', icon: 'reset-zoom', accelerator: 'Ctrl+0' }
         ],
     },
     'Codage': {
@@ -75,9 +74,9 @@ const menuStructure = {
             'separator',
             { text: 'Renommer', icon: 'rename', accelerator: '' },
             { text: 'Déplacer', icon: 'move', accelerator: '' },
-            // 'separator',
-            // { text: 'Importer' },
-            // { text: 'Exporter' },
+            'separator',
+            { text: 'Exporter une liste des codes' },
+            { text: 'Importer le codebook du projet' },
             'separator',
             { text: 'Supprimer', icon: 'delete', accelerator: '' },
         ],
@@ -115,11 +114,16 @@ const menuStructure = {
     //         { text: 'Changer de thème' },
     //         { text: 'Changer de police' },
     //         'separator',
-    //         { text: 'Mettre à jour' },
-    //         { text: 'Rechercher des mises à jour' },
-    //         { text: "Installer les mises à jour" }
+    //         { text: 'Mettre à jour' }
     //     ]
     // }
+    'Debug': {
+        items: [
+            { text: 'Console', icon: 'console', accelerator: 'Ctrl+Shift+I' },
+            { text: 'Recharger', icon: 'refresh', accelerator: 'Ctrl+R' },
+            { text: 'Fermer', icon: 'circle-x', accelerator: 'Ctrl+Shift+W' },
+        ],
+    },
 };
 
 // Function to generate menus
@@ -229,7 +233,7 @@ function handleMenuAction(menu, action) {
         case 'Fichier':
             switch (action) {
                 case 'Nouveau fichier':
-                    window.api.saveDialog({ defaultPath: currentProjectDirectoy }).then(result => {
+                    window.api.saveDialog({ defaultPath: currentProjectDirectory }).then(result => {
                         if (result) {
                             const { filePath, fileName } = result;
                             window.api.createFile(filePath).then(() => {
@@ -365,6 +369,20 @@ function handleMenuAction(menu, action) {
                     console.log(`No action defined for ${action} under ${menu}`);
             }
             break;
+        case 'Debug':
+            switch (action) {
+                case 'Console':
+                    // window.api.openDevTools();
+                    break;
+                case 'Recharger':
+                    // window.api.reloadWindow();
+                    break;
+                case 'Fermer':
+                    // window.api.closeWindow();
+                    break;
+                default:
+                    console.log(`No action defined for ${action} under ${menu}`);
+            }
         default:
             console.log(`No action defined for ${action} under ${menu}`);
     }
@@ -475,9 +493,9 @@ function attachMenuEventListeners() {
 generateMenus(menuStructure);
 
 // list of menu button functions
-let currentProjectDirectoy;
+let currentProjectDirectory;
 window.api.receive('open-project', (folderPath) => {
-    currentProjectDirectoy = folderPath;
+    currentProjectDirectory = folderPath;
     openProjectInFileTree(folderPath);
 });
 

@@ -20,6 +20,18 @@ window.api.onWindowFocusChange((event, isFocused) => {
     }
 });
 
+document.addEventListener('mousedown', (event) => {
+    if (!codingBar.contains(event.target)) {
+        hideCodingBar();
+    }
+    if (!formattingBar.contains(event.target)) {
+        hideFormattingBar();
+    }
+    if (!contextMenu.contains(event.target)) {
+        hideContextMenu();
+    }
+});
+
 // const signalerProbleme = document.getElementById('statusBarCenter');
 // signalerProbleme.addEventListener('click', () => {
 //     console.log('l\'utilisateur a signalé un problème');

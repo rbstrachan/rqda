@@ -97,26 +97,27 @@ async function createApplicationWindows() {
 
 	// handle window close event
 	mainWindow.on('close', (event) => {
-		event.preventDefault();
+		mainWindow.destroy();
+		// event.preventDefault();
 
-		const options = {
-			type: 'question',
-			buttons: ['Enregistrer', 'Ne pas enregistrer', 'Annuler'],
-			defaultId: 0,
-			title: 'Enregistrer les modifications',
-			message: 'Voulez-vous enregistrer les modifications apportées à ce projet avant de le fermer?',
-			detail: 'Ce projet contient des modifications. Si vous ne les sauvegardez pas, elles seront perdues.',
-		};
+		// const options = {
+		// 	type: 'question',
+		// 	buttons: ['Enregistrer', 'Ne pas enregistrer', 'Annuler'],
+		// 	defaultId: 0,
+		// 	title: 'Enregistrer les modifications',
+		// 	message: 'Voulez-vous enregistrer les modifications apportées à ce projet avant de le fermer?',
+		// 	detail: 'Ce projet contient des modifications. Si vous ne les sauvegardez pas, elles seront perdues.',
+		// };
 
-		dialog.showMessageBox(options).then((result) => {
-			if (result.response === 0) {
-				// handle save logic here
-				// CHANGER mainWindow.destroy() À UTILISER LE PROTOCOL ipcMain.on('app/close') POUR FERMER LA FENÊTRE
-				mainWindow.destroy();
-			} else if (result.response === 1) {
-				mainWindow.destroy();
-			}
-		});
+		// dialog.showMessageBox(options).then((result) => {
+		// 	if (result.response === 0) {
+		// 		// handle save logic here
+		// 		// CHANGER mainWindow.destroy() À UTILISER LE PROTOCOL ipcMain.on('app/close') POUR FERMER LA FENÊTRE
+		// 		mainWindow.destroy();
+		// 	} else if (result.response === 1) {
+		// 		mainWindow.destroy();
+		// 	}
+		// });
 	});
 
 	// Handle "Fermer le projet" button click
@@ -162,15 +163,6 @@ async function createApplicationWindows() {
 
 	// Open the DevTools programatically
 	// mainWindow.webContents.openDevTools()
-
-	// TO IMPLEMENT: MAKE MAXIMEMISE BUTTON TOGGLE BETWEEN MAXIMISE AND NORMAL SIZE
-	// ipcMain.on('app/maximize', (event, arg) => {
-	//   if (mainWindow.isMaximized()) {
-	//     mainWindow.unmaximize();
-	//   } else {
-	//     mainWindow.maximize();
-	//   }
-	// });
 }
 
 // handle IPC events
@@ -209,17 +201,6 @@ ipcMain.on('save-file', (event, data) => {
 	fs.writeFile(data.filePath, data.content, (err) => {
 		if (err) { console.error('Error writing file:', err); }
 	});
-	// need to make it so that this file is only created iff codes exist in the document
-	fs.writeFile(data.metadataFilePath, JSON.stringify(data.metadata), (err) => {
-		if (err) { console.error('Error writing metadata file:', err); }
-	});
-});
-
-ipcMain.on('load-metadata', (event, data) => {
-	if (fs.existsSync(data.metadataFilePath)) {
-		const metadata = JSON.parse(fs.readFileSync(data.metadataFilePath, 'utf-8'));
-		event.reply('metadata-loaded', metadata);
-	}
 });
 
 ipcMain.handle('open-folder-dialog', async (event, arg) => {
@@ -257,12 +238,17 @@ ipcMain.handle('save-dialog', async (event, arg) => {
 		buttonLabel: 'Créer',
 		defaultPath: arg.defaultPath,
 		filters: [
-			{ name: 'Tous les fichiers', extensions: ['*'] }
+			{ name: 'Fichiers Markdown', extensions: ['md'] }
 		]
 	});
 
+	let finalFilePath = result.filePath;
+	if (result.filePath && !result.filePath.endsWith('.md')) {
+		finalFilePath = `${result.filePath}.md`;
+	}
+
 	if (!result.canceled) {
-		const filePath = result.filePath;
+		const filePath = finalFilePath;
 		const fileName = path.basename(filePath);
 		return { filePath, fileName };
 	}

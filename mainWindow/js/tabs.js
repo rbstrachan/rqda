@@ -113,7 +113,6 @@ class Tab {
 		this.path = path;
 		this.editor = null;
 		this.element = null;
-		this.codedSections = [];
 	}
 }
 
@@ -183,7 +182,6 @@ function activateTab(tab) {
 			lineNumbers: true,
 			// theme: 'dracula',
 			lineWrapping: true,
-			historyEventDelay: 500
 		});
 	}
 
@@ -191,24 +189,17 @@ function activateTab(tab) {
 	tab.editor.focus();
 }
 
-function addNewTab(title = 'New Document', content = '', filePath = '') {
+async function addNewTab(title = 'New Document', content = '', filePath = '') {
 	const newTab = new Tab(`tab${tabs.length + 1}`, title, content, filePath);
 	tabs.push(newTab);
 
 	const tabElement = createTabElement(newTab);
 	tabsContainer.appendChild(tabElement);
 
-	if (filePath) {
-		const metadataFilePath = filePath.replace('.md', '.json');
-		window.api.send('load-metadata', { metadataFilePath });
-
-		window.api.receive('metadata-loaded', (metadata) => {
-			if (metadata && metadata.codedSections) {
-				newTab.codedSections = metadata.codedSections;
-				loadCodedMetadata(newTab);
-			}
-		});
-	}
+	tabsContainer.scrollTo({
+		left: tabsContainer.scrollWidth + 20,
+		behavior: 'smooth'
+	});
 
 	activateTab(newTab);
 }
@@ -216,8 +207,6 @@ function addNewTab(title = 'New Document', content = '', filePath = '') {
 function closeTab(tab) {
 	const index = tabs.indexOf(tab);
 
-	// save the content of the tab before closing it
-	// update the tab.content with the current value in the editor
 	saveTabContentsToFile(tab);
 
 	if (index !== -1) {
@@ -235,6 +224,7 @@ function closeTab(tab) {
 	}
 }
 
+// ADD FUNCIONALITY TO SAVE TAB CONTENTS TO FILE
 function closeAllTabs() {
 	if (tabs.length) {
 		tabs.forEach((tab) => {
@@ -252,31 +242,22 @@ function saveTabContentsToFile(tab) {
 	if (tab.path) {
 		tab.content = tab.editor.getValue();
 
-		const metadata = {
-			// codedSections: tab.codedSections || []
-			codedSections: tab.codedSections.map(section => {
-				const marker = section.marker.find();
-
-				if (!marker) { return null; }
-
-				return {
-					id: section.id,
-					code: section.code,
-					start: marker.from,
-					end: marker.to
-				}
-			})
-			// .filter(section => section !== null)
-		};
-
 		window.api.send('save-file', {
 			filePath: tab.path,
 			content: tab.content,
-			metadataFilePath: tab.path.replace('.md', '.json'),
-			metadata: metadata
 		});
 	}
 }
+
+function autosaveTabContentsToFile() {
+	tabs.forEach((tab) => {
+		if (tab.path) {
+			saveTabContentsToFile(tab);
+		}
+	});
+}
+
+setInterval(autosaveTabContentsToFile, 30000);
 
 function showNoDocumentsMessage() {
 	const message = document.createElement('div');
@@ -296,6 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	populateTabsContainer();
 	addNewTab(
 		'Bienvenue!',
-		'# Bienvenue dans QADDOE!\n\nPour commencer, ouvrir un projet déjà commencé ou créer de nouveaux fichiers.\n\nVous pouvez également importer un fichier existant.\n\nVotre travail sera enregistré automatiquement, chaque 30 secondes. Cependant, vous pouvez toujours sauvguarder manuellement.\n\nPour fermer un document, cliquez sur le bouton \'×\' dans l\'onglet correspondant.'
+		'# Bienvenue dans QADDOE!\n\nPour commencer, fermer cet onglet puis ouvrir un document ou créer de nouveaux fichiers. Vous pouvez également importer un fichier existant.\n\nVotre travail sera enregistré automatiquement, chaque 30 secondes. Cependant, vous pouvez toujours sauvguarder manuellement.\n\nPour fermer un document, cliquez sur le bouton \'×\' dans l\'onglet correspondant. Les changements apportés au fichier seront enregistrés en même temps.\n\nPour coder un extrait de texte, selectionne-le puis clique sur le bouton \'coder cet extrait\'.\n\nPour plus d\'informations, consultez la documentation en ligne.\n\nMerci d\'utiliser QADDOE!'
 	);
 });

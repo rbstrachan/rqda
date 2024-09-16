@@ -26,12 +26,6 @@ editorContainer.addEventListener('mouseup', function (event) {
     }
 });
 
-document.addEventListener('mousedown', function (event) {
-    if (!formattingBar.contains(event.target)) {
-        hideFormattingBar();
-    }
-});
-
 /* event listeners for contextBar buttons */
 boldButton.addEventListener('click', () => {
     formatSelection('Bold');

@@ -98,7 +98,7 @@ function getExpandedFolders() {
 
 function regenerateFileTree() {
 	clearDirectoryTree();
-	openProjectInFileTree(currentProjectDirectoy);
+	openProjectInFileTree(currentProjectDirectory);
 }
 
 // function restoreExpandedFolders(expandedFolders) {
@@ -119,6 +119,7 @@ function updateFileTree() {
 	// restoreExpandedFolders(expandedFolders);
 }
 
+// POSSIBLE MEMORY LEAK HERE USING RECIEVE
 window.api.receive('file-content', (fileName, content, filePath) => {
 	addNewTab(fileName, content, filePath);
 });

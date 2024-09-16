@@ -33,9 +33,13 @@ const formatDict = {
     // 'Paste': 'paste',
     // 'SelectAll': 'selectAll'
 };
+
 document.addEventListener('keydown', function (event) {
     if (event.ctrlKey && ['b', 'i', 'u', 's'].includes(event.key)) {
         event.preventDefault();
         formatSelection(formatDict[event.key]);
     }
+    // if (event.ctrlKey && event.key.toLowerCase() === 'r') {
+    //     event.preventDefault();
+    // }
 });

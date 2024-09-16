@@ -157,23 +157,32 @@
     <button id="addCodeButton">Créer un nouveau code parent</button>
     <button id="addSubCodeButton">Créer un nouveau code enfant</button>
   </div>
+  <div id="contextMenu" class="context-menu">
+    <ul>
+      <li id="contextMenuCopy">Copier</li>
+      <li id="contextMenuPaste">Coller</li>
+      <li id="contextMenuCut">Couper</li>
+    </ul>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/lib/codemirror.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.13/mode/markdown/markdown.js"></script>
 
   <script src="./js/renderer.js"></script>
-  <script src="./js/shortcuts.js"></script>
   <script src="./js/menuBar.js"></script>
   <script src="./js/windowButtons.js"></script>
   <!-- <script src="./js/search.js"></script> -->
-  <!-- <script src="./js/quickActions.js"></script> -->
   <script src="./js/fileTree.js"></script>
   <script src="./js/tabs.js"></script>
   <!-- <script src="./js/editor.js"></script> --> <!-- EMPTY. PUT TINYMCE HERE? -->
-  <script src="./js/codes.js"></script>
   <script src="./js/contextBar.js"></script>
+  <script src="./js/codingBar.js"></script>
+  <script src="./js/coding.js"></script>
+  <!-- <script src="./js/codeTree.js"></script> -->
   <!-- <script src="./js/footer.js"></script> -->
-  <!-- <script src="./js/contextMenus.js"></script> -->
+  <script src="./js/contextMenu.js"></script>
+  <!-- <script src="./js/quickActions.js"></script> -->
+  <script src="./js/shortcuts.js"></script>
 </body>
 
 </html>

@@ -47,5 +47,12 @@ contextBridge.exposeInMainWorld('api', {
         const content = await ipcRenderer.invoke('read-file', filePath);
         return content;
     },
-    onWindowFocusChange: (callback) => ipcRenderer.on('window-focus', callback)
+    onWindowFocusChange: (callback) => ipcRenderer.on('window-focus', callback),
+    saveCodesJSON: async (projectName, codesJSON) => {
+        await ipcRenderer.invoke('save-codes', projectName, codesJSON);
+    },
+    loadCodesJSON: async (projectName) => {
+        const codesJSON = await ipcRenderer.invoke('load-codes', projectName);
+        return codesJSON;
+    },
 });

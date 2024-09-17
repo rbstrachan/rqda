@@ -187,9 +187,17 @@ function activateTab(tab) {
 
 	tab.element.classList.add('active-tab');
 	tab.editor.focus();
+
+	applyHighlightsToCodedText();
 }
 
 async function addNewTab(title = 'New Document', content = '', filePath = '') {
+	const existingTab = tabs.find((tab) => tab.path === filePath);
+	if (existingTab) {
+		activateTab(existingTab);
+		return;
+	}
+
 	const newTab = new Tab(`tab${tabs.length + 1}`, title, content, filePath);
 	tabs.push(newTab);
 

@@ -494,9 +494,12 @@ generateMenus(menuStructure);
 
 // list of menu button functions
 let currentProjectDirectory;
+let currentProjectTitle;
 window.api.receive('open-project', (folderPath) => {
     currentProjectDirectory = folderPath;
+    currentProjectTitle = folderPath.split('/').pop();
     openProjectInFileTree(folderPath);
+    loadCodesJSON(currentProjectTitle);
 });
 
 function openProjectInFileTree(folderPath) {

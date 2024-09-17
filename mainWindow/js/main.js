@@ -263,6 +263,18 @@ ipcMain.handle('read-file', async (event, filePath) => {
 	return content;
 });
 
+ipcMain.handle('save-codes', (event, projectName, codesJSON) => {
+	fs.writeFileSync(path.join(codesPath, `${projectName}.json`), JSON.stringify(codesJSON));
+});
+
+ipcMain.handle('load-codes', (event, projectName) => {
+	const filePath = path.join(codesPath, `${projectName}.json`);
+	if (fs.existsSync(filePath)) {
+		const data = fs.readFileSync(filePath, 'utf-8');
+		return JSON.parse(data);
+	}
+});
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.

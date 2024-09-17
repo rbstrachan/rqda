@@ -11,11 +11,11 @@ function processCode() {
 
     createCode(codingBarInputValue, cursorSelection, activeTab.path);
 
-    const code = codesJSON.codes.find(code => code.name === normalizeCodeName(codingBarInputValue));
+    const code = codesJSON.codes.find(code => code.name === normalize(codingBarInputValue));
     const excerpt = code.codedExcerpts[code.codedExcerpts.length - 1];
     const marker = highlightCodedText(activeTab.editor, excerpt.start, excerpt.end);
 
-    excerpt.marker = marker;
+    // excerpt.marker = marker;
 }
 
 function getActiveTab() {
@@ -23,7 +23,7 @@ function getActiveTab() {
 }
 
 function createCode(codeName, excerpt, filePath) {
-    const normalisedCodeName = normalizeCodeName(codeName);
+    const normalisedCodeName = normalize(codeName);
 
     let code = codesJSON.codes.find(code => code.name === normalisedCodeName);
 
@@ -40,8 +40,40 @@ function createCode(codeName, excerpt, filePath) {
         id: Date.now(),
         start: excerpt.start,
         end: excerpt.end,
-        marker: null,
+        // marker: null,
         filePath: filePath
+    });
+
+    saveCodesJSON(normalize(currentProjectTitle), codesJSON);
+}
+
+function saveCodesJSON(projectName, codesJSON) {
+    window.api.saveCodesJSON(projectName, codesJSON);
+}
+
+async function loadCodesJSON(projectName) {
+    const result = await window.api.loadCodesJSON(normalize(projectName));
+    if (result) {
+        codesJSON = result;
+        console.log(codesJSON);
+    }
+}
+
+function applyHighlightsToCodedText() {
+    const activeTab = getActiveTab();
+    const codedExcerpts = [];
+
+    codesJSON.codes.forEach(code => {
+        code.codedExcerpts.forEach(excerpt => {
+            if (excerpt.filePath === activeTab.path) {
+                codedExcerpts.push(excerpt);
+            }
+        });
+    });
+
+    console.log(codedExcerpts);
+    codedExcerpts.forEach(excerpt => {
+        highlightCodedText(activeTab.editor, excerpt.start, excerpt.end);
     });
 }
 
@@ -53,10 +85,10 @@ function highlightCodedText(editor, start, end) {
     return marker;
 }
 
-function normalizeCodeName(codeName) {
-    return codeName.replace(/\s+/g, '_');
+function normalize(text) {
+    return text.replace(/\s+/g, '-');
 }
 
-function denormalizeCodeName(codeName) {
-    return codeName.replace(/_/g, ' ');
+function denormalize(text) {
+    return text.replace(/-/g, ' ');
 }

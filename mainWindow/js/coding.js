@@ -10,12 +10,12 @@ function processCode() {
     };
 
     createCode(codingBarInputValue, cursorSelection, activeTab.path);
+    updateUI();
+}
 
-    const code = codesJSON.codes.find(code => code.name === normalize(codingBarInputValue));
-    const excerpt = code.codedExcerpts[code.codedExcerpts.length - 1];
-    const marker = highlightCodedText(activeTab.editor, excerpt.start, excerpt.end);
-
-    // excerpt.marker = marker;
+function updateUI() {
+    applyHighlightsToCodedText();
+    // updateCodesList();
 }
 
 function getActiveTab() {
@@ -40,7 +40,7 @@ function createCode(codeName, excerpt, filePath) {
         id: Date.now(),
         start: excerpt.start,
         end: excerpt.end,
-        // marker: null,
+        // marker: marker,
         filePath: filePath
     });
 
@@ -55,13 +55,14 @@ async function loadCodesJSON(projectName) {
     const result = await window.api.loadCodesJSON(normalize(projectName));
     if (result) {
         codesJSON = result;
-        console.log(codesJSON);
     }
 }
 
 function applyHighlightsToCodedText() {
     const activeTab = getActiveTab();
     const codedExcerpts = [];
+
+    activeTab.editor.getAllMarks().forEach(mark => mark.clear());
 
     codesJSON.codes.forEach(code => {
         code.codedExcerpts.forEach(excerpt => {
@@ -71,7 +72,6 @@ function applyHighlightsToCodedText() {
         });
     });
 
-    console.log(codedExcerpts);
     codedExcerpts.forEach(excerpt => {
         highlightCodedText(activeTab.editor, excerpt.start, excerpt.end);
     });
@@ -79,7 +79,6 @@ function applyHighlightsToCodedText() {
 
 function highlightCodedText(editor, start, end) {
     const marker = editor.markText(start, end, {
-        // className: 'cm-highlight'
         className: 'code-highlight'
     });
     return marker;

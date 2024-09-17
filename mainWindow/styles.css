@@ -87,7 +87,7 @@ nav.unfocused {
   background-color: #131313;
   border: 1px solid var(--border-color);
   border-top: none;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
   z-index: 1000;
   padding: 5px;
   width: auto;

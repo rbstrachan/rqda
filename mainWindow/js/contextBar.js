@@ -8,6 +8,10 @@ let barLeft;
 let barTop;
 
 editorContainer.addEventListener('mouseup', function (event) {
+    if (!getActiveTab().path) {
+        return;
+    }
+
     const selectedText = window.getSelection().toString();
     if (selectedText.length > 0) {
         const mouseX = event.clientX;

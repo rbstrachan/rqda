@@ -275,6 +275,30 @@ ipcMain.handle('load-codes', (event, projectName) => {
 	}
 });
 
+ipcMain.handle('show-item-in-folder', (event, filePath) => {
+	const folderPath = path.dirname(filePath);
+	const command = os.platform() === 'win32' ? 'explorer' : 'open';
+	require('child_process').exec(`${command} ${folderPath}`);
+});
+
+ipcMain.handle('open-file-dialog', async (event, arg) => {
+	const result = await dialog.showOpenDialog({
+		properties: ['openFile', 'multiSelections'],
+		filters: [
+			{ name: 'Fichiers Markdown', extensions: ['md'] }
+		]
+	});
+	return result;
+});
+
+ipcMain.handle('copy-files-to-project', async (event, files, projectPath) => {
+	files.forEach(file => {
+		const fileName = path.basename(file);
+		const newFilePath = path.join(projectPath, 'Documents', fileName);
+		fs.copyFileSync(file, newFilePath);
+	});
+});
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.

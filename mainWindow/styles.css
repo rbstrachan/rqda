@@ -3,7 +3,7 @@
 
 :root {
   --applicationName: 'QADDOE';
-  --applicationVersion: '1 (Beta)';
+  --applicationVersion: '0.26.0a';
   --font-family: 'Inter', sans-serif;
   --font-family-mono: 'Fira Code', monospace;
   --text-color: #DADADA;
@@ -692,6 +692,7 @@ li.directory>ul>li:hover>span {
   height: calc(100% - 1px) !important;
   width: 100%;
   font-size: 15px;
+  font-weight: 400;
   line-height: 1.25;
   padding-top: 5px;
   background-color: var(--base-color) !important;

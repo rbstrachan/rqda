@@ -82,6 +82,10 @@ function handleCodeItemButtonClick(action, code, codeElement) {
 }
 
 function renameCode(code, codeElement) {
+    if (!code) {
+        return;
+    }
+
     const nameSpan = codeElement.querySelector('span');
 
     const input = document.createElement('input');
@@ -125,6 +129,10 @@ function renameCode(code, codeElement) {
 }
 
 function deleteCode(code) {
+    if (!code) {
+        return;
+    }
+
     codesJSON.codes = codesJSON.codes.filter(c => c.id !== code.id);
     saveCodesJSON(normalize(currentProjectTitle), codesJSON);
     updateUI();
@@ -135,6 +143,10 @@ function deleteCode(code) {
 // }
 
 function openCode(code) {
+    if (!code) {
+        return;
+    }
+
     const excerptsList = code.codedExcerpts.map(excerpt => {
         return {
             extract: excerpt.extract,
@@ -146,14 +158,28 @@ function openCode(code) {
     let content = `# EXTRAITS CODÉS AVEC "${denormalize(code.name).toUpperCase()}"`;
 
     excerptsList.forEach(data => {
-        content += `\n\n**${data.filePath}**\t(${data.timeCoded})\n`;
+        content += `\n\n**${data.filePath}**\t(${data.timeCoded})\n\n`;
         content += `${data.extract}\n\nーーー`;
     });
 
     addNewTab(denormalize(code.name), content, null);
 }
 
-const renameIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DADADA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>';
-const deleteIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DADADA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>';
+function getActiveCode() {
+    const selectedCodeElement = getActiveCodeElement();
+    if (!selectedCodeElement) {
+        return null;
+    }
+
+    const codeName = selectedCodeElement.querySelector('span').textContent;
+    return codesJSON.codes.find(code => denormalize(code.name) === codeName);
+}
+
+function getActiveCodeElement() {
+    return document.querySelector('.code-item.selected');
+}
+
+const renameIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DADADA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-cursor-input"><path d="M5 4h1a3 3 0 0 1 3 3 3 3 0 0 1 3-3h1"/><path d="M13 20h-1a3 3 0 0 1-3-3 3 3 0 0 1-3 3H5"/><path d="M5 16H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1"/><path d="M13 8h7a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-7"/><path d="M9 7v10"/></svg>';
+const deleteIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DADADA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>';
 // const mergeIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DADADA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-merge"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg>';
 const openIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DADADA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>';

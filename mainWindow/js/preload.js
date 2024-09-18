@@ -46,4 +46,14 @@ contextBridge.exposeInMainWorld('api', {
         const codesJSON = await ipcRenderer.invoke('load-codes', projectName);
         return codesJSON;
     },
+    openExplorer(filePath) {
+        ipcRenderer.invoke('show-item-in-folder', filePath);
+    },
+    openFileDialog: async () => {
+        const result = await ipcRenderer.invoke('open-file-dialog');
+        return result;
+    },
+    copyFilesToProject: async (files, projectPath) => {
+        await ipcRenderer.invoke('copy-files-to-project', files, projectPath);
+    }
 });

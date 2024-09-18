@@ -39,7 +39,11 @@ document.addEventListener('keydown', function (event) {
         event.preventDefault();
         formatSelection(formatDict[event.key]);
     }
-    // if (event.ctrlKey && event.key.toLowerCase() === 'r') {
-    //     event.preventDefault();
-    // }
+    if (event.ctrlKey && event.key.toLowerCase() === 'r') {
+        event.preventDefault();
+    }
+    if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+        saveTabContentsToFile(getActiveTab());
+    }
 });

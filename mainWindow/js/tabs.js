@@ -247,6 +247,10 @@ function closeAllTabs() {
 }
 
 function saveTabContentsToFile(tab) {
+	if (!tab) {
+		return;
+	}
+
 	if (tab.path) {
 		tab.content = tab.editor.getValue();
 
@@ -257,12 +261,16 @@ function saveTabContentsToFile(tab) {
 	}
 }
 
-function autosaveTabContentsToFile() {
+function saveAllTabs() {
 	tabs.forEach((tab) => {
 		if (tab.path) {
 			saveTabContentsToFile(tab);
 		}
 	});
+}
+
+function autosaveTabContentsToFile() {
+	saveAllTabs();
 }
 
 setInterval(autosaveTabContentsToFile, 30000);
@@ -272,6 +280,8 @@ function showNoDocumentsMessage() {
 	message.id = 'noDocumentsMessage';
 	message.textContent = 'Aucun document n\'est actuellement ouvert.';
 	editorContainer.appendChild(message);
+
+	disableTabDependantButtons();
 }
 
 function hideNoDocumentsMessage() {
@@ -279,6 +289,8 @@ function hideNoDocumentsMessage() {
 	if (message) {
 		message.remove();
 	}
+
+	enableTabDependantButtons();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -287,4 +299,5 @@ document.addEventListener('DOMContentLoaded', () => {
 		'Bienvenue!',
 		'# Bienvenue dans QADDOE!\n\nPour commencer, fermez cet onglet puis ouvrez un document ou créez de nouveaux fichiers. Vous pouvez également importer un fichier existant.\n\nVotre travail sera enregistré automatiquement, chaque 30 secondes. Cependant, vous pouvez toujours sauvguarder manuellement en cliquant le bouton de sauvegarde en haut.\n\nPour fermer un onglet, cliquez sur le bouton \'×\' dans l\'onglet correspondant. Afin d\'éviter les pertes de données, les changements apportés au fichier seront enregistrés en même temps.\n\nPour coder un extrait de texte, selectionne-le puis cliquez sur le bouton \'coder cet extrait\'. Vouz verrez à droite une liste de tous vos codes, ainsi que des options pour les renommer ou les supprimer.\n\nPour plus d\'informations, consultez la documentation en ligne.\n\nMerci d\'utiliser QADDOE!'
 	);
+	disableTabDependantButtons();
 });

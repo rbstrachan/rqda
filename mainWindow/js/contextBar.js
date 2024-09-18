@@ -53,7 +53,7 @@ codeButton.addEventListener('click', () => {
 
 /* formatting and coding function definitions */
 function formatSelection(operation) {
-    const editor = document.querySelector('.CodeMirror').CodeMirror;
+    const editor = getActiveTab().editor
     const doc = editor.getDoc();
 
     const start = doc.getCursor('start');
@@ -72,6 +72,8 @@ function formatSelection(operation) {
         doc.markText(start, end, {
             className: `inner${operation}`,
         });
+        console.log(`text marked from ${start} to ${end} with ${operation}`);
+        console.log(start, end, operation, doc);
     }
 
     editor.focus();

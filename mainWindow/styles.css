@@ -726,11 +726,11 @@ li.directory>ul>li:hover>span {
 }
 
 .cm-header-2 {
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 
 .cm-header-3 {
-  font-size: 1.3em;
+  font-size: 1.25em;
 }
 
 .cm-header-4 {
@@ -828,7 +828,7 @@ li.directory>ul>li:hover>span {
   padding: 10px 0px 10px 10px;
   border: 2px solid var(--border-color);
   background: none;
-  cursor: pointer;
+  /* cursor: pointer; */
   color: var(--text-color);
   border-radius: 4px;
 }
@@ -908,7 +908,76 @@ li.directory>ul>li:hover>span {
   color: var(--text-color)
 }
 
-/* code item highlight on click color 007acc */
+.code-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 6px 0;
+  height: 24px;
+  color: var(--text-color);
+}
+
+.code-item:hover {
+  background-color: #363636;
+}
+
+.code-item.selected {
+  background-color: #007acc;
+  font-weight: 800;
+}
+
+.code-item span {
+  padding: 0 14px;
+  flex-grow: 1;
+}
+
+.buttons-container {
+  display: none;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.code-item:hover .buttons-container,
+.code-item.selected .buttons-container {
+  display: flex;
+}
+
+.code-item-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.code-item-button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.code-item-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.code-rename-input {
+  padding: 2px 4px;
+  margin: 0 6px;
+  background-color: #363636;
+  border: 2px solid #666;
+  border-radius: 4px;
+  width: calc(50%);
+  color: var(--text-color);
+}
+
+.code-rename-input:focus {
+  /* outline: none; */
+  border-color: #0161a1;
+}
 
 /* END MAINCONTENTSECTION CODES */
 /* START FOOTER */

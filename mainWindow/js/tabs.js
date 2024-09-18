@@ -188,7 +188,7 @@ function activateTab(tab) {
 	tab.element.classList.add('active-tab');
 	tab.editor.focus();
 
-	applyHighlightsToCodedText();
+	updateUI();
 }
 
 async function addNewTab(title = 'New Document', content = '', filePath = '') {

@@ -15,7 +15,7 @@ function processCode() {
 
 function updateUI() {
     applyHighlightsToCodedText();
-    // updateCodesList();
+    updateCodesList();
 }
 
 function getActiveTab() {
@@ -40,6 +40,7 @@ function createCode(codeName, excerpt, filePath) {
         id: Date.now(),
         start: excerpt.start,
         end: excerpt.end,
+        extract: getActiveTab().editor.getRange(excerpt.start, excerpt.end),
         // marker: marker,
         filePath: filePath
     });
@@ -56,6 +57,8 @@ async function loadCodesJSON(projectName) {
     if (result) {
         codesJSON = result;
     }
+
+    updateUI();
 }
 
 function applyHighlightsToCodedText() {

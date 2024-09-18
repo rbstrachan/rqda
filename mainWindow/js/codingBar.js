@@ -2,7 +2,7 @@ const codingBar = document.getElementById('codingBar');
 const codingBarInput = document.getElementById('codeInput');
 let codingBarInputValue;
 const codingBarNewParentButton = document.getElementById('addCodeButton');
-const codingBarNewSubcodeButton = document.getElementById('addSubCodeButton');
+// const codingBarNewSubcodeButton = document.getElementById('addSubCodeButton');
 
 function showCodeBar(barLeft, barTop) {
     codingBar.style.left = `${barLeft}px`;
@@ -28,11 +28,7 @@ codingBarNewParentButton.addEventListener('click', function () {
         return;
     }
 
-    // let editor = activeTab.editor;
     let codeName = codingBarInput.value.trim();
-
-    // let start = editor.getCursor("start");
-    // let end = editor.getCursor("end");
 
     processCode(codeName);
 

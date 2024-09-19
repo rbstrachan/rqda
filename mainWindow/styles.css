@@ -379,6 +379,26 @@ nav.unfocused {
 /* END TOPBARSECTION DETAILS */
 /* START TOPBARSECTION REQUETE */
 
+.topBarSection.requete {
+  display: flex;
+  align-items: center;
+  padding-bottom: 2px;
+}
+
+#saveButton {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 5px 6px;
+  border-radius: 4px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+#saveButton:hover {
+  background-color: #131313;
+}
+
 /* END TOPBARSECTION REQUETE */
 /* START TOPBARSECTION TESTAREA */
 

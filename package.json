@@ -16,6 +16,8 @@
     "codemirror": "^6.0.1",
     "directory-tree": "^3.5.2",
     "electron-reload": "^2.0.0-alpha.1",
+    "mammoth": "^1.8.0",
+    "pdf-parse": "^1.1.1",
     "tinymce": "^7.3.0"
   }
 }

@@ -4,6 +4,8 @@ const path = require('node:path')
 const os = require('node:os');
 const fs = require('node:fs');
 const dirTree = require('directory-tree');
+const mammoth = require('mammoth');
+const pdf = require('pdf-parse');
 const { homedir } = require('node:os');
 
 const appDataPath = path.join(app.getPath('documents'), 'QADDOE');
@@ -285,18 +287,59 @@ ipcMain.handle('open-file-dialog', async (event, arg) => {
 	const result = await dialog.showOpenDialog({
 		properties: ['openFile', 'multiSelections'],
 		filters: [
-			{ name: 'Fichiers Markdown & PDF', extensions: ['md', 'pdf'] }
+			{ name: 'Documents Text', extensions: ['md', 'pdf', 'docx'] }
 		]
 	});
 	return result;
 });
 
 ipcMain.handle('copy-files-to-project', async (event, files, projectPath) => {
-	files.forEach(file => {
+	for (const file of files) {
 		const fileName = path.basename(file);
-		const newFilePath = path.join(projectPath, 'Documents', fileName);
-		fs.copyFileSync(file, newFilePath);
-	});
+		const ext = path.extname(file).toLowerCase();
+		const baseName = path.basename(fileName, ext);
+		const documentsPath = path.join(projectPath, 'Documents');
+
+		if (ext === '.docx') {
+			try {
+				const result = await mammoth.convertToMarkdown({ path: file });
+				const markdown = result.value
+					.replace(/\\([*_`\-.()])/g, '$1')
+					.replace(/__/g, '**')
+					.replace(/<a\s+id="[^"]*"><\/a>/g, '')
+					.replace(/!\[[\s\S]*?\]\(data:image\/[^\)]+\)/g, '')
+					.trim();
+
+				const newMarkdownFileName = `${baseName}.md`;
+				const newMarkdownFilePath = path.join(documentsPath, newMarkdownFileName);
+
+				fs.writeFileSync(newMarkdownFilePath, markdown, 'utf8');
+			} catch (error) {
+				console.error(`Failed to convert ${fileName} to Markdown:`, error);
+			}
+		} else if (ext === '.pdf') {
+			try {
+				const dataBuffer = fs.readFileSync(file);
+				const data = await pdf(dataBuffer);
+
+				let text = data.text.trim();
+
+				const newMarkdownFileName = `${baseName}.md`;
+				const newMarkdownFilePath = path.join(documentsPath, newMarkdownFileName);
+
+				fs.writeFileSync(newMarkdownFilePath, text, 'utf8');
+			} catch (error) {
+				console.error(`Failed to extract text from ${fileName}:`, error);
+			}
+		} else {
+			try {
+				const newFilePath = path.join(documentsPath, fileName);
+				fs.copyFileSync(file, newFilePath);
+			} catch (error) {
+				console.error(`Failed to copy ${fileName}:`, error);
+			}
+		}
+	}
 });
 
 // This method will be called when Electron has finished

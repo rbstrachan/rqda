@@ -137,6 +137,11 @@ function deleteCode(code) {
     codesJSON.codes = codesJSON.codes.filter(c => c.id !== code.id);
     saveCodesJSON(normalize(currentProjectTitle), codesJSON);
     loadCodesJSON(currentProjectTitle);
+
+    if (getActiveTab() && !checkIfFileHasCodes(getActiveTab().path)) {
+        getActiveTab().editor.setOption('readOnly', false);
+        getActiveTab().editor.getWrapperElement().classList.remove('cm-readonly');
+    }
 }
 
 // function mergeCode(code) {

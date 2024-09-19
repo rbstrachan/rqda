@@ -46,6 +46,8 @@ function createCode(codeName, excerpt, filePath) {
     });
 
     saveCodesJSON(normalize(currentProjectTitle), codesJSON);
+
+    getActiveTab().editor.setOption('readOnly', true);
 }
 
 function saveCodesJSON(projectName, codesJSON) {

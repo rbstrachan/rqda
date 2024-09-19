@@ -141,7 +141,9 @@ function createTabElement(tab) {
 	});
 
 	tabElement.addEventListener('click', () => {
-		activateTab(tab);
+		if (!tab.element.classList.contains('active-tab')) {
+			activateTab(tab);
+		}
 	});
 
 	tab.element = tabElement;
@@ -183,6 +185,14 @@ function activateTab(tab) {
 			// theme: 'dracula',
 			lineWrapping: true,
 		});
+	}
+
+	if (tab.path && checkIfFileHasCodes(tab.path) || !tab.path) {
+		tab.editor.setOption('readOnly', true);
+		tab.editor.getWrapperElement().classList.add('cm-readonly');
+	} else {
+		tab.editor.setOption('readOnly', false);
+		tab.editor.getWrapperElement().classList.remove('cm-readonly');
 	}
 
 	tab.element.classList.add('active-tab');
@@ -275,6 +285,14 @@ function autosaveTabContentsToFile() {
 
 setInterval(autosaveTabContentsToFile, 30000);
 
+function checkIfFileHasCodes(filePath) {
+	const fileHasCodes = codesJSON.codes.some((code) => {
+		return code.codedExcerpts.some((excerpt) => excerpt.filePath === filePath);
+	});
+
+	return fileHasCodes;
+}
+
 function showNoDocumentsMessage() {
 	const message = document.createElement('div');
 	message.id = 'noDocumentsMessage';
@@ -297,7 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	populateTabsContainer();
 	addNewTab(
 		'Bienvenue!',
-		'# Bienvenue dans QADDOE!\n\nPour commencer, fermez cet onglet puis ouvrez un document ou créez de nouveaux fichiers. Vous pouvez également importer un fichier existant.\n\nVotre travail sera enregistré automatiquement, chaque 30 secondes. Cependant, vous pouvez toujours sauveguarder manuellement en cliquant le bouton de sauvegarde en haut.\n\nPour fermer un onglet, cliquez sur le bouton \'×\' dans l\'onglet correspondant. Afin d\'éviter les pertes de données, les changements apportés au fichier seront enregistrés en même temps.\n\nPour coder un extrait de texte, selectionnez-le puis cliquez sur le bouton \'coder cet extrait\'. Vouz verrez à droite une liste de tous vos codes, ainsi que des options pour les renommer ou les supprimer.\n\nPour plus d\'informations, consultez la documentation en ligne. (lien à venir)\n\nMerci d\'utiliser QADDOE!'
+		'# Bienvenue dans QADDOE!\n\nPour commencer, fermez cet onglet puis ouvrez un document ou créez de nouveaux fichiers. Vous pouvez également importer un fichier existant.\n\nVotre travail sera enregistré automatiquement, chaque 30 secondes. Cependant, vous pouvez toujours sauveguarder manuellement en cliquant le bouton de sauvegarde en haut.\n\nPour fermer un onglet, cliquez sur le bouton \'×\' dans l\'onglet correspondant. Afin d\'éviter les pertes de données, les changements apportés au fichier seront enregistrés en même temps.\n\nPour coder un extrait de texte, selectionnez-le puis cliquez sur le bouton \'coder cet extrait\'. Vouz verrez à droite une liste de tous vos codes, ainsi que des options pour les renommer et les supprimer.\n\n## CAUTION!\nEn raison d\'un bogue dans le gestionnaire de codage, les documents ne peuvent **pas** être modifiés après le début du codage. Ce problème sera reglé dans les versions qui suivent.\n\nPour les fichiers Word et PDF, ce logiciel prend en charge seulement le texte ce qui exclut les configurations automatiques (exemple: numérotation, table des matière, hyperlien, etc.) et les images.\nLes tableaux quant à eux sont réorganisés automatiquement de façon textuelle.\n\nPour plus d\'informations, consultez la documentation en ligne. (lien à venir)\n\nMerci d\'utiliser QADDOE!'
 	);
+
 	disableTabDependantButtons();
 });

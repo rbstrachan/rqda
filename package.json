@@ -4,20 +4,32 @@
   "description": "une application pour effectuer facilement les projets de recherches qualitatives",
   "keywords": [],
   "main": "./mainWindow/js/main.js",
-  "version": "0.30.0a",
+  "version": "0.32.0a",
   "author": "reiwa",
   "scripts": {
-    "start": "electron --enable-transparent-visuals ."
+    "start": "electron --enable-transparent-visuals .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.qaddoe",
+    "productName": "QADDOE",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "res/icone.png"
+    }
   },
   "devDependencies": {
-    "electron": "^31.2.1"
+    "electron": "^31.2.1",
+    "electron-builder": "^25.0.5"
   },
   "dependencies": {
     "codemirror": "^6.0.1",
     "directory-tree": "^3.5.2",
     "electron-reload": "^2.0.0-alpha.1",
     "mammoth": "^1.8.0",
-    "pdf-parse": "^1.1.1",
-    "tinymce": "^7.3.0"
+    "pdf-parse": "^1.1.1"
   }
 }

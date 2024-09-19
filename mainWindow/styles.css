@@ -310,10 +310,16 @@ nav.unfocused {
 /* START TOPBARSECTION LOGO */
 
 .topBarSection.logo {
-  /* width: 55px;
-  height: 52px; */
-  /* padding-left: 3px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#logo {
+  width: 45px;
+  height: 45px;
   content: url('../res/qLogo.png');
+  filter: invert(0.5);
 }
 
 /* END TOPBARSECTION LOGO */

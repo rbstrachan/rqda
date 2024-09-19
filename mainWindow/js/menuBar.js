@@ -564,7 +564,7 @@ let currentProjectDirectory;
 let currentProjectTitle;
 window.api.receive('open-project', (folderPath) => {
     currentProjectDirectory = folderPath;
-    currentProjectTitle = folderPath.split('/').pop();
+    currentProjectTitle = folderPath.split(/[\//]/).pop();
     openProjectInFileTree(folderPath);
     loadCodesJSON(currentProjectTitle);
 });

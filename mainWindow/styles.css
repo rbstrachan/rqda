@@ -309,12 +309,12 @@ nav.unfocused {
 /* END TOPBAR & MAINCONTENT -- GENERAL STYLES */
 /* START TOPBARSECTION LOGO */
 
-/* .topBarSection.logo {
-  width: 55px;
-  height: 52px;
-  padding-left: 3px;
+.topBarSection.logo {
+  /* width: 55px;
+  height: 52px; */
+  /* padding-left: 3px; */
   content: url('../res/qLogo.png');
-} */
+}
 
 /* END TOPBARSECTION LOGO */
 /* START TOPBARSECTION DETAILS */

@@ -1,10 +1,10 @@
 {
   "name": "qaddoe",
-  "productName": "qaddoe",
-  "description": "une application pour effectuer facilement des projets de recherches qualitatives",
+  "productName": "QADDOE",
+  "description": "une application pour effectuer facilement les projets de recherches qualitatives",
   "keywords": [],
   "main": "./mainWindow/js/main.js",
-  "version": "1.0.0",
+  "version": "0.26.0a",
   "author": "reiwa",
   "scripts": {
     "start": "electron --enable-transparent-visuals ."

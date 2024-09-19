@@ -10,7 +10,7 @@ function processCode() {
     };
 
     createCode(codingBarInputValue, cursorSelection, activeTab.path);
-    updateUI();
+    loadCodesJSON(currentProjectTitle);
 }
 
 function updateUI() {

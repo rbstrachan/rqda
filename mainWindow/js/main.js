@@ -285,7 +285,7 @@ ipcMain.handle('open-file-dialog', async (event, arg) => {
 	const result = await dialog.showOpenDialog({
 		properties: ['openFile', 'multiSelections'],
 		filters: [
-			{ name: 'Fichiers Markdown', extensions: ['md'] }
+			{ name: 'Fichiers Markdown & PDF', extensions: ['md', 'pdf'] }
 		]
 	});
 	return result;

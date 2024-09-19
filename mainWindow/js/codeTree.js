@@ -109,6 +109,7 @@ function renameCode(code, codeElement) {
 
                 code.name = normalize(newName);
                 saveCodesJSON(normalize(currentProjectTitle), codesJSON);
+                loadCodesJSON(currentProjectTitle);
             }
 
             updateCodesList(code.id);
@@ -135,7 +136,7 @@ function deleteCode(code) {
 
     codesJSON.codes = codesJSON.codes.filter(c => c.id !== code.id);
     saveCodesJSON(normalize(currentProjectTitle), codesJSON);
-    updateUI();
+    loadCodesJSON(currentProjectTitle);
 }
 
 // function mergeCode(code) {
@@ -148,9 +149,11 @@ function openCode(code) {
     }
 
     const excerptsList = code.codedExcerpts.map(excerpt => {
+        const relPath = excerpt.filePath.replace(currentProjectDirectory, '').slice(1);
+
         return {
             extract: excerpt.extract,
-            filePath: excerpt.filePath,
+            filePath: relPath,
             timeCoded: new Date(excerpt.id).toLocaleString()
         }
     });

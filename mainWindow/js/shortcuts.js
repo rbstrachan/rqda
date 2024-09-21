@@ -2,7 +2,7 @@ const formatDict = {
     'b': 'Bold',
     'i': 'Italic',
     'u': 'Underline',
-    's': 'Strike',
+    // 's': 'Strike',
     // 'Subscript': 'subscript',
     // 'Superscript': 'superscript',
     // 'JustifyLeft': 'justifyLeft',
@@ -35,7 +35,7 @@ const formatDict = {
 };
 
 document.addEventListener('keydown', function (event) {
-    if (event.ctrlKey && ['b', 'i', 'u', 's'].includes(event.key)) {
+    if (event.ctrlKey && ['b', 'i', 'u'].includes(event.key)) {
         event.preventDefault();
         formatSelection(formatDict[event.key]);
     }

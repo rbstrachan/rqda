@@ -38,6 +38,9 @@ contextBridge.exposeInMainWorld('api', {
         const content = await ipcRenderer.invoke('read-file', filePath);
         return content;
     },
+    deleteFile: async (filePath) => {
+        await ipcRenderer.invoke('delete-file', filePath);
+    },
     onWindowFocusChange: (callback) => ipcRenderer.on('window-focus', callback),
     saveCodesJSON: async (projectName, codesJSON) => {
         await ipcRenderer.invoke('save-codes', projectName, codesJSON);

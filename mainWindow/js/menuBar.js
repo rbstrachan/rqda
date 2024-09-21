@@ -41,7 +41,7 @@ const menuStructure = {
             { text: 'Envoyer par email', icon: 'send', accelerator: '' },*/
             'separator',
             { text: 'Fermer', icon: 'circle-x', accelerator: 'Ctrl+W' },
-            /*{ text: 'Supprimer', icon: 'delete', accelerator: '' }*/
+            { text: 'Supprimer', icon: 'delete', accelerator: '' }
         ],
     },
     'Édition': {
@@ -312,8 +312,12 @@ function handleMenuAction(menu, action) {
                 case 'Fermer':
                     closeTab(getActiveTab());
                     break;
-                // case 'Supprimer':
-                //     break;
+                case 'Supprimer':
+                    window.api.deleteFile(getActiveTab().path).then(() => {
+                        closeTabWithoutSave(getActiveTab());
+                        regenerateFileTree();
+                    });
+                    break;
                 default:
                     console.log(`No action defined for ${action} under ${menu}`);
             }

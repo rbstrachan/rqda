@@ -242,6 +242,24 @@ function closeTab(tab) {
 	}
 }
 
+function closeTabWithoutSave(tab) {
+	const index = tabs.indexOf(tab);
+
+	if (index !== -1) {
+		tabs.splice(index, 1);
+		tab.element.remove();
+		if (tab.editor) {
+			tab.editor.getWrapperElement().remove();
+		}
+
+		if (tabs.length > 0) {
+			activateTab(tabs[Math.max(index - 1, 0)]);
+		} else {
+			showNoDocumentsMessage();
+		}
+	}
+}
+
 // ADD FUNCIONALITY TO SAVE TAB CONTENTS TO FILE
 function closeAllTabs() {
 	if (tabs.length) {

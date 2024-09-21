@@ -205,6 +205,16 @@ ipcMain.on('save-file', (event, data) => {
 	});
 });
 
+ipcMain.handle('delete-file', async (event, filePath) => {
+	try {
+		const trash = await import('trash');
+		await trash.default(filePath);
+		console.log('File moved to trash:', filePath);
+	} catch (err) {
+		console.error('Error moving file to trash:', err);
+	}
+});
+
 ipcMain.handle('open-folder-dialog', async (event, arg) => {
 	const result = await dialog.showOpenDialog({
 		properties: ['openDirectory']

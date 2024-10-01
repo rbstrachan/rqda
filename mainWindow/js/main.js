@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, dialog, screen } = require('electron')
-const path = require('node:path')
+const { app, BrowserWindow, ipcMain, dialog, screen } = require('electron');
+const path = require('node:path');
 const os = require('node:os');
 const fs = require('node:fs');
 const dirTree = require('directory-tree');
@@ -209,7 +209,7 @@ ipcMain.handle('delete-file', async (event, filePath) => {
 	try {
 		const trash = await import('trash');
 		await trash.default(filePath);
-		console.log('File moved to trash:', filePath);
+		// console.log('File moved to trash:', filePath);
 	} catch (err) {
 		console.error('Error moving file to trash:', err);
 	}

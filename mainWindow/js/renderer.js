@@ -37,7 +37,6 @@ saveButton.addEventListener('click', () => {
     saveTabContentsToFile(getActiveTab());
 });
 
-
 // const signalerProbleme = document.getElementById('statusBarCenter');
 // signalerProbleme.addEventListener('click', () => {
 //     console.log('l\'utilisateur a signalé un problème');

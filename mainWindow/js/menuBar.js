@@ -212,6 +212,7 @@ function disableTabDependantButtons() {
     disableMenuButton('Enregistrer');
     disableMenuButton('Afficher l\'emplacement');
     disableMenuButton('Fermer');
+    disableMenuButton('Supprimer');
     disableMenuButton('Copier');
     disableMenuButton('Coller');
     disableMenuButton('Couper');
@@ -223,6 +224,7 @@ function enableTabDependantButtons() {
     enableMenuButton('Enregistrer');
     enableMenuButton('Afficher l\'emplacement');
     enableMenuButton('Fermer');
+    enableMenuButton('Supprimer');
     enableMenuButton('Copier');
     enableMenuButton('Coller');
     enableMenuButton('Couper');
@@ -568,7 +570,7 @@ let currentProjectDirectory;
 let currentProjectTitle;
 window.api.receive('open-project', (folderPath) => {
     currentProjectDirectory = folderPath;
-    currentProjectTitle = folderPath.split(/[\//]/).pop();
+    currentProjectTitle = folderPath.split('\\').pop();
     openProjectInFileTree(folderPath);
     loadCodesJSON(currentProjectTitle);
 });
@@ -579,7 +581,6 @@ function openProjectInFileTree(folderPath) {
         clearDirectoryTree();
         windowTitleStyle.setProperty('--projectTitle', `"${projectTitle}" " ・ "`);
         renderFileTree(document.getElementById('fileTree'), directoryTree);
-        enableMenuButton('Nouveau projet');
     });
 }
 

@@ -72,8 +72,8 @@ function formatSelection(operation) {
         doc.markText(start, end, {
             className: `inner${operation}`,
         });
-        console.log(`text marked from ${start} to ${end} with ${operation}`);
-        console.log(start, end, operation, doc);
+        // console.log(`text marked from ${start} to ${end} with ${operation}`);
+        // console.log(start, end, operation, doc);
     }
 
     editor.focus();

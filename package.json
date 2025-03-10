@@ -4,7 +4,7 @@
   "description": "une application pour effectuer facilement les projets de recherches qualitatives",
   "keywords": [],
   "main": "./mainWindow/js/main.js",
-  "version": "0.32.0a",
+  "version": "0.36",
   "author": "reiwa",
   "scripts": {
     "start": "electron --enable-transparent-visuals .",

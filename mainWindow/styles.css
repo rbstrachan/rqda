@@ -3,7 +3,7 @@
 
 :root {
   --applicationName: 'QADDOE';
-  --applicationVersion: '0.37a';
+  --applicationVersion: '0.38a';
   --font-family: 'Inter', sans-serif;
   --font-family-mono: 'Fira Code', monospace;
   --text-color: #DADADA;
@@ -932,9 +932,24 @@ li.directory>ul>li:hover>span {
 #codesList {
   overflow-y: auto;
   overflow-x: hidden;
-  /* height: calc(100% - 39px);
-  color: #B3B3B3;
-  padding-left: 14px; */
+  height: calc(100% - 39px);
+}
+
+#codesList::-webkit-scrollbar {
+  width: 5px;
+}
+
+#codesList::-webkit-scrollbar-thumb {
+  background-color: #424242;
+  border-radius: 4px;
+}
+
+#codesList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#codesList::-webkit-scrollbar-button {
+  display: none;
 }
 
 .code-highlight {

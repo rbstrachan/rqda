@@ -585,7 +585,7 @@ function openProjectInFileTree(folderPath) {
 }
 
 function openEmailProvider(reason = null) {
-    const email = 'magma-uncrown-even@duck.com';
+    const email = 'qaddoe@reiwa.ca';
     let version = getComputedStyle(document.documentElement).getPropertyValue('--applicationVersion').trim();
     version = version.substring(1, version.length - 1);
     let subject = encodeURIComponent(`[QADDOE v${version}]`);

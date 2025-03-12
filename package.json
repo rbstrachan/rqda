@@ -4,8 +4,8 @@
   "description": "une application pour effectuer facilement les projets de recherches qualitatives",
   "keywords": [],
   "main": "./mainWindow/js/main.js",
-  "version": "0.38.0a",
-  "author": "reiwa",
+  "version": "0.39.0a",
+  "author": "Reiwa",
   "scripts": {
     "start": "electron --enable-transparent-visuals .",
     "build": "electron-builder"
@@ -18,7 +18,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "res/icone.ico"
+      "icon": "res/iconeRounded.ico"
     }
   },
   "devDependencies": {

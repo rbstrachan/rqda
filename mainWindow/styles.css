@@ -3,7 +3,7 @@
 
 :root {
   --applicationName: 'QADDOE';
-  --applicationVersion: '0.38a';
+  --applicationVersion: '0.39a';
   --font-family: 'Inter', sans-serif;
   --font-family-mono: 'Fira Code', monospace;
   --text-color: #DADADA;
@@ -953,7 +953,7 @@ li.directory>ul>li:hover>span {
 }
 
 .code-highlight {
-  background-color: rgba(105, 228, 101, 1);
+  background-color: rgb(64, 155, 61);
   color: var(--base-color) !important;
   border-radius: 2px;
 }

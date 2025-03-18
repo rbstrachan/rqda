@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain, dialog, screen } = require('electron');
 const path = require('node:path');
 const os = require('node:os');
 const fs = require('node:fs');
-const dirTree = require('directory-tree');
+const dirTree = require('directory-tree'); // update to use --normalize-path?
 const mammoth = require('mammoth');
 const pdf = require('pdf-parse');
 const { homedir } = require('node:os');
@@ -75,7 +75,7 @@ async function createApplicationWindows() {
 			fs.writeFileSync(settingsPath, JSON.stringify({}));
 		}
 
-		// show the projectCreen window
+		// show the projectScreen window
 		projectScreen.show();
 	}
 

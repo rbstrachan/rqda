@@ -105,3 +105,45 @@ function displayProjectInputInfoScreen() {
         document.getElementById('newProjectButtonContainer').style.marginRight = `${230 - event.target.value.length * 7.5}px`;
     });
 }
+
+// fonction pour récupérer une variable CSS depuis un fichier
+async function getCSSVariableFromFile(filePath, variableName) {
+    try {
+        const response = await fetch(filePath);
+        const cssText = await response.text();
+
+        const regex = new RegExp(`--${variableName}:\\s*["']?([^;"']+)["']?;`);
+        const match = cssText.match(regex);
+
+        return match ? match[1].trim() : null;
+    } catch (error) {
+        console.error(`Erreur lors de la lecture du fichier CSS : ${error}`);
+        return null;
+    }
+}
+
+// mettre à jour le contenu du footer avec la version, le nom de l'application et l'année
+(async () => {
+    const appVersion = await getCSSVariableFromFile('../mainWindow/styles.css', 'applicationVersion');
+    const appName = await getCSSVariableFromFile('../mainWindow/styles.css', 'applicationName');
+    const currentYear = new Date().getFullYear();
+
+    const footerTextElement = document.getElementById('footerText');
+    if (footerTextElement) {
+        const nameSpan = footerTextElement.querySelector('.name');
+        const versionSpan = footerTextElement.querySelector('.version');
+        const yearSpan = footerTextElement.querySelector('.year');
+
+        if (nameSpan && appName) {
+            nameSpan.textContent = appName;
+        }
+
+        if (versionSpan && appVersion) {
+            versionSpan.textContent = `v${appVersion} (Alpha)`;
+        }
+
+        if (yearSpan) {
+            yearSpan.textContent = currentYear;
+        }
+    }
+})();

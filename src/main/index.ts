@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from "electron";
 import { existsSync } from "fs";
 import { join } from "path";
 import { electronApp, is } from "@electron-toolkit/utils";
-import icon from "../../resources/icon.png?asset";
+import icon from "../../resources/iconeRounded.png?asset";
 import {
   getVersions,
   triggerIPC,

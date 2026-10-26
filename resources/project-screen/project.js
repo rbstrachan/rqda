@@ -3,7 +3,7 @@ const createNewProjectButton = document.getElementById('newProjectButtonContaine
 const projectNameInput = document.getElementById('newProjectNameInput');
 
 const APP_NAME = 'QADDOE';
-const APP_VERSION = '0.40.0a';
+const APP_VERSION = '1.57';
 
 /** @type {Record<string, string>} */
 let strings = {
@@ -177,7 +177,7 @@ function displayProjectInputInfoScreen() {
         const yearSpan = footerTextElement.querySelector('.year');
 
         if (nameSpan) nameSpan.textContent = APP_NAME;
-        if (versionSpan) versionSpan.textContent = `v${APP_VERSION} (Alpha)`;
+        if (versionSpan) versionSpan.textContent = `v${APP_VERSION}`;
         if (yearSpan) yearSpan.textContent = String(currentYear);
     }
 })();

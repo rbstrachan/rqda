@@ -1,7 +1,7 @@
 {
   "name": "qaddoe",
   "productName": "QADDOE",
-  "version": "1.57.0",
+  "version": "1.62.0",
   "description": "une application puissante pour effectuer facilement les projets de recherches qualitatives",
   "main": "./out/main/index.js",
   "author": "Reiwa Software Labs",
@@ -30,7 +30,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "res/iconeRounded.ico"
+      "icon": "resources/iconeRounded.ico"
     }
   },
   "dependencies": {

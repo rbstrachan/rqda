@@ -2,12 +2,60 @@ let isNamingProject = false;
 const createNewProjectButton = document.getElementById('newProjectButtonContainer');
 const projectNameInput = document.getElementById('newProjectNameInput');
 
+const APP_NAME = 'QADDOE';
+const APP_VERSION = '0.40.0a';
+
+/** @type {Record<string, string>} */
+let strings = {
+  welcomeTitle: 'Bienvenue!',
+  welcomeBlurb1: "Ceci est un logiciel de recherche qualitative qui vous permet de coder et d'analyser des données textuelles.",
+  welcomeBlurb2: 'Créez un nouveau projet ou ouvrez un projet existant pour commencer.',
+  projectNamePlaceholder: 'Nom du projet',
+  createNewProject: 'Créer un nouveau projet',
+  open: 'Ouvrir',
+  createdOn: 'créé le {{date}}',
+  nameProjectTitle: 'Nommer votre projet',
+  nameProjectBlurb: 'Entrez le nom de votre projet puis cliquez sur créer pour commencer.',
+  createProject: 'Créer le projet',
+  createProjectNamed: "Créer le projet '{{name}}'",
+  enterNameAlert: 'Veuillez entrer un nom de projet.',
+};
+
+function interpolate(template, vars) {
+  return template.replace(/\{\{(\w+)\}\}/g, (_, key) =>
+    vars[key] != null ? String(vars[key]) : `{{${key}}}`
+  );
+}
+
+function applyStaticStrings() {
+  const title = document.getElementById('welcomeTextTitle');
+  const blurb1 = document.getElementById('welcomeTextBlurb1');
+  const blurb2 = document.getElementById('welcomeTextBlurb2');
+  const createText = document.getElementById('newProjectButtonText');
+
+  if (title) title.textContent = strings.welcomeTitle;
+  if (blurb1) blurb1.textContent = strings.welcomeBlurb1;
+  if (blurb2) {
+    blurb2.textContent = strings.welcomeBlurb2;
+    blurb2.style.display = '';
+  }
+  if (projectNameInput) {
+    projectNameInput.placeholder = strings.projectNamePlaceholder;
+  }
+  if (createText && !isNamingProject) {
+    createText.textContent = strings.createNewProject;
+  }
+  document.documentElement.lang =
+    strings.welcomeTitle === 'Welcome!' ? 'en' : 'fr';
+}
+
 document.getElementById('windowButton').addEventListener('click', () => {
     projectAPI.send('request-close-project-screen');
 });
 
 function generateProjectsHTML(projects) {
     const projectsContainer = document.getElementById('projectList');
+    projectsContainer.innerHTML = '';
 
     projects.forEach(project => {
         const projectDiv = document.createElement('div');
@@ -27,16 +75,14 @@ function generateProjectsHTML(projects) {
         projectNameH2.classList.add('projectName');
         projectNameH2.textContent = project.name;
 
-        // const projectDirectorySpan = document.createElement('span');
-        // projectDirectorySpan.classList.add('projectDirectory');
-        // projectDirectorySpan.textContent = path.join(projectsDir, project);
-
         const projectCreationDateSpan = document.createElement('span');
         projectCreationDateSpan.classList.add('projectCreationDate');
-        projectCreationDateSpan.textContent = `créé le ${new Date(project.creationDate).toLocaleDateString()}`;
+        const date = new Date(project.creationDate).toLocaleDateString(
+          document.documentElement.lang || undefined
+        );
+        projectCreationDateSpan.textContent = interpolate(strings.createdOn, { date });
 
         projectDetailsDiv.appendChild(projectNameH2);
-        // projectDetailsDiv.appendChild(projectDirectorySpan);
         projectDetailsDiv.appendChild(projectCreationDateSpan);
 
         projectMetaDiv.appendChild(projectImageDiv);
@@ -44,7 +90,7 @@ function generateProjectsHTML(projects) {
 
         const openProjectButtonDiv = document.createElement('div');
         openProjectButtonDiv.classList.add('openProjectButton');
-        openProjectButtonDiv.textContent = 'Ouvrir';
+        openProjectButtonDiv.textContent = strings.open;
         openProjectButtonDiv.addEventListener('click', () => {
             projectAPI.send('request-open-project', project.path);
         });
@@ -56,9 +102,29 @@ function generateProjectsHTML(projects) {
     });
 }
 
-projectAPI.getListOfProjects().then(projects => {
-    generateProjectsHTML(projects);
-});
+async function bootstrap() {
+  try {
+    if (typeof projectAPI.getChooserStrings === 'function') {
+      const loaded = await projectAPI.getChooserStrings();
+      if (loaded) strings = { ...strings, ...loaded };
+    }
+    if (typeof projectAPI.getSettings === 'function') {
+      const settings = await projectAPI.getSettings();
+      if (settings?.language) {
+        document.documentElement.lang = settings.language;
+      }
+    }
+  } catch (error) {
+    console.error('Failed to load chooser translations', error);
+  }
+
+  applyStaticStrings();
+
+  const projects = await projectAPI.getListOfProjects();
+  generateProjectsHTML(projects);
+}
+
+void bootstrap();
 
 createNewProjectButton.addEventListener('click', () => {
     if (!isNamingProject) {
@@ -69,7 +135,7 @@ createNewProjectButton.addEventListener('click', () => {
         if (projectName) {
             projectAPI.newProject(projectName);
         } else {
-            alert('Veuillez entrer un nom de projet.');
+            alert(strings.enterNameAlert);
         }
     }
 });
@@ -81,69 +147,37 @@ projectNameInput.addEventListener('keyup', (event) => {
 });
 
 function displayProjectInputInfoScreen() {
-    // set the title of the welcome text
-    document.getElementById('welcomeTextTitle').textContent = 'Nommer votre projet';
-    document.getElementById('welcomeTextBlurb1').textContent = 'Entrez le nom de votre projet puis cliquez sur créer pour commencer.';
+    document.getElementById('welcomeTextTitle').textContent = strings.nameProjectTitle;
+    document.getElementById('welcomeTextBlurb1').textContent = strings.nameProjectBlurb;
     document.getElementById('welcomeTextBlurb2').style.display = 'none';
 
-    // hide the project list
     document.getElementById('projectList').style.display = 'none';
 
-    // show the project input form
     document.getElementById('newProjectNameInputContainer').style.display = 'block';
 
-    // set the icon and text on the button to adapt to the new form
     document.getElementById('newProjectButton').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#093A3B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"> <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg>';
-    document.getElementById('newProjectButtonText').textContent = 'Créer le projet';
+    document.getElementById('newProjectButtonText').textContent = strings.createProject;
 
-    // re-set the right margin on the button container to adapt to new text
     document.getElementById('newProjectButtonContainer').style.marginRight = '230px';
 
-    // add an event listener for the input form
     document.getElementById('newProjectNameInput').addEventListener('input', (event) => {
-        document.getElementById('newProjectButtonText').textContent = event.target.value ? 'Créer le projet \'' + event.target.value + '\'' : 'Créer le projet';
+        document.getElementById('newProjectButtonText').textContent = event.target.value
+          ? interpolate(strings.createProjectNamed, { name: event.target.value })
+          : strings.createProject;
         document.getElementById('newProjectButtonContainer').style.marginRight = `${230 - event.target.value.length * 7.5}px`;
     });
 }
 
-// fonction pour récupérer une variable CSS depuis un fichier
-async function getCSSVariableFromFile(filePath, variableName) {
-    try {
-        const response = await fetch(filePath);
-        const cssText = await response.text();
-
-        const regex = new RegExp(`--${variableName}:\\s*["']?([^;"']+)["']?;`);
-        const match = cssText.match(regex);
-
-        return match ? match[1].trim() : null;
-    } catch (error) {
-        console.error(`Erreur lors de la lecture du fichier CSS : ${error}`);
-        return null;
-    }
-}
-
-// mettre à jour le contenu du footer avec la version, le nom de l'application et l'année
-(async () => {
-    const appVersion = await getCSSVariableFromFile('../mainWindow/styles.css', 'applicationVersion');
-    const appName = await getCSSVariableFromFile('../mainWindow/styles.css', 'applicationName');
+(function updateFooter() {
     const currentYear = new Date().getFullYear();
-
     const footerTextElement = document.getElementById('footerText');
     if (footerTextElement) {
         const nameSpan = footerTextElement.querySelector('.name');
         const versionSpan = footerTextElement.querySelector('.version');
         const yearSpan = footerTextElement.querySelector('.year');
 
-        if (nameSpan && appName) {
-            nameSpan.textContent = appName;
-        }
-
-        if (versionSpan && appVersion) {
-            versionSpan.textContent = `v${appVersion} (Alpha)`;
-        }
-
-        if (yearSpan) {
-            yearSpan.textContent = currentYear;
-        }
+        if (nameSpan) nameSpan.textContent = APP_NAME;
+        if (versionSpan) versionSpan.textContent = `v${APP_VERSION} (Alpha)`;
+        if (yearSpan) yearSpan.textContent = String(currentYear);
     }
 })();

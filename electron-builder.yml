@@ -1,7 +1,7 @@
-appId: com.electron.app
-productName: electron-app
+appId: com.reiwa.qaddoe
+productName: QADDOE
 directories:
-  buildResources: build
+  output: dist
 files:
   - '!**/.vscode/*'
   - '!src/*'
@@ -15,7 +15,8 @@ extraResources:
   - from: resources/project-screen
     to: project-screen
 win:
-  executableName: electron-app
+  target: nsis
+  icon: resources/iconeRounded.ico
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -36,11 +37,8 @@ linux:
     - AppImage
     - snap
     - deb
-  maintainer: electronjs.org
+  maintainer: qaddoe@reiwa.ca
   category: Utility
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
-publish:
-  provider: generic
-  url: https://example.com/auto-updates

@@ -1,5 +1,18 @@
+# Dependencies
 node_modules/
+
+# Electron/Vite build output and test coverage
 out/
 dist/
 coverage/
 *.tsbuildinfo
+
+# Local environment and logs
+.env
+.env.*
+!.env.example
+logs/
+*.log
+
+# macOS metadata
+.DS_Store

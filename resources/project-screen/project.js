@@ -3,7 +3,7 @@ const createNewProjectButton = document.getElementById('newProjectButtonContaine
 const projectNameInput = document.getElementById('newProjectNameInput');
 
 const APP_NAME = 'QADDOE';
-const APP_VERSION = '1.62';
+const APP_VERSION = '1.65';
 
 /** @type {Record<string, string>} */
 let strings = {

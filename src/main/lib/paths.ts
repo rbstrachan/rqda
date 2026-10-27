@@ -24,7 +24,6 @@ export function setupApplicationDirs(): void {
     mkdirSync(getProjectsPath(), { recursive: true });
     mkdirSync(getCodesPath(), { recursive: true });
     mkdirSync(getDotPath(), { recursive: true });
-    writeFileSync(join(getDotPath(), "config.json"), JSON.stringify({}));
     writeFileSync(join(getDotPath(), "settings.json"), JSON.stringify({}));
   } else {
     if (!existsSync(getProjectsPath())) mkdirSync(getProjectsPath(), { recursive: true });
@@ -35,10 +34,6 @@ export function setupApplicationDirs(): void {
   const settingsFile = join(getDotPath(), "settings.json");
   if (!existsSync(settingsFile)) {
     writeFileSync(settingsFile, JSON.stringify({}));
-  }
-  const configFile = join(getDotPath(), "config.json");
-  if (!existsSync(configFile)) {
-    writeFileSync(configFile, JSON.stringify({}));
   }
 
   const sessionsDir = join(getDotPath(), "sessions");

@@ -35,10 +35,13 @@ dmg:
 linux:
   target:
     - AppImage
-    - snap
     - deb
   maintainer: qaddoe@reiwa.ca
-  category: Utility
+  category: Office
 appImage:
   artifactName: ${name}-${version}.${ext}
+publish:
+  - provider: github
+    owner: rbstrachan
+    repo: rqda
 npmRebuild: false

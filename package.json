@@ -22,17 +22,6 @@
     "test": "npm run test:unit",
     "coverage": "vitest run --coverage"
   },
-  "build": {
-    "appId": "com.reiwa.qaddoe",
-    "productName": "QADDOE",
-    "directories": {
-      "output": "dist"
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "resources/iconeRounded.ico"
-    }
-  },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
     "@codemirror/commands": "^6.11.1",

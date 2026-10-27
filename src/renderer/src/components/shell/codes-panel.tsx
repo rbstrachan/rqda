@@ -571,21 +571,6 @@ function CodeNode({
             </button>
             <button
               type="button"
-              title={t("outline.delete")}
-              aria-label={t("outline.delete")}
-              className={cn(
-                "inline-flex size-6 items-center justify-center rounded-md hover:bg-muted hover:text-foreground",
-                !selected && "text-muted-foreground"
-              )}
-              onClick={(e) => {
-                e.stopPropagation();
-                onRequestDelete(node.data.codeId);
-              }}
-            >
-              <Trash2 className="size-3.5" aria-hidden />
-            </button>
-            <button
-              type="button"
               title={t("outline.open")}
               aria-label={t("outline.open")}
               className={cn(
@@ -598,6 +583,21 @@ function CodeNode({
               }}
             >
               <FolderOpen className="size-3.5" aria-hidden />
+            </button>
+            <button
+              type="button"
+              title={t("outline.delete")}
+              aria-label={t("outline.delete")}
+              className={cn(
+                "inline-flex size-6 items-center justify-center rounded-md hover:bg-muted hover:text-foreground",
+                !selected && "text-muted-foreground"
+              )}
+              onClick={(e) => {
+                e.stopPropagation();
+                onRequestDelete(node.data.codeId);
+              }}
+            >
+              <Trash2 className="size-3.5" aria-hidden />
             </button>
           </div>
         </>

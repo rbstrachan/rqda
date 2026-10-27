@@ -30,7 +30,7 @@ jobs:
         run: npm run build
 
       - name: Build and publish Electron application
-        uses: samuelmeuli/action-electron-builder@v5
+        uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release: true
